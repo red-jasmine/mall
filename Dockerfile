@@ -22,8 +22,7 @@ RUN composer install --no-scripts --no-autoloader --ansi --no-interaction --no-d
 
 COPY ${APP_CODE_PATH} .
 RUN composer dump-autoload -o
-RUN chown -R :www-data /var/www/app \
-    && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
+RUN chown -R :www-data /var/www/app && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
 
 
 ###########################################################################
