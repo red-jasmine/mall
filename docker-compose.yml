@@ -1,0 +1,78 @@
+version: "3.5"
+
+networks:
+    frontend:
+        driver: 'bridge'
+    backend:
+        driver: 'bridge'
+
+
+services:
+    app:
+        build:
+            context: .
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./:/var/www/app
+        networks:
+            - frontend
+            - backend
+        depends_on:
+            - mysql
+            - redis
+            - elasticsearch
+    ### MySQL ################################################
+    mysql:
+        image: mysql:8.0
+        environment:
+            - MYSQL_DATABASE=default
+            - MYSQL_USER=default
+            - MYSQL_PASSWORD=default
+            - MYSQL_ROOT_PASSWORD=root
+            - TZ=UTC
+        volumes:
+            - ../data/database/mysql:/var/lib/mysql
+            - ../data/database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        ports:
+            - "3306:3306"
+        networks:
+            - backend
+    ### Redis ################################################
+    redis:
+        image: redis:latest
+        volumes:
+            - ../data/database/redis:/data
+        command: --requirepass redis
+        ports:
+            - "6379:6379"
+        networks:
+            - backend
+
+    ### ElasticSearch ########################################
+    elasticsearch:
+        image: elasticsearch:8.6.0
+        volumes:
+            - ../data/database/elasticsearch:/usr/share/elasticsearch/data
+            - ./docker/elasticsearch/ik:/usr/share/elasticsearch/plugins/ik
+        environment:
+            - cluster.name=laradock-cluster
+            - node.name=laradock-node
+            - bootstrap.memory_lock=true
+            - xpack.security.enabled=false
+            - xpack.security.transport.ssl.enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - cluster.initial_master_nodes=laradock-node
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+            nofile:
+                soft: 65536
+                hard: 65536
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        networks:
+            - backend
