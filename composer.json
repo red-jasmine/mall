@@ -97,14 +97,14 @@
     "repositories": {
         "red-jasmine/supplier": {
             "type": "path",
-            "url": "/var/www/app/packages/red-jasmine/supplier",
+            "url": "./packages/red-jasmine/supplier",
             "options": {
                 "symlink": true
             }
         },
         "red-jasmine/account-recharge": {
             "type": "path",
-            "url": "/var/www/app/packages/red-jasmine/account-recharge",
+            "url": "./packages/red-jasmine/account-recharge",
             "options": {
                 "symlink": true
             }
