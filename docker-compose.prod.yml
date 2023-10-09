@@ -1,0 +1,19 @@
+version: "3.5"
+
+
+networks:
+    frontend:
+        driver: 'bridge'
+services:
+    app:
+        build:
+            context: .
+        ports:
+            - "${DOCKER_HTTP_PORT}:80"
+        volumes:
+            - ./:/var/www/app
+            - ./docker/nginx/sites/:/etc/nginx/conf.d
+        networks:
+            - frontend
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
