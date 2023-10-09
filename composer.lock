@@ -4,8 +4,173 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c8c6e0c118cff4480aeda072b9e004d",
+    "content-hash": "160aae825d682dfae4e5a3f60b794510",
     "packages": [
+        {
+            "name": "aliyuncs/oss-sdk-php",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aliyun/aliyun-oss-php-sdk.git",
+                "reference": "572d0f8e099e8630ae7139ed3fdedb926c7a760f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/572d0f8e099e8630ae7139ed3fdedb926c7a760f",
+                "reference": "572d0f8e099e8630ae7139ed3fdedb926c7a760f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "satooshi/php-coveralls": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OSS\\": "src/OSS"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aliyuncs",
+                    "homepage": "http://www.aliyun.com"
+                }
+            ],
+            "description": "Aliyun OSS SDK for PHP",
+            "homepage": "http://www.aliyun.com/product/oss/",
+            "support": {
+                "issues": "https://github.com/aliyun/aliyun-oss-php-sdk/issues",
+                "source": "https://github.com/aliyun/aliyun-oss-php-sdk/tree/v2.6.0"
+            },
+            "time": "2022-08-03T08:06:01+00:00"
+        },
+        {
+            "name": "alphasnow/aliyun-oss-flysystem",
+            "version": "3.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alphasnow/aliyun-oss-flysystem.git",
+                "reference": "ac62f862cb743ca76f7c3c146ffdd8d52af86153"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alphasnow/aliyun-oss-flysystem/zipball/ac62f862cb743ca76f7c3c146ffdd8d52af86153",
+                "reference": "ac62f862cb743ca76f7c3c146ffdd8d52af86153",
+                "shasum": ""
+            },
+            "require": {
+                "aliyuncs/oss-sdk-php": "^2.5",
+                "league/flysystem": "^3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.6",
+                "mockery/mockery": "^1.5",
+                "php-coveralls/php-coveralls": "*",
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^9.5",
+                "vlucas/phpdotenv": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AlphaSnow\\Flysystem\\Aliyun\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alpha Snow",
+                    "email": "wind91@foxmail.com"
+                }
+            ],
+            "description": "Flysystem adapter for the Aliyun storage",
+            "homepage": "https://alphasnow.github.io/aliyun-oss-flysystem/",
+            "keywords": [
+                "adapter",
+                "aliyun",
+                "filesystem",
+                "oss"
+            ],
+            "support": {
+                "issues": "https://github.com/alphasnow/aliyun-oss-flysystem/issues",
+                "source": "https://github.com/alphasnow/aliyun-oss-flysystem/tree/3.3.3"
+            },
+            "time": "2023-06-29T08:45:24+00:00"
+        },
+        {
+            "name": "alphasnow/aliyun-oss-laravel",
+            "version": "4.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alphasnow/aliyun-oss-laravel.git",
+                "reference": "d4f5885bcff8c7a5c43be118e749a85fe5eb6a99"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alphasnow/aliyun-oss-laravel/zipball/d4f5885bcff8c7a5c43be118e749a85fe5eb6a99",
+                "reference": "d4f5885bcff8c7a5c43be118e749a85fe5eb6a99",
+                "shasum": ""
+            },
+            "require": {
+                "alphasnow/aliyun-oss-flysystem": "^3.3",
+                "php": "^8.0.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.12",
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.13",
+                "php-coveralls/php-coveralls": "*",
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AlphaSnow\\LaravelFilesystem\\Aliyun\\AliyunServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AlphaSnow\\LaravelFilesystem\\Aliyun\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alphasnow",
+                    "email": "wind91@foxmail.com"
+                }
+            ],
+            "description": "alibaba cloud object storage service for laravel",
+            "homepage": "https://alphasnow.github.io/aliyun-oss-laravel/",
+            "keywords": [
+                "aliyun",
+                "filesystems",
+                "laravel",
+                "oss",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/alphasnow/aliyun-oss-laravel/issues",
+                "source": "https://github.com/alphasnow/aliyun-oss-laravel/tree/4.7.1"
+            },
+            "time": "2022-12-03T14:27:07+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
@@ -4688,7 +4853,7 @@
         },
         {
             "name": "red-jasmine/account",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/account",
@@ -4753,7 +4918,7 @@
         },
         {
             "name": "red-jasmine/account-recharge",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/account-recharge",
@@ -4820,7 +4985,7 @@
         },
         {
             "name": "red-jasmine/address",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/address",
@@ -4877,7 +5042,7 @@
         },
         {
             "name": "red-jasmine/address-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/address-admin",
@@ -4935,7 +5100,7 @@
         },
         {
             "name": "red-jasmine/admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/admin",
@@ -4996,7 +5161,7 @@
         },
         {
             "name": "red-jasmine/auth",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/auth",
@@ -5072,7 +5237,7 @@
         },
         {
             "name": "red-jasmine/captcha",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/captcha",
@@ -5137,7 +5302,7 @@
         },
         {
             "name": "red-jasmine/item",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/item",
@@ -5205,7 +5370,7 @@
         },
         {
             "name": "red-jasmine/item-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/item-admin",
@@ -5259,7 +5424,7 @@
         },
         {
             "name": "red-jasmine/item-trade",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/item-trade",
@@ -5326,7 +5491,7 @@
         },
         {
             "name": "red-jasmine/mall-buyer",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-buyer",
@@ -5392,7 +5557,7 @@
         },
         {
             "name": "red-jasmine/mall-core",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-core",
@@ -5456,7 +5621,7 @@
         },
         {
             "name": "red-jasmine/mall-item",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-item",
@@ -5521,7 +5686,7 @@
         },
         {
             "name": "red-jasmine/mall-payment",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-payment",
@@ -5586,7 +5751,7 @@
         },
         {
             "name": "red-jasmine/mall-trade",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-trade",
@@ -5650,7 +5815,7 @@
         },
         {
             "name": "red-jasmine/payment",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/payment",
@@ -5716,7 +5881,7 @@
         },
         {
             "name": "red-jasmine/region",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/region",
@@ -5777,7 +5942,7 @@
         },
         {
             "name": "red-jasmine/region-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/region-admin",
@@ -5833,7 +5998,7 @@
         },
         {
             "name": "red-jasmine/supplier",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/supplier",
@@ -5898,7 +6063,7 @@
         },
         {
             "name": "red-jasmine/support",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/support",
@@ -5954,7 +6119,7 @@
         },
         {
             "name": "red-jasmine/trade",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/trade",
@@ -6018,7 +6183,7 @@
         },
         {
             "name": "red-jasmine/user",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/user",
@@ -11361,5 +11526,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
