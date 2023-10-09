@@ -1,0 +1,63 @@
+[submodule "packages/red-jasmine/account"]
+	path = packages/red-jasmine/account
+	url = git@github.com:red-jasmine/account.git
+[submodule "packages/red-jasmine/account-recharge"]
+	path = packages/red-jasmine/account-recharge
+	url = git@github.com:red-jasmine/account-recharge.git
+[submodule "packages/red-jasmine/address"]
+	path = packages/red-jasmine/address
+	url = git@github.com:red-jasmine/address.git
+[submodule "packages/red-jasmine/address-admin"]
+	path = packages/red-jasmine/address-admin
+	url = git@github.com:red-jasmine/address-admin.git
+[submodule "packages/red-jasmine/admin"]
+	path = packages/red-jasmine/admin
+	url = git@github.com:red-jasmine/admin.git
+[submodule "packages/red-jasmine/auth"]
+	path = packages/red-jasmine/auth
+	url = git@github.com:red-jasmine/auth.git
+[submodule "packages/red-jasmine/captcha"]
+	path = packages/red-jasmine/captcha
+	url = git@github.com:red-jasmine/captcha.git
+[submodule "packages/red-jasmine/item"]
+	path = packages/red-jasmine/item
+	url = git@github.com:red-jasmine/item.git
+[submodule "packages/red-jasmine/item-admin"]
+	path = packages/red-jasmine/item-admin
+	url = git@github.com:red-jasmine/item-admin.git
+[submodule "packages/red-jasmine/item-trade"]
+	path = packages/red-jasmine/item-trade
+	url = git@github.com:red-jasmine/item-trade.git
+[submodule "packages/red-jasmine/mall-buyer"]
+	path = packages/red-jasmine/mall-buyer
+	url = git@github.com:red-jasmine/mall-buyer.git
+[submodule "packages/red-jasmine/mall-core"]
+	path = packages/red-jasmine/mall-core
+	url = git@github.com:red-jasmine/mall-core.git
+[submodule "packages/red-jasmine/mall-item"]
+	path = packages/red-jasmine/mall-item
+	url = git@github.com:red-jasmine/mall-item.git
+[submodule "packages/red-jasmine/mall-payment"]
+	path = packages/red-jasmine/mall-payment
+	url = git@github.com:red-jasmine/mall-payment.git
+[submodule "packages/red-jasmine/mall-trade"]
+	path = packages/red-jasmine/mall-trade
+	url = git@github.com:red-jasmine/mall-trade.git
+[submodule "packages/red-jasmine/payment"]
+	path = packages/red-jasmine/payment
+	url = git@github.com:red-jasmine/payment.git
+[submodule "packages/red-jasmine/region"]
+	path = packages/red-jasmine/region
+	url = git@github.com:red-jasmine/region.git
+[submodule "packages/red-jasmine/region-admin"]
+	path = packages/red-jasmine/region-admin
+	url = git@github.com:red-jasmine/region-admin.git
+[submodule "packages/red-jasmine/supplier"]
+	path = packages/red-jasmine/supplier
+	url = git@github.com:red-jasmine/supplier.git
+[submodule "packages/red-jasmine/trade"]
+	path = packages/red-jasmine/trade
+	url = git@github.com:red-jasmine/trade.git
+[submodule "packages/red-jasmine/user"]
+	path = packages/red-jasmine/user
+	url = git@github.com:red-jasmine/user.git
