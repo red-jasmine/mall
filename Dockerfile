@@ -1,4 +1,4 @@
-FROM liushoukun/php-nginx-base:8.1-bate
+FROM liushoukun/php-nginx-base:8.2-bate
 
 ARG APP_CODE_PATH=./
 
@@ -14,7 +14,7 @@ COPY docker/nginx/ssl /etc/nginx/ssl
 
 WORKDIR /var/www/app
 
-RUN composer config -g repo.packagist composer https://mirrors.tencent.com/composer/
+#RUN composer config -g repo.packagist composer https://mirrors.tencent.com/composer/
 # install application dependencies
 COPY ${APP_CODE_PATH}composer.json ${APP_CODE_PATH}composer.lock* ./
 RUN composer install --no-scripts --no-autoloader --ansi --no-interaction --no-dev -vvv
