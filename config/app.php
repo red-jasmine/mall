@@ -58,7 +58,7 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
-    'sub_domain'=>true,
+    'sub_domain' => env('APP_SUB_DOMAIN', false), // 是否开启子域名
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
