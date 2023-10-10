@@ -144,7 +144,7 @@ return [
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model'  => Dcat\Admin\Models\Administrator::class,
+                'model'  => \RedJasmine\Admin\Models\Administrator::class,
             ],
         ],
 
