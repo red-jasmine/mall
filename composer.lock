@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "160aae825d682dfae4e5a3f60b794510",
+    "content-hash": "58931c13564d14c02f5d3d6b35281a64",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -5297,6 +5297,71 @@
                 "Laravel"
             ],
             "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "red-jasmine/card",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/red-jasmine/card",
+                "reference": "ad4d3f7772eb314f89312e601b95430d0d447c83"
+            },
+            "require": {
+                "red-jasmine/support": "1.0.x-dev"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RedJasmine\\Card\\CardServiceProvider"
+                    ],
+                    "aliases": {
+                        "Card": "RedJasmine\\Card\\Facades\\Card"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\Card\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RedJasmine\\Card\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liushoukun",
+                    "email": "liushoukun66@gmail.com",
+                    "homepage": "https://github.com/liushoukun66"
+                }
+            ],
+            "description": "卡密",
+            "homepage": "https://github.com/red-jasmine/captcha",
+            "keywords": [
+                "Captcha",
+                "Laravel"
+            ],
+            "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },

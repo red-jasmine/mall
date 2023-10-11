@@ -20,6 +20,7 @@
         "red-jasmine/admin": "1.0.x-dev",
         "red-jasmine/auth": "1.0.x-dev",
         "red-jasmine/captcha": "1.0.x-dev",
+        "red-jasmine/card": "^1.0@dev",
         "red-jasmine/item": "1.0.x-dev",
         "red-jasmine/item-admin": "1.0.x-dev",
         "red-jasmine/item-trade": "1.0.x-dev",
@@ -96,6 +97,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "red-jasmine/card": {
+            "type": "path",
+            "url": "./packages/red-jasmine/card",
+            "options": {
+                "symlink": true
+            }
+        },
         "red-jasmine/supplier": {
             "type": "path",
             "url": "./packages/red-jasmine/supplier",
