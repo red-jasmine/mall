@@ -64,3 +64,6 @@
 [submodule "packages/red-jasmine/support"]
 	path = packages/red-jasmine/support
 	url = git@github.com:red-jasmine/support.git
+[submodule "packages/red-jasmine/card"]
+	path = packages/red-jasmine/card
+	url = git@github.com:red-jasmine/card.git
