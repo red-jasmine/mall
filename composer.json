@@ -12,6 +12,7 @@
         "alphasnow/aliyun-oss-laravel": "^4.7",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
+        "laravel/horizon": "^5.21",
         "laravel/tinker": "^2.8",
         "red-jasmine/account": "1.0.x-dev",
         "red-jasmine/account-recharge": "1.0.x-dev",
