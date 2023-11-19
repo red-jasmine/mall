@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00303928dfa7bfa1d5e2f15b382c1b0c",
+    "content-hash": "a7faa6c7ce23302da34b5bd6c24686cf",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -6017,8 +6017,73 @@
             }
         },
         {
+            "name": "red-jasmine/product",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "/var/www/red-jasmine/mall/packages/red-jasmine/product",
+                "reference": "a9c71ae9a0c25c74b1fc9f44797de68e1cef161a"
+            },
+            "require": {
+                "red-jasmine/support": "1.0.x-dev"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RedJasmine\\Product\\ProductServiceProvider"
+                    ],
+                    "aliases": {
+                        "ProductService": "RedJasmine\\Product\\Facades\\ProductService"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\Product\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RedJasmine\\Product\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liushoukun",
+                    "email": "liushoukun66@gmail.com",
+                    "homepage": "https://github.com/liushoukun"
+                }
+            ],
+            "description": ":package_description",
+            "homepage": "https://github.com/red-jasmine/product",
+            "keywords": [
+                "Laravel",
+                "Product"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": false
+            }
+        },
+        {
             "name": "red-jasmine/region",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/region",
@@ -6204,7 +6269,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/support",
-                "reference": "ed06b217f346f9ae3b27f3f54c2c93d2d53140de"
+                "reference": "d330c9ef0f006c66cec373b0372cd98db6e9dfd6"
             },
             "require": {
                 "illuminate/contracts": "^9.0|^10.0"
@@ -6214,10 +6279,7 @@
                 "laravel": {
                     "providers": [
                         "RedJasmine\\Support\\SupportServiceProvider"
-                    ],
-                    "aliases": {
-                        "Support": "RedJasmine\\Support\\Facades\\Support"
-                    }
+                    ]
                 },
                 "branch-alias": {
                     "dev-master": "1.0.x-dev",
@@ -11654,6 +11716,7 @@
         "red-jasmine/mall-payment": 20,
         "red-jasmine/mall-trade": 20,
         "red-jasmine/payment": 20,
+        "red-jasmine/product": 20,
         "red-jasmine/region": 20,
         "red-jasmine/region-admin": 20,
         "red-jasmine/supplier": 20,

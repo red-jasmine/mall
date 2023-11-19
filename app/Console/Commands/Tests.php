@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -17,6 +18,12 @@ use PHPHtmlParser\Exceptions\StrictException;
 use QL\QueryList;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
+use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
+use RedJasmine\Product\Enums\Product\ProductTypeEnum;
+use RedJasmine\Product\Enums\Product\ShippingTypeEnum;
+use RedJasmine\Product\Services\Category\ProductCategoryService;
+use RedJasmine\Product\Services\Product\ProductService;
+use RedJasmine\Support\Services\SystemUser;
 use RedJasmine\Trade\Helpers\Trade;
 use RedJasmine\Trade\Services\TradeCreate;
 use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
@@ -42,68 +49,95 @@ class Tests extends Command
 
     public function tradeHandle()
     {
-        $data      = [
-            'seller_type'  => 'seller',
-            'seller_uid'   => '111111111111111111111111111111',
-            'buyer_type'   => 'buyer',
-            'buyer_uid'    => '1',
-            'post_fee'     => 20,
-            'discount_fee' => 100,
-            'title'=>'阿达撒打算啊实打实大撒大所大所多阿萨',
-            'items'        => [
-                [
-                    'iid'   => 1,
-                    'num'   => 100,
-                    'price' => 3,
-                    'title' => '标题',
-                ],
-                [
-                    'iid'   => 1,
-                    'num'   => 10000,
-                    'price' => 20,
-                    'title' => '标题',
-                ],
-                [
-                    'iid'   => 1,
-                    'num'   => 100,
-                    'price' => 10,
-                    'title' => '标题',
-                ],
-            ],
-        ];
-        $tradeData = new Trade($data);
 
-        $tradeCreateService = app(TradeCreate::class)->init($tradeData);
-        $tradeCreateService->getValidator()->addValidator(new TradeBaseValidator());
-        $tradeCreateService->validate();
-        $trade = $tradeCreateService->save();
-        dd($trade);
 
     }
 
-    public function handle() : void
+
+    public function testCategory()
     {
 
-        $this->tradeHandle();
-        return;
+        $service = \app(ProductCategoryService::class);
+        $service->setOperator(new SystemUser());
+
+        $attributes = [
+            'parent_id'  => 0,
+            'name'       => '测试',
+            'group_name' => '',
+            'sort'       => 1,
+            'is_leaf'    => 0,
+            'status'     => CategoryStatusEnum::ENABLE,
+            'extends'    => [],
+        ];
+       $ProductCategory =  $service->create($attributes);
+       dd($ProductCategory);
 
 
-        $cursor = DB::table('regions')->cursor();
 
 
-        foreach ($cursor as $region) {
-            try {
-                DB::table('regions')->where('id', $region->id)->update(
-                    [
-                        'id'        => str_pad($region->id, 6, '0'),
-                        'parent_id' => str_pad($region->parent_id, 6, '0'),
-                    ]
-                );
-            } catch (\Throwable $throwable) {
+    }
 
-            }
+    public function handle()
+    {
+        return $this->testCategory();
 
-        }
+        $product = [
+            'product_type'       => ProductTypeEnum::GOODS->value,
+            'shipping_type'      => ShippingTypeEnum::LOGISTICS,
+            'title'              => '商品名称',
+            'has_skus'           => 0,
+            'image'              => 'https://gw.alicdn.com/bao/uploaded/i4/125105796/O1CN01fj8CxM1sgcTuyWZ52_!!0-saturn_solar.jpg_300x300q90.jpg_.webp',
+            'category_id'        => null,
+            'seller_category_id' => null,
+            'brand_id'           => null,
+            'postage_id'         => null,
+            'keywords'           => '测试 好后 萨达撒',
+
+
+            'freight_payer' => 0,
+            'sub_stock'     => 0,
+            'delivery_time' => 0,
+            'quantity'      => ProductService::MAX_QUANTITY,
+            'sold_quantity' => 0,
+            'vip'           => 0,
+            'points'        => 0,
+            'status'        => 0,
+
+            'barcode'      => '55876464',
+            'outer_id'     => 'ES-844',
+            'price'        => '1',
+            'market_price' => '1',
+            'cost_price'   => '1',
+            'min'          => 0,
+            'max'          => 0,
+            'multiple'     => 1,
+
+            'info' => [
+                'desc'        => '',
+                'web_detail'  => '',
+                'wap_detail'  => '',
+                'images'      => [],
+                'videos'      => [],
+                'weight'      => '',
+                'width'       => '',
+                'height'      => '',
+                'length'      => '',
+                'size'        => '',
+                'basic_props' => [],
+                'sku_props'   => [],
+                'remarks'     => '',
+                'extends'     => [],
+            ],
+            'skus' => [
+
+                [
+                    'properties' => '',//销售属性
+                ],
+
+            ],
+
+
+        ];
 
 
     }
