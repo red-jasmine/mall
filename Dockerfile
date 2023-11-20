@@ -16,11 +16,9 @@ WORKDIR /var/www/app
 
 #RUN composer config -g repo.packagist composer https://mirrors.tencent.com/composer/
 # install application dependencies
-COPY ${APP_CODE_PATH}composer.json ${APP_CODE_PATH}composer.lock* ./
+COPY ${APP_CODE_PATH} .
 RUN composer install --no-scripts --no-autoloader --ansi --no-interaction --no-dev -vvv
 # copy application code
-
-COPY ${APP_CODE_PATH} .
 RUN composer dump-autoload -o
 RUN chown -R :www-data /var/www/app && chmod -R 775 /var/www/app/storage /var/www/app/bootstrap/cache
 

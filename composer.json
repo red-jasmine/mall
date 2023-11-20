@@ -31,7 +31,7 @@
         "red-jasmine/mall-payment": "1.0.x-dev",
         "red-jasmine/mall-trade": "1.0.x-dev",
         "red-jasmine/payment": "1.0.x-dev",
-        "red-jasmine/product": "@dev",
+        "red-jasmine/product":  "1.0.x-dev",
         "red-jasmine/region": "1.0.x-dev",
         "red-jasmine/region-admin": "1.0.x-dev",
         "red-jasmine/supplier": "1.0.x-dev",
