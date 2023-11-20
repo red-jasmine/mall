@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a14df0617a2f4a5cfd975e25ce0a023",
+    "content-hash": "2b8e0b2fa7c24b0e5c26012d1167ea53",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -3914,11 +3914,11 @@
         },
         {
             "name": "red-jasmine/account",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/account",
-                "reference": "c7d8d0bbf828d7b57b6076b654fb6049944bb4df"
+                "reference": "98f9fdd79d9b4550d78c5dabe522383566f35e4e"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -3979,11 +3979,11 @@
         },
         {
             "name": "red-jasmine/account-recharge",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/account-recharge",
-                "reference": "93f3a8804a9f2e6a276ef2fff31f98c117e26d2c"
+                "reference": "4b00b6e1b7bffb287ac6bf6b9d92be506be1fd78"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -4046,11 +4046,11 @@
         },
         {
             "name": "red-jasmine/address",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/address",
-                "reference": "e45254196dca08c83abfaedca209fd51a4d5282a"
+                "reference": "ae7194cc34edce7f168ff4c51401b432fd0fcf49"
             },
             "require": {
                 "red-jasmine/region": "1.0.x-dev",
@@ -4103,11 +4103,11 @@
         },
         {
             "name": "red-jasmine/address-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/address-admin",
-                "reference": "d2474ed742f6602adcb91a30bfbd9869e8d5477f"
+                "reference": "03fb57c6e48a9b8a068b8fe70ff198b3156b600e"
             },
             "require": {
                 "red-jasmine/address": "1.0.x-dev",
@@ -4161,11 +4161,11 @@
         },
         {
             "name": "red-jasmine/admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/admin",
-                "reference": "5afe8f66b1a6304f760e1a2e6cc612e868ff0b44"
+                "reference": "ccdd72cc9461dced94482cc59f00163a51d4d8ca"
             },
             "require": {
                 "dcat/laravel-admin": "2.*",
@@ -4219,11 +4219,11 @@
         },
         {
             "name": "red-jasmine/auth",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/auth",
-                "reference": "5d717933659235409bf6d84d28cd232869cf942d"
+                "reference": "671a5137b70da57dd421c05cf8352737b1f0caae"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev",
@@ -4295,11 +4295,11 @@
         },
         {
             "name": "red-jasmine/captcha",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/captcha",
-                "reference": "de7175a6b90817bb3a65f13b9c8239cf70cf9f73"
+                "reference": "8d0fb168869a864e253ed1d78ae3edfb3fce8012"
             },
             "require": {
                 "overtrue/laravel-easy-sms": "^2.1",
@@ -4360,11 +4360,11 @@
         },
         {
             "name": "red-jasmine/card",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/card",
-                "reference": "d9b703c783213e83ecee81a1f7a3d7d515dd6267"
+                "reference": "ad4d3f7772eb314f89312e601b95430d0d447c83"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -4425,11 +4425,11 @@
         },
         {
             "name": "red-jasmine/item",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/item",
-                "reference": "6e2f14f321d52f5fc040a6b64d9de815a68de019"
+                "reference": "0b9348cd71242a15af55e57868ebc30f4f405bdf"
             },
             "require": {
                 "elasticsearch/elasticsearch": "^8.6",
@@ -4493,11 +4493,11 @@
         },
         {
             "name": "red-jasmine/item-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/item-admin",
-                "reference": "81633cd3e957528de72f60242a0c1c7ea15e5965"
+                "reference": "c29f44ccd87a83431139e795322cb015edd3bf71"
             },
             "require": {
                 "red-jasmine/admin": "1.0.x-dev",
@@ -4547,11 +4547,11 @@
         },
         {
             "name": "red-jasmine/item-trade",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/item-trade",
-                "reference": "fa752825f786c494414584660a805b7a64a6c1d1"
+                "reference": "e7f057ae4dd239881900dc1100c2041db9eba6b4"
             },
             "require": {
                 "red-jasmine/item": "1.0.x-dev",
@@ -4614,11 +4614,11 @@
         },
         {
             "name": "red-jasmine/mall-buyer",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-buyer",
-                "reference": "da46613f7516c36a3f289ffe36c89439824e4d5c"
+                "reference": "96f593357d9a5a564c3002237b492e3965ed7609"
             },
             "require": {
                 "red-jasmine/captcha": "1.0.x-dev",
@@ -4680,11 +4680,11 @@
         },
         {
             "name": "red-jasmine/mall-core",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-core",
-                "reference": "3026c84a891ffa3e887dba66e2c99f6f4a5a1285"
+                "reference": "c49a98a0ff4c7a93c3aff7206a0b4d3347f252c8"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -4743,77 +4743,12 @@
             }
         },
         {
-            "name": "red-jasmine/mall-item",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./packages/red-jasmine/mall-item",
-                "reference": "e283a87b9716d045d5f50c61040bd8b86c2d4c22"
-            },
-            "require": {
-                "red-jasmine/item": "1.0.x-dev",
-                "red-jasmine/mall-core": "1.0.x-dev"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RedJasmine\\MallItem\\MallItemServiceProvider"
-                    ],
-                    "aliases": {
-                        "MallItem": "RedJasmine\\MallItem\\Facades\\MallItem"
-                    }
-                },
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-main": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RedJasmine\\MallItem\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "RedJasmine\\MallItem\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php vendor/bin/testbench package:discover --ansi"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "liushoukun",
-                    "email": "liushoukun66@gmail.com",
-                    "homepage": "https://github.com/liushoukun66"
-                }
-            ],
-            "description": ":package_description",
-            "homepage": "https://github.com/red-jasmine/mall-item",
-            "keywords": [
-                "Laravel",
-                "MallItem"
-            ],
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
             "name": "red-jasmine/mall-payment",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-payment",
-                "reference": "1a97238785d47e3f810d7fa64cade65321516511"
+                "reference": "fdbee1b8ded0dacd087583d0f7103e3a7fcff1ae"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -4873,12 +4808,77 @@
             }
         },
         {
+            "name": "red-jasmine/mall-seller",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "/var/www/red-jasmine/mall/packages/red-jasmine/mall-seller",
+                "reference": "45a69617a09ad01f76918bbeb2814f621d793213"
+            },
+            "require": {
+                "red-jasmine/support": "1.0.x-dev"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RedJasmine\\MallSeller\\MallSellerServiceProvider"
+                    ],
+                    "aliases": {
+                        "MallSellerService": "RedJasmine\\MallSeller\\Facades\\MallSellerService"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\MallSeller\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RedJasmine\\MallSeller\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liushoukun",
+                    "email": "liushoukun66@gmail.com",
+                    "homepage": "https://github.com/liushoukun"
+                }
+            ],
+            "description": ":package_description",
+            "homepage": "https://github.com/red-jasmine/mall-seller",
+            "keywords": [
+                "Laravel",
+                "MallSeller"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": false
+            }
+        },
+        {
             "name": "red-jasmine/mall-trade",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-trade",
-                "reference": "8be0192831f3e0d04377e628faa45b7300de1eeb"
+                "reference": "c6333074f1ebe5027a0f51daf9b6ff4f2b732e0d"
             },
             "require": {
                 "red-jasmine/mall-core": "1.0.x-dev"
@@ -4938,11 +4938,11 @@
         },
         {
             "name": "red-jasmine/payment",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/payment",
-                "reference": "4ac1bae76c580954844b7b73a9101b9067566cd5"
+                "reference": "128e8ae6467ef9d604bdd559af89bc9d7e49eb4b"
             },
             "require": {
                 "league/omnipay": "^3.2",
@@ -5004,11 +5004,11 @@
         },
         {
             "name": "red-jasmine/product",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/product",
-                "reference": "0cd04c15492c872134cd492b52e09ffb247b2262"
+                "reference": "f59d1a4b4e1f769defda4c4062bb74999ac10d9c"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5069,11 +5069,11 @@
         },
         {
             "name": "red-jasmine/region",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/region",
-                "reference": "6ea1f1a508708b28e85846d8cbae0a8312af1d69"
+                "reference": "d3d67491c9dead1ab1e978afe32b560812ba1329"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5130,11 +5130,11 @@
         },
         {
             "name": "red-jasmine/region-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/region-admin",
-                "reference": "feda0a71a89d3da621ead9fea3f1a5cc7c8327cd"
+                "reference": "ec050a7e1dc6429d7b55825a3a7577a252b9ea86"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5186,11 +5186,11 @@
         },
         {
             "name": "red-jasmine/supplier",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/supplier",
-                "reference": "98d7d318b2b408ceffe1fa2d57669f839b0ac1ba"
+                "reference": "74696e898a96b0d59eaf9ed56bad4e28e9169220"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5251,11 +5251,11 @@
         },
         {
             "name": "red-jasmine/support",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/support",
-                "reference": "ffd4e723b5884be048f9ab79d2b21fdf5b717b3a"
+                "reference": "d330c9ef0f006c66cec373b0372cd98db6e9dfd6"
             },
             "require": {
                 "illuminate/contracts": "^9.0|^10.0"
@@ -5304,11 +5304,11 @@
         },
         {
             "name": "red-jasmine/trade",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/trade",
-                "reference": "fcc7b4fdb26567e9ab4c439d52118e949611d4f8"
+                "reference": "c5072c5df665efe5e3b6b75df549bae277987eca"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5368,11 +5368,11 @@
         },
         {
             "name": "red-jasmine/user",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/user",
-                "reference": "6671a321d29312967057f6c412ef1a71d18d2cb3"
+                "reference": "4697e63cf3830bbb20e00864c58ceda55ed6c4dc"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev",
@@ -9325,8 +9325,8 @@
         "red-jasmine/item-trade": 20,
         "red-jasmine/mall-buyer": 20,
         "red-jasmine/mall-core": 20,
-        "red-jasmine/mall-item": 20,
         "red-jasmine/mall-payment": 20,
+        "red-jasmine/mall-seller": 20,
         "red-jasmine/mall-trade": 20,
         "red-jasmine/payment": 20,
         "red-jasmine/product": 20,
@@ -9343,5 +9343,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

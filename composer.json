@@ -27,11 +27,11 @@
         "red-jasmine/item-trade": "1.0.x-dev",
         "red-jasmine/mall-buyer": "1.0.x-dev",
         "red-jasmine/mall-core": "1.0.x-dev",
-        "red-jasmine/mall-item": "1.0.x-dev",
         "red-jasmine/mall-payment": "1.0.x-dev",
+        "red-jasmine/mall-seller": "@dev",
         "red-jasmine/mall-trade": "1.0.x-dev",
         "red-jasmine/payment": "1.0.x-dev",
-        "red-jasmine/product":  "1.0.x-dev",
+        "red-jasmine/product": "1.0.x-dev",
         "red-jasmine/region": "1.0.x-dev",
         "red-jasmine/region-admin": "1.0.x-dev",
         "red-jasmine/supplier": "1.0.x-dev",
@@ -99,6 +99,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "red-jasmine/mall-seller": {
+            "type": "path",
+            "url": "./packages/red-jasmine/mall-seller",
+            "options": {
+                "symlink": true
+            }
+        },
         "red-jasmine/product": {
             "type": "path",
             "url": "./packages/red-jasmine/product",
