@@ -4812,7 +4812,7 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "/var/www/red-jasmine/mall/packages/red-jasmine/mall-seller",
+                "url": "./packages/red-jasmine/mall-seller",
                 "reference": "45a69617a09ad01f76918bbeb2814f621d793213"
             },
             "require": {
