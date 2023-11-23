@@ -158,10 +158,6 @@
                 "symlink": true
             }
         },
-        "red-jasmine/mall-trade": {
-            "type": "path",
-            "url": "./packages/red-jasmine/mall-trade"
-        },
         "red-jasmine/mall-item": {
             "type": "path",
             "url": "./packages/red-jasmine/mall-item"
