@@ -31,6 +31,7 @@
         "red-jasmine/mall-seller": "@dev",
         "red-jasmine/payment": "1.0.x-dev",
         "red-jasmine/product": "1.0.x-dev",
+        "red-jasmine/product-admin":"1.0.x-dev",
         "red-jasmine/region": "1.0.x-dev",
         "red-jasmine/region-admin": "1.0.x-dev",
         "red-jasmine/supplier": "1.0.x-dev",
@@ -98,6 +99,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "red-jasmine/product-admin": {
+            "type": "path",
+            "url": "./packages/red-jasmine/product-admin",
+            "options": {
+                "symlink": true
+            }
+        },
         "red-jasmine/mall-seller": {
             "type": "path",
             "url": "./packages/red-jasmine/mall-seller",
