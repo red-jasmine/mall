@@ -73,3 +73,6 @@
 [submodule "packages/red-jasmine/mall-seller"]
 	path = packages/red-jasmine/mall-seller
 	url = git@github.com:red-jasmine/mall-seller.git
+[submodule "packages/red-jasmine/product-admin"]
+	path = packages/red-jasmine/product-admin
+	url = git@github.com:red-jasmine/product-admin.git
