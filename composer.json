@@ -58,8 +58,8 @@
             "RedJasmine\\RegionAdmin\\": "packages/red-jasmine/region-admin/src/",
             "RedJasmine\\Region\\": "packages/red-jasmine/region/src/",
             "RedJasmine\\Address\\": "packages/red-jasmine/address/src/",
-            "RedJasmine\\AddressAdmin\\": "packages/red-jasmine/address-admin/src/"
-
+            "RedJasmine\\AddressAdmin\\": "packages/red-jasmine/address-admin/src/",
+            "RedJasmine\\ProductAdmin\\": "packages/red-jasmine/product-admin/src/"
         }
     },
     "autoload-dev": {

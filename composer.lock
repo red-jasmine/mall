@@ -5244,7 +5244,7 @@
         },
         {
             "name": "red-jasmine/admin",
-            "version": "dev-master",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/admin",
@@ -5896,7 +5896,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-seller",
-                "reference": "bdf56b68aa7e701026322ae58fa9cbf35f73e3f4"
+                "reference": "56e1cd0863330a698dca4765c549cdf89312e5b0"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6024,7 +6024,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/product",
-                "reference": "61cf66052e133709fbf69cc942ab28249235b99b"
+                "reference": "7dbd2f98062db52ab7f2911e3181c8d7d6c1faca"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev",
@@ -6091,9 +6091,11 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/product-admin",
-                "reference": "3ae05f60a3582eda638e74bd7930b6a182bdbca2"
+                "reference": "f4518d50dc6c289cedf254410bcfb8d5417e80d5"
             },
             "require": {
+                "red-jasmine/admin": "1.0.x-dev",
+                "red-jasmine/product": "1.0.x-dev",
                 "red-jasmine/support": "1.0.x-dev"
             },
             "require-dev": {
