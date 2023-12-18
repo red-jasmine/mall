@@ -21,13 +21,19 @@ use RedJasmine\Item\Services\Items\ItemCreateService;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
 use RedJasmine\Product\Enums\Product\ShippingTypeEnum;
+use RedJasmine\Product\Enums\Stock\ProductStockChangeTypeEnum;
 use RedJasmine\Product\Services\Category\ProductCategoryService;
 use RedJasmine\Product\Services\Product\ProductService;
+use RedJasmine\Product\Services\Product\ProductStock;
+use RedJasmine\Product\Services\Product\Stock\StockChannelObject;
+use RedJasmine\Product\Services\Product\Stock\StockChanneObject;
+use RedJasmine\Support\Helpers\UserObjectBuilder;
 use RedJasmine\Support\Services\SystemUser;
 use RedJasmine\Trade\Helpers\Trade;
 use RedJasmine\Trade\Services\TradeCreate;
 use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
 use RedJasmine\User\Models\User;
+use Spatie\Browsershot\Browsershot;
 use Throwable;
 
 class Tests extends Command
@@ -60,7 +66,7 @@ class Tests extends Command
         $service = \app(ProductCategoryService::class);
         $service->setOperator(new SystemUser());
 
-        $attributes = [
+        $attributes      = [
             'parent_id'  => 0,
             'name'       => '测试',
             'group_name' => '',
@@ -69,16 +75,64 @@ class Tests extends Command
             'status'     => CategoryStatusEnum::ENABLE,
             'extends'    => [],
         ];
-       $ProductCategory =  $service->create($attributes);
-       dd($ProductCategory);
-
-
+        $ProductCategory = $service->create($attributes);
+        dd($ProductCategory);
 
 
     }
 
     public function handle()
     {
+
+        $service = app(ProductService::class);
+        $service->setOperator(new UserObjectBuilder([ 'type' => 'admin', 'uid' => 0 ]));
+
+        $changeStock = rand(-100, 100);
+        $changeStock = 200;
+        // $skuID        = 380060972386593;
+        $skuID        = 382551881693164;
+        $stockService = $service->stock();
+
+        $channel1 = new StockChannelObject('activity', 1);
+        $channel2 = new StockChannelObject('activity', 2);
+        //$stockService->channel()->create($skuID,3,$channel1);
+        // $stockService->lock($skuID,120,ProductStockChangeTypeEnum::SALE);
+        //$stockService->checklock($skuID,1,ProductStockChangeTypeEnum::SALE,$channel1);
+        //$stockService->checkLock($skuID,1,ProductStockChangeTypeEnum::SALE);
+        //$stockService->setStock($skuID, 58, ProductStockChangeTypeEnum::SELLER);
+        //$stockService->channel()->create($skuID,10,$channel1);
+        //$stockService->channel()->create($skuID,10,$channel2);
+        //$stockService->channel()->add($skuID,10,$channel2);
+        $stockService->sub($skuID,1,ProductStockChangeTypeEnum::SALE,null,true);
+        dd();
+        // 对逻辑库存操作
+        // $stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE, $channel1);
+        // $stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE, $channel1, true);
+        // $stockService->unlock($skuID, 1, ProductStockChangeTypeEnum::SALE, $channel1);
+        // dd();
+        //$stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE, $channel2);
+        //$stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE, $channel2, true);
+        //$stockService->unlock($skuID, 1, ProductStockChangeTypeEnum::SALE, $channel2);
+
+        // 对 实际库存操作
+        //$stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE);
+        //$stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE, null, true);
+        //$stockService->unlock($skuID, 1, ProductStockChangeTypeEnum::SALE);
+        //$stockService->sub($skuID, 72, ProductStockChangeTypeEnum::SELLER);
+        //$stockService->add($skuID, 72, ProductStockChangeTypeEnum::SALE);
+        dd(1);
+        //$stockService->changeStock(ProductStockChangeTypeEnum::SELLER, $skuID, $changeStock);
+        //$channelStock = $stockService->channel()->create($skuID,10,$channel);
+
+        //$result = $stockService->setStock(ProductStockChangeTypeEnum::SELLER, $skuID, 888);
+        // $result = $stockService->add(ProductStockChangeTypeEnum::SELLER, $skuID, rand(1,10));
+
+        dd();
+
+        $result = $stockService->unlock($skuID, 2, ProductStockChangeTypeEnum::SALE);
+        // $result = $stockService->unlock($skuID, 1, ProductStockChangeTypeEnum::SALE);
+        dd($result);
+
         return $this->testCategory();
 
         $product = [
