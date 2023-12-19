@@ -3,12 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use PHPHtmlParser\Dom;
 use PHPHtmlParser\Exceptions\ChildNotFoundException;
 use PHPHtmlParser\Exceptions\CircularException;
@@ -18,6 +13,8 @@ use PHPHtmlParser\Exceptions\StrictException;
 use QL\QueryList;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
+use RedJasmine\Order\Helpers\Products\ProductObject;
+use RedJasmine\Order\OrderService;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
 use RedJasmine\Product\Enums\Product\ShippingTypeEnum;
@@ -59,30 +56,34 @@ class Tests extends Command
 
     }
 
-
-    public function testCategory()
-    {
-
-        $service = \app(ProductCategoryService::class);
-        $service->setOperator(new SystemUser());
-
-        $attributes      = [
-            'parent_id'  => 0,
-            'name'       => '测试',
-            'group_name' => '',
-            'sort'       => 1,
-            'is_leaf'    => 0,
-            'status'     => CategoryStatusEnum::ENABLE,
-            'extends'    => [],
-        ];
-        $ProductCategory = $service->create($attributes);
-        dd($ProductCategory);
-
-
-    }
-
     public function handle()
     {
+        $service = \app(OrderService::class);
+        $service->setOwner(new SystemUser());
+        $service->setOperator(new SystemUser());
+
+        $product = [
+            'shipping_type' => 'card',
+            'product_type'  => 'system',
+            'product_id'    => 1,
+            'sku_id'        => 0,
+            'price'         => '22',
+            'num'           => 66,
+            'title'         => '商品名称',
+            'image'         => '',
+        ];
+
+        $creator = $service->creator();
+
+        $creator->addProduct(new ProductObject($product));
+        $creator->addProduct(new ProductObject($product));
+
+        dd(  $creator->sum());
+    }
+
+    public function handle33()
+    {
+
 
         $service = app(ProductService::class);
         $service->setOperator(new UserObjectBuilder([ 'type' => 'admin', 'uid' => 0 ]));
@@ -103,7 +104,7 @@ class Tests extends Command
         //$stockService->channel()->create($skuID,10,$channel1);
         //$stockService->channel()->create($skuID,10,$channel2);
         //$stockService->channel()->add($skuID,10,$channel2);
-        $stockService->sub($skuID,1,ProductStockChangeTypeEnum::SALE,null,true);
+        $stockService->sub($skuID, 1, ProductStockChangeTypeEnum::SALE, null, true);
         dd();
         // 对逻辑库存操作
         // $stockService->sub($skuID, 2, ProductStockChangeTypeEnum::SALE, $channel1);
@@ -196,6 +197,27 @@ class Tests extends Command
 
     }
 
+    public function testCategory()
+    {
+
+        $service = \app(ProductCategoryService::class);
+        $service->setOperator(new SystemUser());
+
+        $attributes      = [
+            'parent_id'  => 0,
+            'name'       => '测试',
+            'group_name' => '',
+            'sort'       => 1,
+            'is_leaf'    => 0,
+            'status'     => CategoryStatusEnum::ENABLE,
+            'extends'    => [],
+        ];
+        $ProductCategory = $service->create($attributes);
+        dd($ProductCategory);
+
+
+    }
+
     /**
      * Execute the console command.
      */
@@ -223,7 +245,7 @@ class Tests extends Command
                              // 构件商品属性
                              try {
                                  $item_props = json_decode($item->item_props, true);
-                             } catch (\Throwable $throwable) {
+                             } catch (Throwable $throwable) {
                                  $item_props = [];
                              }
                              $item_props_text = '';
@@ -232,7 +254,7 @@ class Tests extends Command
                              }
                              try {
                                  $sku_props = json_decode($item->sku_props, true);
-                             } catch (\Throwable $throwable) {
+                             } catch (Throwable $throwable) {
                                  $sku_props = [];
                              }
                              $sku_props_text = '';
@@ -282,7 +304,7 @@ class Tests extends Command
 
                              try {
                                  $service->create($itemInputs, $owner, $creator);
-                             } catch (\Throwable $throwable) {
+                             } catch (Throwable $throwable) {
                                  dump($item->iid . ';创建失败' . $throwable->getMessage());
 //                                    dump($itemInputs);
 //                                 throw $throwable;
