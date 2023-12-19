@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43306420284c3d7aa07f4e0eebe44584",
+    "content-hash": "0adc743497bf775015852f8ce83aa657",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -4964,7 +4964,7 @@
         },
         {
             "name": "red-jasmine/account-recharge",
-            "version": "dev-master",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/account-recharge",
@@ -5146,7 +5146,7 @@
         },
         {
             "name": "red-jasmine/admin",
-            "version": "dev-master",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/admin",
@@ -5666,6 +5666,71 @@
             }
         },
         {
+            "name": "red-jasmine/order",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/red-jasmine/order",
+                "reference": "8411d5cba9959250529fed65a60907626988a3ee"
+            },
+            "require": {
+                "red-jasmine/support": "1.0.x-dev"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RedJasmine\\Order\\OrderServiceProvider"
+                    ],
+                    "aliases": {
+                        "OrderService": "RedJasmine\\Order\\Facades\\OrderService"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\Order\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RedJasmine\\Order\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liushoukun",
+                    "email": "liushoukun66@gmail.com",
+                    "homepage": "https://github.com/liushoukun"
+                }
+            ],
+            "description": ":package_description",
+            "homepage": "https://github.com/red-jasmine/order",
+            "keywords": [
+                "Laravel",
+                "Order"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "red-jasmine/payment",
             "version": "dev-main",
             "dist": {
@@ -5733,11 +5798,11 @@
         },
         {
             "name": "red-jasmine/product",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/product",
-                "reference": "09648ce12e7a0bec972e21c4c26e85c346d8e415"
+                "reference": "39c87a54451204c266fd360ffbd4ed032716f7a0"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev",
@@ -11508,6 +11573,7 @@
         "red-jasmine/mall-core": 20,
         "red-jasmine/mall-payment": 20,
         "red-jasmine/mall-seller": 20,
+        "red-jasmine/order": 20,
         "red-jasmine/payment": 20,
         "red-jasmine/product": 20,
         "red-jasmine/product-admin": 20,
