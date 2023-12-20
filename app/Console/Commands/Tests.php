@@ -13,6 +13,7 @@ use PHPHtmlParser\Exceptions\StrictException;
 use QL\QueryList;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
+use RedJasmine\Order\Enums\Orders\ShippingTypeEnums;
 use RedJasmine\Order\Helpers\Products\ProductObject;
 use RedJasmine\Order\OrderService;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
@@ -32,6 +33,7 @@ use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
 use RedJasmine\User\Models\User;
 use Spatie\Browsershot\Browsershot;
 use Throwable;
+use function app;
 
 class Tests extends Command
 {
@@ -58,40 +60,46 @@ class Tests extends Command
 
     public function handle()
     {
-        $service = \app(OrderService::class);
+        $service = app(OrderService::class);
         $service->setOwner(new SystemUser());
         $service->setOperator(new SystemUser());
 
         $product  = [
-            'shipping_type' => 'CDK',
-            'product_type'  => 'system',
-            'product_id'    => 1,
-            'sku_id'        => 0,
-            'price'         => '22',
-            'num'           => 2,
-            'title'         => '测试商品2',
-            'image'         => '',
-            'cost_price'    => '18',
+            'shipping_type'   => 'CDK',
+            'product_type'    => 'system',
+            'product_id'      => 1,
+            'sku_id'          => 0,
+            'price'           => '120',
+            'num'             => 1,
+            'title'           => 'A',
+            'image'           => '',
+            'cost_price'      => '18',
+            'tax_amount'      => '12',
+            'discount_amount' => '12',
         ];
         $product2 = [
-            'shipping_type' => 'CDK',
-            'product_type'  => 'system',
-            'product_id'    => 2,
-            'sku_id'        => 0,
-            'price'         => '5',
-            'num'           => 3,
-            'title'         => '测试商品1',
-            'image'         => '',
-            'cost_price'    => '4',
+            'shipping_type'   => 'CDK',
+            'product_type'    => 'system',
+            'product_id'      => 2,
+            'sku_id'          => 0,
+            'price'           => '20',
+            'num'             => 2,
+            'title'           => 'B',
+            'image'           => '',
+            'cost_price'      => '4',
+            'discount_amount' => '4',
         ];
         $creator  = $service->creator();
-
         $creator->setSeller(new SystemUser());
+        $creator->setBuyer(new SystemUser());
+        $creator->setShippingType(ShippingTypeEnums::VIRTUAL);
         $creator->addProduct(new ProductObject($product));
         $creator->addProduct(new ProductObject($product2));
         //$creator->addProduct(new ProductObject($product));
-        $creator->calculate();
-        dd($creator);
+
+
+        dd($creator->create());
+
     }
 
     public function handle33()
@@ -213,7 +221,7 @@ class Tests extends Command
     public function testCategory()
     {
 
-        $service = \app(ProductCategoryService::class);
+        $service = app(ProductCategoryService::class);
         $service->setOperator(new SystemUser());
 
         $attributes      = [
