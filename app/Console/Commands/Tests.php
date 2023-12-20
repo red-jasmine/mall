@@ -62,23 +62,36 @@ class Tests extends Command
         $service->setOwner(new SystemUser());
         $service->setOperator(new SystemUser());
 
-        $product = [
-            'shipping_type' => 'card',
+        $product  = [
+            'shipping_type' => 'CDK',
             'product_type'  => 'system',
             'product_id'    => 1,
             'sku_id'        => 0,
             'price'         => '22',
-            'num'           => 66,
-            'title'         => '商品名称',
+            'num'           => 2,
+            'title'         => '测试商品2',
             'image'         => '',
+            'cost_price'    => '18',
         ];
+        $product2 = [
+            'shipping_type' => 'CDK',
+            'product_type'  => 'system',
+            'product_id'    => 2,
+            'sku_id'        => 0,
+            'price'         => '5',
+            'num'           => 3,
+            'title'         => '测试商品1',
+            'image'         => '',
+            'cost_price'    => '4',
+        ];
+        $creator  = $service->creator();
 
-        $creator = $service->creator();
-
+        $creator->setSeller(new SystemUser());
         $creator->addProduct(new ProductObject($product));
-        $creator->addProduct(new ProductObject($product));
-
-        dd(  $creator->sum());
+        $creator->addProduct(new ProductObject($product2));
+        //$creator->addProduct(new ProductObject($product));
+        $creator->calculate();
+        dd($creator);
     }
 
     public function handle33()
