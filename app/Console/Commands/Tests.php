@@ -93,12 +93,10 @@ class Tests extends Command
         $creator->setSeller(new SystemUser());
         $creator->setBuyer(new SystemUser());
         $creator->setShippingType(ShippingTypeEnums::VIRTUAL);
+
         $creator->addProduct(new ProductObject($product));
         $creator->addProduct(new ProductObject($product2));
-        //$creator->addProduct(new ProductObject($product));
-
-
-        dd($creator->create());
+        dd($creator->create()->toArray());
 
     }
 
