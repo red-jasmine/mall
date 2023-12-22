@@ -15,6 +15,7 @@ use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnums;
 use RedJasmine\Order\Helpers\Products\ProductObject;
+use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
@@ -64,19 +65,9 @@ class Tests extends Command
         $service->setOwner(new SystemUser());
         $service->setOperator(new SystemUser());
 
-        $product  = [
-            'shipping_type'   => 'CDK',
-            'product_type'    => 'system',
-            'product_id'      => 1,
-            'sku_id'          => 0,
-            'price'           => '120',
-            'num'             => 1,
-            'title'           => 'A',
-            'image'           => '',
-            'cost_price'      => '18',
-            'tax_amount'      => '12',
-            'discount_amount' => '12',
-        ];
+
+
+
         $product2 = [
             'shipping_type'   => 'CDK',
             'product_type'    => 'system',
@@ -89,14 +80,31 @@ class Tests extends Command
             'cost_price'      => '4',
             'discount_amount' => '4',
         ];
-        $creator  = $service->creator();
+
+
+        $creator = $service->creator();
+        $product = [
+            'shipping_type'   => 'CDK',
+            'product_type'    => 'system',
+            'product_id'      => 1,
+            'sku_id'          => 0,
+            'price'           => '120',
+            'num'             => 1,
+            'title'           => 'A',
+            'image'           => '',
+            'cost_price'      => '18',
+            'tax_amount'      => '12',
+            'discount_amount' => '12',
+        ];
+
+        $product =  OrderProduct::make($product);
+        dd($product);
         $creator->setSeller(new SystemUser());
         $creator->setBuyer(new SystemUser());
         $creator->setShippingType(ShippingTypeEnums::VIRTUAL);
-
         $creator->addProduct(new ProductObject($product));
         $creator->addProduct(new ProductObject($product2));
-        dd($creator->create()->toArray());
+        dd($creator->calculate()->getOrder()->toArray());
 
     }
 
