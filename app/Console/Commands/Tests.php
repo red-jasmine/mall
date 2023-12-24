@@ -66,8 +66,6 @@ class Tests extends Command
         $service->setOperator(new SystemUser());
 
 
-
-
         $product2 = [
             'shipping_type'   => 'CDK',
             'product_type'    => 'system',
@@ -96,15 +94,19 @@ class Tests extends Command
             'tax_amount'      => '12',
             'discount_amount' => '12',
         ];
+        //$product = \RedJasmine\Order\ValueObjects\OrderProduct::make($product);
 
-        $product =  OrderProduct::make($product);
-        dd($product);
+        $product  = OrderProduct::make($product);
+
+
+        $product2 = OrderProduct::make($product2);
+
         $creator->setSeller(new SystemUser());
         $creator->setBuyer(new SystemUser());
         $creator->setShippingType(ShippingTypeEnums::VIRTUAL);
-        $creator->addProduct(new ProductObject($product));
-        $creator->addProduct(new ProductObject($product2));
-        dd($creator->calculate()->getOrder()->toArray());
+        $creator->addProduct($product);
+        $creator->addProduct($product2);
+        dd($creator->calculate()->getOrder()->toJson());
 
     }
 
