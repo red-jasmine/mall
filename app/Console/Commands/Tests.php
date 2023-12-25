@@ -17,6 +17,8 @@ use RedJasmine\Order\Enums\Orders\ShippingTypeEnums;
 use RedJasmine\Order\Helpers\Products\ProductObject;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
+use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
+use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
 use RedJasmine\Product\Enums\Product\ShippingTypeEnum;
@@ -67,16 +69,22 @@ class Tests extends Command
 
 
         $product2 = [
-            'shipping_type'   => 'CDK',
-            'product_type'    => 'system',
-            'product_id'      => 2,
-            'sku_id'          => 0,
-            'price'           => '20',
-            'num'             => 2,
-            'title'           => 'B',
-            'image'           => '',
-            'cost_price'      => '4',
-            'discount_amount' => '4',
+            'shipping_type'     => 'CDK',
+            'product_type'      => 'system',
+            'product_id'        => 2,
+            'sku_id'            => 0,
+            'price'             => '20',
+            'num'               => 2,
+            'title'             => 'B',
+            'image'             => '',
+            'cost_price'        => '4',
+            'discount_amount'   => '4',
+            'tools'             => [
+                'form' => [ 'a' => 1 ]
+            ],
+            'DiscountBreakdown' => [
+                [ 'name' => '满20减10' ],
+            ],
         ];
 
 
@@ -95,18 +103,17 @@ class Tests extends Command
             'discount_amount' => '12',
         ];
         //$product = \RedJasmine\Order\ValueObjects\OrderProduct::make($product);
-
-        $product  = OrderProduct::make($product);
-
-
-        $product2 = OrderProduct::make($product2);
+        $product  = OrderProduct::build($product);
+        $product2 = OrderProduct::build($product2);
 
         $creator->setSeller(new SystemUser());
         $creator->setBuyer(new SystemUser());
         $creator->setShippingType(ShippingTypeEnums::VIRTUAL);
-        $creator->addProduct($product);
+        // $creator->addProduct($product);
         $creator->addProduct($product2);
-        dd($creator->calculate()->getOrder()->toJson());
+
+        $creator->addProductPipelines(ProductCategoryApplying::class);
+        dd($creator->create());
 
     }
 
