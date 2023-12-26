@@ -13,6 +13,9 @@ use PHPHtmlParser\Exceptions\StrictException;
 use QL\QueryList;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
+use RedJasmine\Order\Enums\Orders\OrderStatusEnums;
+use RedJasmine\Order\Enums\Orders\OrderTypeEnums;
+use RedJasmine\Order\Enums\Orders\PaymentStatusEnums;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnums;
 use RedJasmine\Order\Helpers\Products\ProductObject;
 use RedJasmine\Order\Models\OrderProduct;
@@ -64,7 +67,6 @@ class Tests extends Command
     public function handle()
     {
         $service = app(OrderService::class);
-        $service->setOwner(new SystemUser());
         $service->setOperator(new SystemUser());
 
 
@@ -85,6 +87,11 @@ class Tests extends Command
             'DiscountBreakdown' => [
                 [ 'name' => '满20减10' ],
             ],
+            //'category_id'       => 377942835138326
+            'info'              => [
+                'seller_remarks' => '卖家备注'
+            ],
+
         ];
 
 
@@ -102,18 +109,52 @@ class Tests extends Command
             'tax_amount'      => '12',
             'discount_amount' => '12',
         ];
-        //$product = \RedJasmine\Order\ValueObjects\OrderProduct::make($product);
-        $product  = OrderProduct::build($product);
-        $product2 = OrderProduct::build($product2);
+
+        $order = [
+            'order_type'      => OrderTypeEnums::MALL->value,
+            'shipping_type'   => ShippingTypeEnums::VIRTUAL->value,
+            'order_status'    => OrderStatusEnums::WAIT_BUYER_PAY->value,
+            'payment_status'  => PaymentStatusEnums::WAIT_PAY->value,
+            'shipping_status' => null,
+            'refund_status'   => null,
+            'rate_status'     => null,
+            'freight_amount'  => 0,
+            'discount_amount' => 0,
+            'client_type'     => 'Console',
+            'client_ip'       => request()->getClientIp(),
+            'channel_type'    => null,
+            'channel_id'      => null,
+            'store_type'      => null,
+            'store_id'        => null,
+            'guide_type'      => null,
+            'guide_id'        => null,
+            'email'           => null,
+            'password'        => null,
+            'info'            => [
+                'seller_remarks' => null,
+                'seller_message' => null,
+                'buyer_remarks'  => null,
+                'buyer_message'  => null,
+                'seller_extends' => null,
+                'other_extends'  => null,
+            ]
+        ];
+
+        $productModel  = OrderProduct::makeParameters($product);
+        $product2Model = OrderProduct::makeParameters($product2);
 
         $creator->setSeller(new SystemUser());
         $creator->setBuyer(new SystemUser());
-        $creator->setShippingType(ShippingTypeEnums::VIRTUAL);
-        // $creator->addProduct($product);
-        $creator->addProduct($product2);
+        $creator->addProduct($productModel);
+        $creator->addProduct($product2Model);
 
-        $creator->addProductPipelines(ProductCategoryApplying::class);
-        dd($creator->create());
+        // 设置订单参数
+        $creator->setOrderParameters($order);
+
+        // 添加应用管道
+        // /$creator->addInitPipelines();
+
+        dd($creator->create()->toArray());
 
     }
 
