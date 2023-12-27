@@ -147,7 +147,6 @@ class Tests extends Command
         $creator->setBuyer(new SystemUser());
         $creator->addProduct($productModel);
         $creator->addProduct($product2Model);
-
         // 设置订单参数
         $creator->setOrderParameters($order);
 
