@@ -18,6 +18,7 @@ use RedJasmine\Order\Enums\Orders\OrderTypeEnums;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnums;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnums;
 use RedJasmine\Order\Helpers\Products\ProductObject;
+use RedJasmine\Order\Models\OrderAddress;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
@@ -131,13 +132,14 @@ class Tests extends Command
             'email'           => null,
             'password'        => null,
             'info'            => [
-                'seller_remarks' => null,
-                'seller_message' => null,
-                'buyer_remarks'  => null,
-                'buyer_message'  => null,
-                'seller_extends' => null,
+                'seller_remarks' => '订单卖家备注-买家不可见',
+                'seller_message' => '订单卖家留言-买家可见',
+                'buyer_remarks'  => '订单买家备注-卖家不可见',
+                'buyer_message'  => '订单买家留言-卖家可见',
+                'seller_extends' => '{"json":"1"}',
                 'other_extends'  => null,
-            ]
+            ],
+            'address'         => OrderAddress::make([]),
         ];
 
         $productModel  = OrderProduct::makeParameters($product);
@@ -145,15 +147,17 @@ class Tests extends Command
 
         $creator->setSeller(new SystemUser());
         $creator->setBuyer(new SystemUser());
-        $creator->addProduct($productModel);
-        $creator->addProduct($product2Model);
         // 设置订单参数
         $creator->setOrderParameters($order);
 
+        $creator->addProduct($productModel);
+        $creator->addProduct($product2Model);
+
+        //$creator->setAddress(OrderAddress::make([]));
         // 添加应用管道
         // /$creator->addInitPipelines();
 
-        dd($creator->create()->toArray());
+        dd($creator->create());
 
     }
 
