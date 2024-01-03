@@ -11,13 +11,14 @@ use PHPHtmlParser\Exceptions\CurlException;
 use PHPHtmlParser\Exceptions\NotLoadedException;
 use PHPHtmlParser\Exceptions\StrictException;
 use QL\QueryList;
+use RedJasmine\Address\Address;
+use RedJasmine\Address\Models\Address as AddressModel;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
-use RedJasmine\Order\Enums\Orders\OrderStatusEnums;
-use RedJasmine\Order\Enums\Orders\OrderTypeEnums;
-use RedJasmine\Order\Enums\Orders\PaymentStatusEnums;
-use RedJasmine\Order\Enums\Orders\ShippingTypeEnums;
-use RedJasmine\Order\Helpers\Products\ProductObject;
+use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
+use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
+use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
+use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
 use RedJasmine\Order\Models\OrderAddress;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
@@ -25,7 +26,6 @@ use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
 use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
-use RedJasmine\Product\Enums\Product\ShippingTypeEnum;
 use RedJasmine\Product\Enums\Stock\ProductStockChangeTypeEnum;
 use RedJasmine\Product\Services\Category\ProductCategoryService;
 use RedJasmine\Product\Services\Product\ProductService;
@@ -111,11 +111,13 @@ class Tests extends Command
             'discount_amount' => '12',
         ];
 
+        $address = AddressModel::find(1);
+
         $order = [
-            'order_type'      => OrderTypeEnums::MALL->value,
-            'shipping_type'   => ShippingTypeEnums::VIRTUAL->value,
-            'order_status'    => OrderStatusEnums::WAIT_BUYER_PAY->value,
-            'payment_status'  => PaymentStatusEnums::WAIT_PAY->value,
+            'order_type'      => OrderTypeEnum::MALL->value,
+            'shipping_type'   => ShippingTypeEnum::VIRTUAL->value,
+            'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
+            'payment_status'  => PaymentStatusEnum::WAIT_PAY->value,
             'shipping_status' => null,
             'refund_status'   => null,
             'rate_status'     => null,
@@ -139,7 +141,7 @@ class Tests extends Command
                 'seller_extends' => '{"json":"1"}',
                 'other_extends'  => null,
             ],
-            'address'         => OrderAddress::make([]),
+            'address'         => $address->toArray(),
         ];
 
         $productModel  = OrderProduct::makeParameters($product);
@@ -153,11 +155,11 @@ class Tests extends Command
         $creator->addProduct($productModel);
         $creator->addProduct($product2Model);
 
-        //$creator->setAddress(OrderAddress::make([]));
+
         // 添加应用管道
         // /$creator->addInitPipelines();
 
-        dd($creator->create());
+        dd($creator->create()->toArray());
 
     }
 
