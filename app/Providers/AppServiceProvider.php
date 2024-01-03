@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Date::serializeUsing(function ($date) {
+            return $date->format('Y-m-d H:i:s');
+        });
     }
 }

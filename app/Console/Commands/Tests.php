@@ -148,7 +148,7 @@ class Tests extends Command
         $product2Model = OrderProduct::makeParameters($product2);
 
         $creator->setSeller(new SystemUser());
-        $creator->setBuyer(new SystemUser());
+        $creator->setBuyer(User::find(383142919024923));
         // 设置订单参数
         $creator->setOrderParameters($order);
 

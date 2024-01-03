@@ -9,7 +9,7 @@ return [
      * You can customize these query string parameters here.
      */
     'parameters' => [
-        'include' => 'include',
+        'include' => 'includes',
 
         'filter' => null,
 
