@@ -22,6 +22,7 @@ use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
 use RedJasmine\Order\Models\OrderAddress;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
+use RedJasmine\Order\Services\Orders\Actions\OrderPayAction;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
 use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
@@ -70,6 +71,7 @@ class Tests extends Command
         $service = app(OrderService::class);
         $service->setOperator(new SystemUser());
 
+        $service->pay(1)->pay();
 
         $product2 = [
             'shipping_type'     => 'CDK',
