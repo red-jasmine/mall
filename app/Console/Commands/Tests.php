@@ -3,15 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use PHPHtmlParser\Dom;
-use PHPHtmlParser\Exceptions\ChildNotFoundException;
-use PHPHtmlParser\Exceptions\CircularException;
-use PHPHtmlParser\Exceptions\CurlException;
-use PHPHtmlParser\Exceptions\NotLoadedException;
-use PHPHtmlParser\Exceptions\StrictException;
 use QL\QueryList;
-use RedJasmine\Address\Address;
 use RedJasmine\Address\Models\Address as AddressModel;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
@@ -19,7 +13,6 @@ use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
-use RedJasmine\Order\Models\OrderAddress;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
 use RedJasmine\Order\Services\Orders\Actions\OrderPayAction;
@@ -33,8 +26,8 @@ use RedJasmine\Product\Services\Product\ProductService;
 use RedJasmine\Product\Services\Product\ProductStock;
 use RedJasmine\Product\Services\Product\Stock\StockChannelObject;
 use RedJasmine\Product\Services\Product\Stock\StockChanneObject;
-use RedJasmine\Support\Helpers\UserObjectBuilder;
-use RedJasmine\Support\Services\SystemUser;
+use RedJasmine\Support\Helpers\User\SystemUser;
+use RedJasmine\Support\Helpers\User\UserObject;
 use RedJasmine\Trade\Helpers\Trade;
 use RedJasmine\Trade\Services\TradeCreate;
 use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
@@ -68,10 +61,16 @@ class Tests extends Command
 
     public function handle()
     {
-        $service = app(OrderService::class);
-        $service->setOperator(new SystemUser());
 
-        $service->pay(1)->pay();
+
+        $service = app(OrderService::class);
+        $service->setOperator(new SystemUser(2));
+
+        $service::extends('pay', OrderPayAction::class);
+        $result = $service->pay(390698022165289);
+
+        dd($result);
+
 
         $product2 = [
             'shipping_type'     => 'CDK',
@@ -146,10 +145,10 @@ class Tests extends Command
             'address'         => $address->toArray(),
         ];
 
-        $productModel  = OrderProduct::makeParameters($product);
-        $product2Model = OrderProduct::makeParameters($product2);
+        $productModel  = OrderProduct::transferFrom($product);
+        $product2Model = OrderProduct::transferFrom($product2);
 
-        $creator->setSeller(new SystemUser());
+        $creator->setSeller(new SystemUser(222));
         $creator->setBuyer(User::find(383142919024923));
         // 设置订单参数
         $creator->setOrderParameters($order);
@@ -170,7 +169,7 @@ class Tests extends Command
 
 
         $service = app(ProductService::class);
-        $service->setOperator(new UserObjectBuilder([ 'type' => 'admin', 'uid' => 0 ]));
+        $service->setOperator(new UserObject([ 'type' => 'admin', 'uid' => 0 ]));
 
         $changeStock = rand(-100, 100);
         $changeStock = 200;
