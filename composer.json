@@ -26,7 +26,7 @@
         "red-jasmine/mall-core": "1.0.x-dev",
         "red-jasmine/mall-payment": "1.0.x-dev",
         "red-jasmine/mall-seller": "1.0.x-dev",
-        "red-jasmine/order": "@dev",
+        "red-jasmine/order": "^1.0@dev",
         "red-jasmine/payment": "1.0.x-dev",
         "red-jasmine/product": "1.0.x-dev",
         "red-jasmine/product-admin": "1.0.x-dev",

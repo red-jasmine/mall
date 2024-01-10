@@ -3,20 +3,20 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use QL\QueryList;
 use RedJasmine\Address\Models\Address as AddressModel;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
+use RedJasmine\Order\DataTransferObjects\OrderData;
 use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
 use RedJasmine\Order\Models\OrderProduct;
-use RedJasmine\Order\OrderService;
 use RedJasmine\Order\Services\Orders\Actions\OrderPayingAction;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
+use RedJasmine\Order\Services\OrderService;
 use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
@@ -26,6 +26,8 @@ use RedJasmine\Product\Services\Product\ProductService;
 use RedJasmine\Product\Services\Product\ProductStock;
 use RedJasmine\Product\Services\Product\Stock\StockChannelObject;
 use RedJasmine\Product\Services\Product\Stock\StockChanneObject;
+use RedJasmine\Support\DataTransferObjects\SystemUserData;
+use RedJasmine\Support\DataTransferObjects\UserData;
 use RedJasmine\Support\Helpers\User\SystemUser;
 use RedJasmine\Support\Helpers\User\UserObject;
 use RedJasmine\Trade\Helpers\Trade;
@@ -34,7 +36,6 @@ use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
 use RedJasmine\User\Models\User;
 use Spatie\Browsershot\Browsershot;
 use Throwable;
-use function app;
 
 class Tests extends Command
 {
@@ -63,13 +64,17 @@ class Tests extends Command
     {
 
 
+        $result = OrderData::from([
+                                      'seller'        => UserData::fromUserInterface(User::find(383142919024923)),
+                                      'shipping_type' => ShippingTypeEnum::VIRTUAL->value,
+                                      'buyer'         => new SystemUserData(nickname: '系统2')
+                                  ]);
+        dd($result->toArray());
+
         $service = app(OrderService::class);
         $service->setOperator(new SystemUser(2));
-
         //$service::extends('paying', OrderPayingAction::class);
-        $result = $service->paying()->paying(390854719831209);
-        dd($result);
-
+        $service->create->execute();
 
         $product2 = [
             'shipping_type'     => 'CDK',
@@ -96,7 +101,6 @@ class Tests extends Command
         ];
 
 
-        $creator = $service->creator();
         $product = [
             'shipping_type'   => 'CDK',
             'product_type'    => 'system',
@@ -147,19 +151,14 @@ class Tests extends Command
         $productModel  = OrderProduct::transferFrom($product);
         $product2Model = OrderProduct::transferFrom($product2);
 
-        $creator->setSeller(new SystemUser(222));
-        $creator->setBuyer(User::find(383142919024923));
-        // 设置订单参数
-        $creator->setOrderParameters($order);
 
-        $creator->addProduct($productModel);
-        $creator->addProduct($product2Model);
-
-
+        $seller = new SystemUser(222);
+        $buyer  = User::find(383142919024923);
+        $result = $service->create($seller, $buyer, $order, collect([ $productModel, $product2Model ]));
+        dd($result->toArray());
         // 添加应用管道
         // /$creator->addInitPipelines();
 
-        dd($creator->create()->toArray());
 
     }
 
