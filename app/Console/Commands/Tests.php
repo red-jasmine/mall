@@ -15,7 +15,7 @@ use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\OrderService;
-use RedJasmine\Order\Services\Orders\Actions\OrderPayAction;
+use RedJasmine\Order\Services\Orders\Actions\OrderPayingAction;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
 use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
@@ -66,9 +66,8 @@ class Tests extends Command
         $service = app(OrderService::class);
         $service->setOperator(new SystemUser(2));
 
-        $service::extends('pay', OrderPayAction::class);
-        $result = $service->pay(390698022165289);
-
+        //$service::extends('paying', OrderPayingAction::class);
+        $result = $service->paying()->paying(390854719831209);
         dd($result);
 
 
@@ -142,7 +141,7 @@ class Tests extends Command
                 'seller_extends' => '{"json":"1"}',
                 'other_extends'  => null,
             ],
-            'address'         => $address->toArray(),
+            'address'         => $address?->toArray(),
         ];
 
         $productModel  = OrderProduct::transferFrom($product);
