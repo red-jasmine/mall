@@ -8,7 +8,9 @@ use QL\QueryList;
 use RedJasmine\Address\Models\Address as AddressModel;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
-use RedJasmine\Order\DataTransferObjects\OrderData;
+use RedJasmine\Order\DataTransferObjects\DataPipeline;
+use RedJasmine\Order\DataTransferObjects\OrderDTO;
+use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
 use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
@@ -61,21 +63,97 @@ class Tests extends Command
     }
 
     public function handle()
-    {
+    {     $product2 = [
+        'shipping_type'     => 'CDK',
+        'product_type'      => 'system',
+        'product_id'        => 2,
+        'sku_id'            => 0,
+        'price'             => '20',
+        'num'               => 2,
+        'title'             => 'B',
+        'image'             => '',
+        'cost_price'        => '4',
+        'discount_amount'   => '4',
+        'tools'             => [
+            'form' => [ 'a' => 1 ]
+        ],
+        'DiscountBreakdown' => [
+            [ 'name' => '满20减10' ],
+        ],
+        //'category_id'       => 377942835138326
+        'info'              => [
+            'seller_remarks' => '卖家备注'
+        ],
+
+    ];
 
 
-        $result = OrderData::from([
-                                      'seller'        => UserData::fromUserInterface(User::find(383142919024923)),
-                                      'shipping_type' => ShippingTypeEnum::VIRTUAL->value,
-                                      'buyer'         => new SystemUserData(nickname: '系统2')
-                                  ]);
-        dd($result->toArray());
+        $product = [
+            'shipping_type'   => 'CDK',
+            'product_type'    => 'system',
+            'product_id'      => 1,
+            'sku_id'          => 0,
+            'price'           => '120',
+            'num'             => 1,
+            'title'           => 'A',
+            'image'           => '',
+            'cost_price'      => '18',
+            'tax_amount'      => '12',
+            'discount_amount' => '12',
+        ];
+
+        $address = AddressModel::find(1);
+        // OrderData::extendPipeline(DataPipeline::class);
+        $order    = [
+            'title'           => '标题',
+            'seller'          => UserData::fromUserInterface(User::find(383142919024923)),
+            'buyer'           => new SystemUserData(nickname: '系统2'),
+            'order_type'      => OrderTypeEnum::MALL->value,
+            'shipping_type'   => ShippingTypeEnum::VIRTUAL->value,
+            'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
+            'payment_status'  => PaymentStatusEnum::WAIT_PAY->value,
+            //'shipping_status' => null,
+            //'refund_status'   => null,
+            //'rate_status'     => null,
+            'freight_amount'  => 0,
+            'discount_amount' => 0,
+            'client_type'     => 'Console',
+            'client_ip'       => request()->getClientIp(),
+            'channel_type'    => null,
+            'channel_id'      => null,
+            'store_type'      => null,
+            'store_id'        => null,
+            'guide_type'      => null,
+            'guide_id'        => null,
+            'email'           => null,
+            'password'        => null,
+            'info'            => [
+                'seller_remarks' => '订单卖家备注-买家不可见',
+                'seller_message' => '订单卖家留言-买家可见',
+                'buyer_remarks'  => '订单买家备注-卖家不可见',
+                'buyer_message'  => '订单买家留言-卖家可见',
+                'seller_extends' => [ 'json' => 1 ],
+                'other_extends'  => null,
+            ],
+            'address'         => $address?->toArray(),
+            'extends'         => [
+                'test' => 1,
+            ],
+            'products'=>[
+                $product
+
+            ],
+        ];
+        $orderDTO = OrderDTO::from($order);
+        dd((array)($orderDTO->toArray()));
+        ///$orderDTO->store = UserData::from([ 'type' => 'store', 'id' => 1 ]);
+
 
         $service = app(OrderService::class);
         $service->setOperator(new SystemUser(2));
         //$service::extends('paying', OrderPayingAction::class);
-        $service->create->execute();
-
+        $service->create->executeV2($orderDTO);
+        dd(1);
         $product2 = [
             'shipping_type'     => 'CDK',
             'product_type'      => 'system',
@@ -115,7 +193,6 @@ class Tests extends Command
             'discount_amount' => '12',
         ];
 
-        $address = AddressModel::find(1);
 
         $order = [
             'order_type'      => OrderTypeEnum::MALL->value,
