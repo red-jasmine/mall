@@ -16,6 +16,7 @@ use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
 use RedJasmine\Order\Models\OrderProduct;
+use RedJasmine\Order\Pipelines\OrderTestPipeline;
 use RedJasmine\Order\Services\Orders\Actions\OrderPayingAction;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
 use RedJasmine\Order\Services\OrderService;
@@ -63,29 +64,30 @@ class Tests extends Command
     }
 
     public function handle()
-    {     $product2 = [
-        'shipping_type'     => 'CDK',
-        'product_type'      => 'system',
-        'product_id'        => 2,
-        'sku_id'            => 0,
-        'price'             => '20',
-        'num'               => 2,
-        'title'             => 'B',
-        'image'             => '',
-        'cost_price'        => '4',
-        'discount_amount'   => '4',
-        'tools'             => [
-            'form' => [ 'a' => 1 ]
-        ],
-        'DiscountBreakdown' => [
-            [ 'name' => '满20减10' ],
-        ],
-        //'category_id'       => 377942835138326
-        'info'              => [
-            'seller_remarks' => '卖家备注'
-        ],
+    {
+        $product2 = [
+            'shipping_type'     => 'CDK',
+            'product_type'      => 'system',
+            'product_id'        => 2,
+            'sku_id'            => 0,
+            'price'             => '20',
+            'num'               => 2,
+            'title'             => 'B',
+            'image'             => '',
+            'cost_price'        => '4',
+            'discount_amount'   => '4',
+            'tools'             => [
+                'form' => [ 'a' => 1 ]
+            ],
+            'DiscountBreakdown' => [
+                [ 'name' => '满20减10' ],
+            ],
+            //'category_id'       => 377942835138326
+            'info'              => [
+                'seller_remarks' => '卖家备注'
+            ],
 
-    ];
+        ];
 
 
         $product = [
@@ -136,24 +138,25 @@ class Tests extends Command
                 'other_extends'  => null,
             ],
             'address'         => $address?->toArray(),
-            'extends'         => [
+            'parameters'      => [
                 'test' => 1,
             ],
-            'products'=>[
+            'products'        => [
                 $product
 
             ],
         ];
         $orderDTO = OrderDTO::from($order);
-        dd((array)($orderDTO->toArray()));
+
         ///$orderDTO->store = UserData::from([ 'type' => 'store', 'id' => 1 ]);
 
 
         $service = app(OrderService::class);
         $service->setOperator(new SystemUser(2));
         //$service::extends('paying', OrderPayingAction::class);
-        $service->create->executeV2($orderDTO);
-        dd(1);
+
+        $order = $service->create($orderDTO);
+        dd($order);
         $product2 = [
             'shipping_type'     => 'CDK',
             'product_type'      => 'system',
