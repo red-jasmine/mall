@@ -29,8 +29,8 @@ use RedJasmine\Product\Services\Product\ProductService;
 use RedJasmine\Product\Services\Product\ProductStock;
 use RedJasmine\Product\Services\Product\Stock\StockChannelObject;
 use RedJasmine\Product\Services\Product\Stock\StockChanneObject;
-use RedJasmine\Support\DataTransferObjects\SystemUserData;
-use RedJasmine\Support\DataTransferObjects\UserData;
+use RedJasmine\Support\DataTransferObjects\SystemUserDTO;
+use RedJasmine\Support\DataTransferObjects\UserDTO;
 use RedJasmine\Support\Helpers\User\SystemUser;
 use RedJasmine\Support\Helpers\User\UserObject;
 use RedJasmine\Trade\Helpers\Trade;
@@ -108,8 +108,8 @@ class Tests extends Command
         // OrderData::extendPipeline(DataPipeline::class);
         $order    = [
             'title'           => '标题',
-            'seller'          => UserData::fromUserInterface(User::find(383142919024923)),
-            'buyer'           => new SystemUserData(nickname: '系统2'),
+            'seller'          => UserDTO::fromUserInterface(User::find(383142919024923)),
+            'buyer'           => new SystemUserDTO(nickname: '系统2'),
             'order_type'      => OrderTypeEnum::MALL->value,
             'shipping_type'   => ShippingTypeEnum::VIRTUAL->value,
             'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
