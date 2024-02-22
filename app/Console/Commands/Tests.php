@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Dflydev\DotAccessData\Data;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use QL\QueryList;
@@ -12,6 +13,9 @@ use RedJasmine\Order\DataTransferObjects\DataPipeline;
 use RedJasmine\Order\DataTransferObjects\OrderDTO;
 use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
 use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
+use RedJasmine\Order\DataTransferObjects\Shipping\OrderCardKeyShippingDTO;
+use RedJasmine\Order\DataTransferObjects\Shipping\OrderLogisticsShippingDTO;
+use RedJasmine\Order\DataTransferObjects\Shipping\OrderShippingDTO;
 use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
@@ -70,7 +74,7 @@ class Tests extends Command
 
         $product  = [
             'order_product_type' => 'virtual',
-            'shipping_type'      => ShippingTypeEnum::VIRTUAL->value,
+            'shipping_type'      => ShippingTypeEnum::CDK->value,
             'product_type'       => 'system',
             'product_id'         => 1,
             'sku_id'             => 0,
@@ -84,7 +88,7 @@ class Tests extends Command
         ];
         $product2 = [
             'order_product_type' => 'virtual',
-            'shipping_type'      => ShippingTypeEnum::VIRTUAL->value,
+            'shipping_type'      => ShippingTypeEnum::CDK->value,
             'product_type'       => 'system',
             'product_id'         => 12,
             'sku_id'             => 0,
@@ -104,7 +108,7 @@ class Tests extends Command
             'seller'          => UserDTO::fromUserInterface(User::find(383142919024923)),
             'buyer'           => new SystemUserDTO(nickname: '系统2'),
             'order_type'      => OrderTypeEnum::MALL->value,
-            'shipping_type'   => ShippingTypeEnum::VIRTUAL->value,
+            'shipping_type'   => ShippingTypeEnum::CDK->value,
             'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
             'payment_status'  => PaymentStatusEnum::WAIT_PAY->value,
             //'shipping_status' => null,
@@ -148,11 +152,11 @@ class Tests extends Command
         $service->setOperator(new SystemUser(2));
         //$service::extends('paying', OrderPayingAction::class);
 
-        $order = $service->create($orderDTO);
-
-        $id = $order->id;
-        $service->paying($id);
-        //
+        //$order = $service->create($orderDTO);
+        //$id = $order->id;
+        $id = 406259700040732;
+        //$service->paying($id);
+        // //
         $OrderPaidInfoDTO = OrderPaidInfoDTO::from([
                                                        'paymentTime'    => now(),
                                                        'paymentType'    => 'payment',
@@ -160,10 +164,31 @@ class Tests extends Command
                                                        'paymentChannel' => 'alipay'
                                                    ]);
 
-        $service->paid($id, $OrderPaidInfoDTO);
+        //$service->paid($id, $OrderPaidInfoDTO);
 
 
-        $service->virtualShipping($id,true);
+        //$OrderShippingDTO = OrderShippingDTO::from([ 'isSplit' => false ]);
+        //$service->virtualShipping($id, $OrderShippingDTO);
+
+        // $OrderLogisticsShippingDTO = OrderLogisticsShippingDTO::from([
+        //                                                                  'isSplit'            => true,
+        //                                                                  'expressCompanyCode' => 'POST',
+        //                                                                  'expressNo'          => '123123',
+        //                                                                  'orderProducts'      => [ 406252832028176, 406252832028177 ]
+        //                                                              ]);
+        //
+        //
+        // $service->logisticsShipping($id, $OrderLogisticsShippingDTO);
+
+
+        $OrderLogisticsShippingDTO = OrderCardKeyShippingDTO::from([
+                                                                       'isSplit'       => true,
+                                                                       'orderProducts' => [ 406259700040734 ],
+                                                                       'cardKey'       => 'asdasdadasdsa',
+                                                                   ]);
+
+
+        $service->cardKeyShipping($id, $OrderLogisticsShippingDTO);
         dd(1);
 
 
