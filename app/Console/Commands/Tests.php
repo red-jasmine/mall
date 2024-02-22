@@ -10,6 +10,7 @@ use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
 use RedJasmine\Order\DataTransferObjects\DataPipeline;
 use RedJasmine\Order\DataTransferObjects\OrderDTO;
+use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
 use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
 use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
@@ -57,51 +58,43 @@ class Tests extends Command
     protected $description = 'Command description';
 
 
-    public function tradeHandle()
+    public function handle()
     {
+        $this->testOrder();
 
 
     }
 
-    public function handle()
+    public function testOrder()
     {
-        $product2 = [
-            'shipping_type'     => 'CDK',
-            'product_type'      => 'system',
-            'product_id'        => 2,
-            'sku_id'            => 0,
-            'price'             => '20',
-            'num'               => 2,
-            'title'             => 'B',
-            'image'             => '',
-            'cost_price'        => '4',
-            'discount_amount'   => '4',
-            'tools'             => [
-                'form' => [ 'a' => 1 ]
-            ],
-            'DiscountBreakdown' => [
-                [ 'name' => '满20减10' ],
-            ],
-            //'category_id'       => 377942835138326
-            'info'              => [
-                'seller_remarks' => '卖家备注'
-            ],
 
+        $product  = [
+            'order_product_type' => 'virtual',
+            'shipping_type'      => ShippingTypeEnum::VIRTUAL->value,
+            'product_type'       => 'system',
+            'product_id'         => 1,
+            'sku_id'             => 0,
+            'price'              => '120',
+            'num'                => 1,
+            'title'              => 'A',
+            'image'              => '',
+            'cost_price'         => '18',
+            'tax_amount'         => '12',
+            'discount_amount'    => '12',
         ];
-
-
-        $product = [
-            'shipping_type'   => 'CDK',
-            'product_type'    => 'system',
-            'product_id'      => 1,
-            'sku_id'          => 0,
-            'price'           => '120',
-            'num'             => 1,
-            'title'           => 'A',
-            'image'           => '',
-            'cost_price'      => '18',
-            'tax_amount'      => '12',
-            'discount_amount' => '12',
+        $product2 = [
+            'order_product_type' => 'virtual',
+            'shipping_type'      => ShippingTypeEnum::VIRTUAL->value,
+            'product_type'       => 'system',
+            'product_id'         => 12,
+            'sku_id'             => 0,
+            'price'              => '30',
+            'num'                => 2,
+            'title'              => 'B',
+            'image'              => '',
+            'cost_price'         => '18',
+            'tax_amount'         => '12',
+            'discount_amount'    => '1',
         ];
 
         $address = AddressModel::find(1);
@@ -142,7 +135,7 @@ class Tests extends Command
                 'test' => 1,
             ],
             'products'        => [
-                $product
+                $product, $product2
 
             ],
         ];
@@ -156,88 +149,22 @@ class Tests extends Command
         //$service::extends('paying', OrderPayingAction::class);
 
         $order = $service->create($orderDTO);
-        dd($order);
-        $product2 = [
-            'shipping_type'     => 'CDK',
-            'product_type'      => 'system',
-            'product_id'        => 2,
-            'sku_id'            => 0,
-            'price'             => '20',
-            'num'               => 2,
-            'title'             => 'B',
-            'image'             => '',
-            'cost_price'        => '4',
-            'discount_amount'   => '4',
-            'tools'             => [
-                'form' => [ 'a' => 1 ]
-            ],
-            'DiscountBreakdown' => [
-                [ 'name' => '满20减10' ],
-            ],
-            //'category_id'       => 377942835138326
-            'info'              => [
-                'seller_remarks' => '卖家备注'
-            ],
 
-        ];
+        $id = $order->id;
+        $service->paying($id);
+        //
+        $OrderPaidInfoDTO = OrderPaidInfoDTO::from([
+                                                       'paymentTime'    => now(),
+                                                       'paymentType'    => 'payment',
+                                                       'paymentId'      => time(),
+                                                       'paymentChannel' => 'alipay'
+                                                   ]);
+
+        $service->paid($id, $OrderPaidInfoDTO);
 
 
-        $product = [
-            'shipping_type'   => 'CDK',
-            'product_type'    => 'system',
-            'product_id'      => 1,
-            'sku_id'          => 0,
-            'price'           => '120',
-            'num'             => 1,
-            'title'           => 'A',
-            'image'           => '',
-            'cost_price'      => '18',
-            'tax_amount'      => '12',
-            'discount_amount' => '12',
-        ];
-
-
-        $order = [
-            'order_type'      => OrderTypeEnum::MALL->value,
-            'shipping_type'   => ShippingTypeEnum::VIRTUAL->value,
-            'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
-            'payment_status'  => PaymentStatusEnum::WAIT_PAY->value,
-            'shipping_status' => null,
-            'refund_status'   => null,
-            'rate_status'     => null,
-            'freight_amount'  => 0,
-            'discount_amount' => 0,
-            'client_type'     => 'Console',
-            'client_ip'       => request()->getClientIp(),
-            'channel_type'    => null,
-            'channel_id'      => null,
-            'store_type'      => null,
-            'store_id'        => null,
-            'guide_type'      => null,
-            'guide_id'        => null,
-            'email'           => null,
-            'password'        => null,
-            'info'            => [
-                'seller_remarks' => '订单卖家备注-买家不可见',
-                'seller_message' => '订单卖家留言-买家可见',
-                'buyer_remarks'  => '订单买家备注-卖家不可见',
-                'buyer_message'  => '订单买家留言-卖家可见',
-                'seller_extends' => '{"json":"1"}',
-                'other_extends'  => null,
-            ],
-            'address'         => $address?->toArray(),
-        ];
-
-        $productModel  = OrderProduct::transferFrom($product);
-        $product2Model = OrderProduct::transferFrom($product2);
-
-
-        $seller = new SystemUser(222);
-        $buyer  = User::find(383142919024923);
-        $result = $service->create($seller, $buyer, $order, collect([ $productModel, $product2Model ]));
-        dd($result->toArray());
-        // 添加应用管道
-        // /$creator->addInitPipelines();
+        $service->virtualShipping($id,true);
+        dd(1);
 
 
     }
