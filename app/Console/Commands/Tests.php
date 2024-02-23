@@ -13,6 +13,7 @@ use RedJasmine\Order\DataTransferObjects\DataPipeline;
 use RedJasmine\Order\DataTransferObjects\OrderDTO;
 use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
 use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
+use RedJasmine\Order\DataTransferObjects\OrderSplitProductDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderCardKeyShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderLogisticsShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderShippingDTO;
@@ -64,6 +65,8 @@ class Tests extends Command
 
     public function handle()
     {
+
+
         $this->testOrder();
 
 
@@ -152,10 +155,10 @@ class Tests extends Command
         $service->setOperator(new SystemUser(2));
         //$service::extends('paying', OrderPayingAction::class);
 
-        //$order = $service->create($orderDTO);
-        //$id = $order->id;
-        $id = 406259700040732;
-        //$service->paying($id);
+        // $order = $service->create($orderDTO);
+        // $id = $order->id;
+        $id = 406501137263615;
+        // $service->paying($id);
         // //
         $OrderPaidInfoDTO = OrderPaidInfoDTO::from([
                                                        'paymentTime'    => now(),
@@ -164,31 +167,40 @@ class Tests extends Command
                                                        'paymentChannel' => 'alipay'
                                                    ]);
 
-        //$service->paid($id, $OrderPaidInfoDTO);
-
+        // $service->paid($id, $OrderPaidInfoDTO);
+        // dd();
 
         //$OrderShippingDTO = OrderShippingDTO::from([ 'isSplit' => false ]);
         //$service->virtualShipping($id, $OrderShippingDTO);
 
-        // $OrderLogisticsShippingDTO = OrderLogisticsShippingDTO::from([
-        //                                                                  'isSplit'            => true,
-        //                                                                  'expressCompanyCode' => 'POST',
-        //                                                                  'expressNo'          => '123123',
-        //                                                                  'orderProducts'      => [ 406252832028176, 406252832028177 ]
-        //                                                              ]);
-        //
-        //
+        $OrderLogisticsShippingDTO = OrderLogisticsShippingDTO::from([
+                                                                         'isSplit'            => true,
+                                                                         'expressCompanyCode' => 'POST',
+                                                                         'expressNo'          => '123123',
+                                                                         'orderProducts'      => [ 406252832028176, 406252832028177 ]
+                                                                     ]);
+
+
         // $service->logisticsShipping($id, $OrderLogisticsShippingDTO);
 
 
-        $OrderLogisticsShippingDTO = OrderCardKeyShippingDTO::from([
+        $OrderCardKeyShippingDTO = OrderCardKeyShippingDTO::from([
                                                                        'isSplit'       => true,
-                                                                       'orderProducts' => [ 406259700040734 ],
-                                                                       'cardKey'       => 'asdasdadasdsa',
+                                                                       'orderProducts' => [ 406501137263617 ],
+                                                                       'cardKey'       => '支付撒旦撒sadsa',
                                                                    ]);
 
 
-        $service->cardKeyShipping($id, $OrderLogisticsShippingDTO);
+        $service->cardKeyShipping($id, $OrderCardKeyShippingDTO);
+        //dd();
+
+
+        $DTO = OrderSplitProductDTO::from([
+                                              'isSplit' => true, 'orderProducts' => [ 406501137263616 ],
+                                          ]);
+
+        $service->confirm($id,$DTO);
+
         dd(1);
 
 
