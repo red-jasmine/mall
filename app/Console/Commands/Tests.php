@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Dflydev\DotAccessData\Data;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\DB;
 use QL\QueryList;
 use RedJasmine\Address\Models\Address as AddressModel;
@@ -14,6 +15,9 @@ use RedJasmine\Order\DataTransferObjects\OrderDTO;
 use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
 use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
 use RedJasmine\Order\DataTransferObjects\OrderSplitProductDTO;
+use RedJasmine\Order\DataTransferObjects\Refund\OrderProductRefundDTO;
+use RedJasmine\Order\DataTransferObjects\Refund\RefundAgreeDTO;
+use RedJasmine\Order\DataTransferObjects\Refund\RefundRefuseDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderCardKeyShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderLogisticsShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderShippingDTO;
@@ -21,11 +25,15 @@ use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
+use RedJasmine\Order\Enums\Refund\RefundGoodsStatusEnum;
+use RedJasmine\Order\Enums\Refund\RefundTypeEnum;
+use RedJasmine\Order\Models\OrderLogistics;
 use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\Pipelines\OrderTestPipeline;
 use RedJasmine\Order\Services\Orders\Actions\OrderPayingAction;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
 use RedJasmine\Order\Services\OrderService;
+use RedJasmine\Order\Services\RefundService;
 use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
@@ -67,17 +75,53 @@ class Tests extends Command
     {
 
 
-        $this->testOrder();
+        $this->testRefund();
+        // $this->testOrder();
 
+
+    }
+
+    public function testRefund()
+    {
+        $service = app(RefundService::class);
+        $service->setOperator(new SystemUser(2));
+
+
+        // 创建
+        $id     = 407323960673399;
+        $DTO    = OrderProductRefundDTO::from(
+            [
+                'refundType'  => RefundTypeEnum::REFUND_ONLY,
+                'reason'      => '不想要了',
+                'description' => '',
+                'images'      => null,
+                'goodStatus'  => null,
+            ]
+        );
+        $refund = $service->create($id, $DTO);
+        // dd();
+        // 同意退款
+        $rid = $refund->id;
+
+        //$DTO = RefundAgreeDTO::from([]);
+        // $refund = $service->agree($rid, $DTO);
+
+        // 拒绝退款
+        $DTO = RefundRefuseDTO::from([]);
+        $refund = $service->refuse($rid, $DTO);
+        dd($refund);
 
     }
 
     public function testOrder()
     {
 
+        $service = app(OrderService::class);
+        $service->setOperator(new SystemUser(2));
+
         $product  = [
             'order_product_type' => 'virtual',
-            'shipping_type'      => ShippingTypeEnum::CDK->value,
+            'shipping_type'      => ShippingTypeEnum::EXPRESS->value,
             'product_type'       => 'system',
             'product_id'         => 1,
             'sku_id'             => 0,
@@ -91,7 +135,7 @@ class Tests extends Command
         ];
         $product2 = [
             'order_product_type' => 'virtual',
-            'shipping_type'      => ShippingTypeEnum::CDK->value,
+            'shipping_type'      => ShippingTypeEnum::EXPRESS->value,
             'product_type'       => 'system',
             'product_id'         => 12,
             'sku_id'             => 0,
@@ -105,13 +149,13 @@ class Tests extends Command
         ];
 
         $address = AddressModel::find(1);
-        // OrderData::extendPipeline(DataPipeline::class);
-        $order    = [
+
+        $order                   = [
             'title'           => '标题',
             'seller'          => UserDTO::fromUserInterface(User::find(383142919024923)),
-            'buyer'           => new SystemUserDTO(nickname: '系统2'),
+            'buyer'           => new SystemUserDTO(),
             'order_type'      => OrderTypeEnum::MALL->value,
-            'shipping_type'   => ShippingTypeEnum::CDK->value,
+            'shipping_type'   => ShippingTypeEnum::EXPRESS->value,
             'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
             'payment_status'  => PaymentStatusEnum::WAIT_PAY->value,
             //'shipping_status' => null,
@@ -146,20 +190,17 @@ class Tests extends Command
 
             ],
         ];
-        $orderDTO = OrderDTO::from($order);
+        $orderDTO                = OrderDTO::from($order);
+        $orderDTO->freightAmount = 10;
+        $orderDTO->store         = UserDTO::from([ 'type' => 'store', 'id' => 1 ]);
 
-        ///$orderDTO->store = UserData::from([ 'type' => 'store', 'id' => 1 ]);
+
+        $order = $service->create($orderDTO);
+        $id    = $order->id;
+        // $id = 406627888527297;
+        $service->paying($id);
 
 
-        $service = app(OrderService::class);
-        $service->setOperator(new SystemUser(2));
-        //$service::extends('paying', OrderPayingAction::class);
-
-        // $order = $service->create($orderDTO);
-        // $id = $order->id;
-        $id = 406501137263615;
-        // $service->paying($id);
-        // //
         $OrderPaidInfoDTO = OrderPaidInfoDTO::from([
                                                        'paymentTime'    => now(),
                                                        'paymentType'    => 'payment',
@@ -167,39 +208,39 @@ class Tests extends Command
                                                        'paymentChannel' => 'alipay'
                                                    ]);
 
-        // $service->paid($id, $OrderPaidInfoDTO);
-        // dd();
+        $service->paid($id, $OrderPaidInfoDTO);
+
 
         //$OrderShippingDTO = OrderShippingDTO::from([ 'isSplit' => false ]);
         //$service->virtualShipping($id, $OrderShippingDTO);
 
         $OrderLogisticsShippingDTO = OrderLogisticsShippingDTO::from([
-                                                                         'isSplit'            => true,
+                                                                         'isSplit'            => false,
                                                                          'expressCompanyCode' => 'POST',
                                                                          'expressNo'          => '123123',
-                                                                         'orderProducts'      => [ 406252832028176, 406252832028177 ]
+                                                                         'orderProducts'      => []
                                                                      ]);
 
 
-        // $service->logisticsShipping($id, $OrderLogisticsShippingDTO);
-
+        //$service->logisticsShipping($id, $OrderLogisticsShippingDTO);
+        dd();
 
         $OrderCardKeyShippingDTO = OrderCardKeyShippingDTO::from([
-                                                                       'isSplit'       => true,
-                                                                       'orderProducts' => [ 406501137263617 ],
-                                                                       'cardKey'       => '支付撒旦撒sadsa',
-                                                                   ]);
+                                                                     'isSplit'       => true,
+                                                                     'orderProducts' => [ 406501137263617 ],
+                                                                     'cardKey'       => '支付撒旦撒sadsa',
+                                                                 ]);
 
 
         $service->cardKeyShipping($id, $OrderCardKeyShippingDTO);
-        //dd();
+        dd();
 
 
         $DTO = OrderSplitProductDTO::from([
                                               'isSplit' => true, 'orderProducts' => [ 406501137263616 ],
                                           ]);
 
-        $service->confirm($id,$DTO);
+        $service->confirm($id, $DTO);
 
         dd(1);
 
