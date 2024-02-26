@@ -88,7 +88,7 @@ class Tests extends Command
 
 
         // 创建
-        $id  = 407554631953123;
+        $id  = 407630837227087;
         $DTO = OrderProductRefundDTO::from(
             [
                 'refundType'  => RefundTypeEnum::RETURN_GOODS_REFUND,
@@ -102,31 +102,34 @@ class Tests extends Command
         // dd();
         // 同意退款
         // $rid = $refund->id;
-        $rid = 407568517900416;
+        $rid = 407633906196402;
 
         // $DTO = RefundAgreeDTO::from([]);
         // $refund = $service->agree($rid, $DTO);
 
         // 拒绝退款
         $DTO = RefundRefuseDTO::from(['refuseReason' => '已损坏']);
-        $refund = $service->refuse($rid, $DTO);
-        dd($refund);
+        // $refund = $service->refuse($rid, $DTO);
+        // dd($refund);
 
         // $refund  =$service->cancel($rid);
         // dd($refund);
 
         // 同意退货
-        $refund = $service->agreeReturn($rid);
+        //$refund = $service->agreeReturnGoods($rid);
         // dd($refund);
 
         // 卖家退货货物
-        $DTO    = RefundReturnGoodsDTO::from([
-                                                 'expressCompanyCode' => 'POST',
-                                                 'expressNo'          => '123'
-                                             ]);
-        $refund = $service->returnGoods($rid,$DTO);
-        dd($refund);
+        // $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo'          => '123' ]);
+        // $refund = $service->returnGoods($rid,$DTO);
+        // dd($refund);
 
+
+        // 拒绝退货
+        $DTO = RefundRefuseDTO::from(['refuseReason' => '已损坏']);
+
+        $refund = $service->refuseReturnGoods($rid,$DTO);
+        dd($refund);
 
     }
 
