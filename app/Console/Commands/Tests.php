@@ -48,6 +48,7 @@ use RedJasmine\Product\Services\Product\Stock\StockChannelObject;
 use RedJasmine\Product\Services\Product\Stock\StockChanneObject;
 use RedJasmine\Support\DataTransferObjects\SystemUserDTO;
 use RedJasmine\Support\DataTransferObjects\UserDTO;
+use RedJasmine\Support\Helpers\Encrypter\AES;
 use RedJasmine\Support\Helpers\User\SystemUser;
 use RedJasmine\Support\Helpers\User\UserObject;
 use RedJasmine\Trade\Helpers\Trade;
@@ -77,6 +78,7 @@ class Tests extends Command
     public function handle()
     {
 
+
         $this->testRefund();
         // $this->testOrder();
     }
@@ -88,27 +90,28 @@ class Tests extends Command
 
 
         // 创建
-        $id  = 407630837227087;
+        $id  = 407666193467032;
         $DTO = OrderProductRefundDTO::from(
             [
-                'refundType'  => RefundTypeEnum::RETURN_GOODS_REFUND,
-                'reason'      => '不想要了',
+                'refundType'  => RefundTypeEnum::EXCHANGE_GOODS,
+                'reason'      => '换货',
                 'description' => '',
                 'images'      => null,
                 'goodStatus'  => null,
             ]
         );
-        // $refund = $service->create($id, $DTO);
+        $refund = $service->create($id, $DTO);
+        // dd();
         // dd();
         // 同意退款
-        // $rid = $refund->id;
-        $rid = 407633906196402;
+        $rid = $refund->id;
+        // $rid = 407666604244323;
 
         // $DTO = RefundAgreeDTO::from([]);
         // $refund = $service->agree($rid, $DTO);
 
         // 拒绝退款
-        $DTO = RefundRefuseDTO::from(['refuseReason' => '已损坏']);
+        // $DTO = RefundRefuseDTO::from([ 'refuseReason' => '已损坏' ]);
         // $refund = $service->refuse($rid, $DTO);
         // dd($refund);
 
@@ -116,19 +119,23 @@ class Tests extends Command
         // dd($refund);
 
         // 同意退货
-        //$refund = $service->agreeReturnGoods($rid);
+        $refund = $service->agreeReturnGoods($rid);
         // dd($refund);
 
         // 卖家退货货物
-        // $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo'          => '123' ]);
-        // $refund = $service->returnGoods($rid,$DTO);
+        $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo'=> '123' ]);
+        $refund = $service->returnGoods($rid,$DTO);
         // dd($refund);
 
 
-        // 拒绝退货
-        $DTO = RefundRefuseDTO::from(['refuseReason' => '已损坏']);
+        // // 拒绝退货
+        // $DTO = RefundRefuseDTO::from([ 'refuseReason' => '已损坏' ]);
+        // $refund = $service->refuseReturnGoods($rid, $DTO);
+        // dd($refund);
 
-        $refund = $service->refuseReturnGoods($rid,$DTO);
+        // 卖家 完成 换货 或者维修
+        $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo'=> '123' ]);
+        $refund = $service->sellerReturnGoods($rid, $DTO);
         dd($refund);
 
     }
@@ -168,6 +175,12 @@ class Tests extends Command
             'discount_amount'    => '1',
         ];
 
+        $product3 = $product2;
+        $product3['product_id'] = 13;
+
+        $product4 = $product2;
+        $product4['product_id'] = 4;
+
         $address = AddressModel::find(1);
 
         $order                   = [
@@ -206,7 +219,7 @@ class Tests extends Command
                 'test' => 1,
             ],
             'products'        => [
-                $product, $product2
+                $product, $product2,$product3,$product4
 
             ],
         ];
