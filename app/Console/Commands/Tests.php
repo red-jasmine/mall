@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use QL\QueryList;
 use RedJasmine\Address\Models\Address as AddressModel;
@@ -18,6 +20,7 @@ use RedJasmine\Order\DataTransferObjects\OrderSplitProductDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\OrderProductRefundDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\RefundAgreeDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\RefundRefuseDTO;
+use RedJasmine\Order\DataTransferObjects\Refund\RefundReturnGoodsDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderCardKeyShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderLogisticsShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderShippingDTO;
@@ -74,11 +77,8 @@ class Tests extends Command
     public function handle()
     {
 
-
         $this->testRefund();
         // $this->testOrder();
-
-
     }
 
     public function testRefund()
@@ -88,28 +88,45 @@ class Tests extends Command
 
 
         // 创建
-        $id     = 407323960673399;
-        $DTO    = OrderProductRefundDTO::from(
+        $id  = 407554631953123;
+        $DTO = OrderProductRefundDTO::from(
             [
-                'refundType'  => RefundTypeEnum::REFUND_ONLY,
+                'refundType'  => RefundTypeEnum::RETURN_GOODS_REFUND,
                 'reason'      => '不想要了',
                 'description' => '',
                 'images'      => null,
                 'goodStatus'  => null,
             ]
         );
-        $refund = $service->create($id, $DTO);
+        // $refund = $service->create($id, $DTO);
         // dd();
         // 同意退款
-        $rid = $refund->id;
+        // $rid = $refund->id;
+        $rid = 407568517900416;
 
-        //$DTO = RefundAgreeDTO::from([]);
+        // $DTO = RefundAgreeDTO::from([]);
         // $refund = $service->agree($rid, $DTO);
 
         // 拒绝退款
-        $DTO = RefundRefuseDTO::from([]);
+        $DTO = RefundRefuseDTO::from(['refuseReason' => '已损坏']);
         $refund = $service->refuse($rid, $DTO);
         dd($refund);
+
+        // $refund  =$service->cancel($rid);
+        // dd($refund);
+
+        // 同意退货
+        $refund = $service->agreeReturn($rid);
+        // dd($refund);
+
+        // 卖家退货货物
+        $DTO    = RefundReturnGoodsDTO::from([
+                                                 'expressCompanyCode' => 'POST',
+                                                 'expressNo'          => '123'
+                                             ]);
+        $refund = $service->returnGoods($rid,$DTO);
+        dd($refund);
+
 
     }
 
@@ -120,7 +137,7 @@ class Tests extends Command
         $service->setOperator(new SystemUser(2));
 
         $product  = [
-            'order_product_type' => 'virtual',
+            'order_product_type' => 'goods',
             'shipping_type'      => ShippingTypeEnum::EXPRESS->value,
             'product_type'       => 'system',
             'product_id'         => 1,
@@ -134,7 +151,7 @@ class Tests extends Command
             'discount_amount'    => '12',
         ];
         $product2 = [
-            'order_product_type' => 'virtual',
+            'order_product_type' => 'goods',
             'shipping_type'      => ShippingTypeEnum::EXPRESS->value,
             'product_type'       => 'system',
             'product_id'         => 12,
@@ -222,7 +239,7 @@ class Tests extends Command
                                                                      ]);
 
 
-        //$service->logisticsShipping($id, $OrderLogisticsShippingDTO);
+        $service->logisticsShipping($id, $OrderLogisticsShippingDTO);
         dd();
 
         $OrderCardKeyShippingDTO = OrderCardKeyShippingDTO::from([
