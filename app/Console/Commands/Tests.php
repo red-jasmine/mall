@@ -17,6 +17,8 @@ use RedJasmine\Order\DataTransferObjects\OrderDTO;
 use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
 use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
 use RedJasmine\Order\DataTransferObjects\OrderSplitProductDTO;
+use RedJasmine\Order\DataTransferObjects\Others\OrderProductProgressDTO;
+use RedJasmine\Order\DataTransferObjects\Others\OrderRemarksDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\OrderProductRefundDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\RefundAgreeDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\RefundRefuseDTO;
@@ -79,8 +81,48 @@ class Tests extends Command
     {
 
 
-        $this->testRefund();
-        // $this->testOrder();
+        $this->testOrder();
+        // $this->testRefund();
+        // $this->testOrderOthers();
+        // $this->testOrderProducts();
+    }
+
+
+    public function testOrderProducts()
+    {
+        $service = app(OrderService::class);
+        $service->setOperator(new SystemUser(2));
+
+
+
+        $DTO = OrderProductProgressDTO::from([
+                                                 'progress'      => 15,
+                                                 'progressTotal' => 100
+                                             ]);
+        $service->productProgress($id,$DTO);
+
+
+        $DTO = OrderRemarksDTO::from([
+                                         // 'form' => 'seller',
+                                         'form'    => 'buyer',
+                                         'remarks' => '12321', ]);
+
+        $service->productRemarks($id,$DTO);
+
+    }
+
+    public function testOrderOthers()
+    {
+        $service = app(OrderService::class);
+        $service->setOperator(new SystemUser(2));
+
+        $id  = 408200202924856;
+        $DTO = OrderRemarksDTO::from([
+                                         // 'form' => 'seller',
+                                         'form'    => 'buyer',
+                                         'remarks' => '', ]);
+        $service->remarks($id, $DTO);
+
     }
 
     public function testRefund()
@@ -100,6 +142,7 @@ class Tests extends Command
                 'goodStatus'  => null,
             ]
         );
+
         $refund = $service->create($id, $DTO);
         // dd();
         // dd();
@@ -123,8 +166,8 @@ class Tests extends Command
         // dd($refund);
 
         // 卖家退货货物
-        $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo'=> '123' ]);
-        $refund = $service->returnGoods($rid,$DTO);
+        $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo' => '123' ]);
+        $refund = $service->returnGoods($rid, $DTO);
         // dd($refund);
 
 
@@ -134,7 +177,7 @@ class Tests extends Command
         // dd($refund);
 
         // 卖家 完成 换货 或者维修
-        $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo'=> '123' ]);
+        $DTO    = RefundReturnGoodsDTO::from([ 'expressCompanyCode' => 'POST', 'expressNo' => '123' ]);
         $refund = $service->sellerReturnGoods($rid, $DTO);
         dd($refund);
 
@@ -175,10 +218,10 @@ class Tests extends Command
             'discount_amount'    => '1',
         ];
 
-        $product3 = $product2;
+        $product3               = $product2;
         $product3['product_id'] = 13;
 
-        $product4 = $product2;
+        $product4               = $product2;
         $product4['product_id'] = 4;
 
         $address = AddressModel::find(1);
@@ -204,7 +247,7 @@ class Tests extends Command
             'store_id'        => null,
             'guide_type'      => null,
             'guide_id'        => null,
-            'email'           => null,
+            'contact'           => '2255345@qq.com',
             'password'        => null,
             'info'            => [
                 'seller_remarks' => '订单卖家备注-买家不可见',
@@ -219,10 +262,11 @@ class Tests extends Command
                 'test' => 1,
             ],
             'products'        => [
-                $product, $product2,$product3,$product4
+                $product, $product2, $product3, $product4
 
             ],
         ];
+
         $orderDTO                = OrderDTO::from($order);
         $orderDTO->freightAmount = 10;
         $orderDTO->store         = UserDTO::from([ 'type' => 'store', 'id' => 1 ]);
