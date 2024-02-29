@@ -33,7 +33,8 @@
         "red-jasmine/region": "1.0.x-dev",
         "red-jasmine/region-admin": "1.0.x-dev",
         "red-jasmine/supplier": "1.0.x-dev",
-        "red-jasmine/user": "1.0.x-dev"
+        "red-jasmine/user": "1.0.x-dev",
+        "red-jasmine/wallet": "1.0.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -96,6 +97,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "red-jasmine/wallet": {
+            "type": "path",
+            "url": "./packages/red-jasmine/wallet",
+            "options": {
+                "symlink": true
+            }
+        },
         "red-jasmine/order": {
             "type": "path",
             "url": "./packages/red-jasmine/order",
