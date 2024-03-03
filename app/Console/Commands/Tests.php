@@ -57,6 +57,11 @@ use RedJasmine\Trade\Helpers\Trade;
 use RedJasmine\Trade\Services\TradeCreate;
 use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
 use RedJasmine\User\Models\User;
+use RedJasmine\Wallet\DataTransferObjects\Recharges\RechargePaymentDTO;
+use RedJasmine\Wallet\DataTransferObjects\Recharges\WalletRechargeDTO;
+use RedJasmine\Wallet\DataTransferObjects\WalletActionDTO;
+use RedJasmine\Wallet\WalletRechargeService;
+use RedJasmine\Wallet\WalletService;
 use Spatie\Browsershot\Browsershot;
 use Throwable;
 
@@ -80,6 +85,48 @@ class Tests extends Command
     public function handle()
     {
 
+        $service = new WalletService();
+        $service->setOperator(new SystemUser(2));
+        $owner  = UserDTO::from([ 'type' => 'system', 'id' => 1 ]);
+        $wallet1 = $service->wallet($owner, 'balance');
+        $DTO = WalletActionDTO::from([
+                                         'amount'      => 100,
+                                         'title'       => '测试',
+                                         'description' => '测试'
+                                     ]);
+
+        $service->recharge($wallet1->id,$DTO);
+        $owner2  = UserDTO::from([ 'type' => 'system', 'id' => 2 ]);
+        $wallet2 = $service->wallet($owner2, 'balance');
+        // 冻结
+        $DTO = WalletActionDTO::from([
+                                         'amount'      => 3,
+                                         'title'       => '测试',
+                                         'description' => '测试'
+                                     ]);
+
+        $service->transfer($wallet1->id,$wallet2->id, $DTO);
+        dd();
+
+        // $service->doAction($wallet->id,$DTO);
+        //$service->refund($wallet->id, $DTO);
+
+        $service = app(WalletRechargeService::class);
+        $service->setOperator(new SystemUser(2));
+
+        $DTO            = WalletRechargeDTO::from([
+                                                      'amount' => 10
+                                                  ]);
+        $walletRecharge = $service->create($wallet->id, $DTO);
+
+        $DTO            = RechargePaymentDTO::from([
+                                                       'paymentType'           => 'payment',
+                                                       'paymentId'             => time(),
+                                                       'paymentChannelTradeNo' => time(),
+                                                       'paymentMode'           => 'alipay'
+                                                   ]);
+        $walletRecharge = $service->paid($walletRecharge->id, $DTO);
+        dd($walletRecharge);
 
         $this->testOrder();
         // $this->testRefund();
@@ -94,12 +141,11 @@ class Tests extends Command
         $service->setOperator(new SystemUser(2));
 
 
-
         $DTO = OrderProductProgressDTO::from([
                                                  'progress'      => 15,
                                                  'progressTotal' => 100
                                              ]);
-        $service->productProgress($id,$DTO);
+        $service->productProgress($id, $DTO);
 
 
         $DTO = OrderRemarksDTO::from([
@@ -107,7 +153,7 @@ class Tests extends Command
                                          'form'    => 'buyer',
                                          'remarks' => '12321', ]);
 
-        $service->productRemarks($id,$DTO);
+        $service->productRemarks($id, $DTO);
 
     }
 
@@ -226,7 +272,7 @@ class Tests extends Command
 
         $address = AddressModel::find(1);
 
-        $order                   = [
+        $order = [
             'title'           => '标题',
             'seller'          => UserDTO::fromUserInterface(User::find(383142919024923)),
             'buyer'           => new SystemUserDTO(),
@@ -247,7 +293,7 @@ class Tests extends Command
             'store_id'        => null,
             'guide_type'      => null,
             'guide_id'        => null,
-            'contact'           => '2255345@qq.com',
+            'contact'         => '2255345@qq.com',
             'password'        => null,
             'info'            => [
                 'seller_remarks' => '订单卖家备注-买家不可见',
