@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e76f3149626935b4222cc657da1e07f",
+    "content-hash": "7abbbfff6ae88efe1571ce17e6905d1b",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -6432,138 +6432,6 @@
             "time": "2023-11-08T05:53:05+00:00"
         },
         {
-            "name": "red-jasmine/account",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./packages/red-jasmine/account",
-                "reference": "98f9fdd79d9b4550d78c5dabe522383566f35e4e"
-            },
-            "require": {
-                "red-jasmine/support": "1.0.x-dev"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RedJasmine\\Account\\AccountServiceProvider"
-                    ],
-                    "aliases": {
-                        "Account": "RedJasmine\\Account\\Facades\\Account"
-                    }
-                },
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-main": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RedJasmine\\Account\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "RedJasmine\\Account\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php vendor/bin/testbench package:discover --ansi"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "liushoukun",
-                    "email": "liushoukun66@gmail.com",
-                    "homepage": "https://github.com/liushoukun66"
-                }
-            ],
-            "description": ":package_description",
-            "homepage": "https://github.com/red-jasmine/amount",
-            "keywords": [
-                "Account",
-                "Laravel"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "red-jasmine/account-recharge",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./packages/red-jasmine/account-recharge",
-                "reference": "4b00b6e1b7bffb287ac6bf6b9d92be506be1fd78"
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "red-jasmine/payment": "1.0.x-dev",
-                "red-jasmine/support": "1.0.x-dev"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RedJasmine\\AccountRecharge\\AccountRechargeServiceProvider"
-                    ],
-                    "aliases": {
-                        "AccountRecharge": "RedJasmine\\AccountRecharge\\Facades\\AccountRechargeService"
-                    }
-                },
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-main": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RedJasmine\\AccountRecharge\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "RedJasmine\\AccountRecharge\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "post-autoload-dump": [
-                    "@php vendor/bin/testbench package:discover --ansi"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "liushoukun",
-                    "email": "liushoukun66@gmail.com",
-                    "homepage": "https://github.com/liushoukun66"
-                }
-            ],
-            "description": ":package_description",
-            "homepage": "https://github.com/red-jasmine/account-recharge",
-            "keywords": [
-                "AccountRecharge",
-                "Laravel"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
             "name": "red-jasmine/address",
             "version": "dev-master",
             "dist": {
@@ -6622,7 +6490,7 @@
         },
         {
             "name": "red-jasmine/address-admin",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/address-admin",
@@ -6944,7 +6812,7 @@
         },
         {
             "name": "red-jasmine/mall-buyer",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/mall-buyer",
@@ -7201,7 +7069,7 @@
         },
         {
             "name": "red-jasmine/order",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/order",
@@ -7266,7 +7134,7 @@
         },
         {
             "name": "red-jasmine/payment",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/payment",
@@ -7332,11 +7200,11 @@
         },
         {
             "name": "red-jasmine/product",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/product",
-                "reference": "3e4e059a82a71897b324e5f5ea1452ea20713b4c"
+                "reference": "773f135531fee966cee3d2db1299c225e5c9b080"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -7776,7 +7644,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/red-jasmine/wallet",
-                "reference": "c1480c51baf4092fd64b141e46ec99ecae1a5f49"
+                "reference": "b1b549cef4dbf31a9b91a91a3d6448ab995b145a"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -13361,8 +13229,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "red-jasmine/account": 20,
-        "red-jasmine/account-recharge": 20,
         "red-jasmine/address": 20,
         "red-jasmine/address-admin": 20,
         "red-jasmine/admin": 20,

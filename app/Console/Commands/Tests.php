@@ -60,8 +60,10 @@ use RedJasmine\User\Models\User;
 use RedJasmine\Wallet\DataTransferObjects\Recharges\RechargePaymentDTO;
 use RedJasmine\Wallet\DataTransferObjects\Recharges\WalletRechargeDTO;
 use RedJasmine\Wallet\DataTransferObjects\WalletActionDTO;
+use RedJasmine\Wallet\DataTransferObjects\Withdrawals\WalletWithdrawalDTO;
 use RedJasmine\Wallet\WalletRechargeService;
 use RedJasmine\Wallet\WalletService;
+use RedJasmine\Wallet\WalletWithdrawalService;
 use Spatie\Browsershot\Browsershot;
 use Throwable;
 
@@ -85,17 +87,32 @@ class Tests extends Command
     public function handle()
     {
 
+        $service = app(WalletWithdrawalService::class);
+        $service->setOperator(new SystemUser(2));
+
+        $id  = 409674314262254;
+        $DTO = WalletWithdrawalDTO::from([
+                                             'amount'                  => '100',
+                                             'transferType'            => 'alipay',
+                                             'transferAccount'         => 'xxxxx',
+                                             'transferAccountRealName' => '留口水'
+                                         ]);
+        $service->create($id, $DTO);
+
+
+        dd();
+
         $service = new WalletService();
         $service->setOperator(new SystemUser(2));
-        $owner  = UserDTO::from([ 'type' => 'system', 'id' => 1 ]);
+        $owner   = UserDTO::from([ 'type' => 'system', 'id' => 1 ]);
         $wallet1 = $service->wallet($owner, 'balance');
-        $DTO = WalletActionDTO::from([
-                                         'amount'      => 100,
-                                         'title'       => '测试',
-                                         'description' => '测试'
-                                     ]);
+        $DTO     = WalletActionDTO::from([
+                                             'amount'      => 100,
+                                             'title'       => '测试',
+                                             'description' => '测试'
+                                         ]);
 
-        $service->recharge($wallet1->id,$DTO);
+        $service->recharge($wallet1->id, $DTO);
         $owner2  = UserDTO::from([ 'type' => 'system', 'id' => 2 ]);
         $wallet2 = $service->wallet($owner2, 'balance');
         // 冻结
@@ -105,7 +122,7 @@ class Tests extends Command
                                          'description' => '测试'
                                      ]);
 
-        $service->transfer($wallet1->id,$wallet2->id, $DTO);
+        $service->transfer($wallet1->id, $wallet2->id, $DTO);
         dd();
 
         // $service->doAction($wallet->id,$DTO);

@@ -1,9 +1,3 @@
-[submodule "packages/red-jasmine/account"]
-	path = packages/red-jasmine/account
-	url = git@github.com:red-jasmine/account.git
-[submodule "packages/red-jasmine/account-recharge"]
-	path = packages/red-jasmine/account-recharge
-	url = git@github.com:red-jasmine/account-recharge.git
 [submodule "packages/red-jasmine/address"]
 	path = packages/red-jasmine/address
 	url = git@github.com:red-jasmine/address.git

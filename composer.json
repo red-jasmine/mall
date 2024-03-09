@@ -14,8 +14,6 @@
         "laravel/framework": "^10.0",
         "laravel/horizon": "^5.21",
         "laravel/tinker": "^2.8",
-        "red-jasmine/account": "1.0.x-dev",
-        "red-jasmine/account-recharge": "1.0.x-dev",
         "red-jasmine/address": "1.0.x-dev",
         "red-jasmine/address-admin": "1.0.x-dev",
         "red-jasmine/admin": "1.0.x-dev",
