@@ -1,221 +1,247 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": "^8.2",
-        "alphasnow/aliyun-oss-laravel": "^4.7",
-        "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.0",
-        "laravel/horizon": "^5.21",
-        "laravel/tinker": "^2.8",
-        "red-jasmine/address": "1.0.x-dev",
-        "red-jasmine/address-admin": "1.0.x-dev",
-        "red-jasmine/admin": "1.0.x-dev",
-        "red-jasmine/auth": "1.0.x-dev",
-        "red-jasmine/captcha": "1.0.x-dev",
-        "red-jasmine/card": "^1.0@dev",
-        "red-jasmine/mall-buyer": "1.0.x-dev",
-        "red-jasmine/mall-core": "1.0.x-dev",
-        "red-jasmine/mall-payment": "1.0.x-dev",
-        "red-jasmine/mall-seller": "1.0.x-dev",
-        "red-jasmine/order": "^1.0@dev",
-        "red-jasmine/payment": "1.0.x-dev",
-        "red-jasmine/product": "1.0.x-dev",
-        "red-jasmine/product-admin": "1.0.x-dev",
-        "red-jasmine/region": "1.0.x-dev",
-        "red-jasmine/region-admin": "1.0.x-dev",
-        "red-jasmine/supplier": "1.0.x-dev",
-        "red-jasmine/user": "1.0.x-dev",
-        "red-jasmine/wallet": "1.0.x-dev"
-    },
-    "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "jeroen-g/laravel-packager": "dev-master",
-        "laravel/pint": "^1.0",
-        "laravel/sail": "^1.18",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0",
-        "spatie/laravel-ignition": "^2.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "RedJasmine\\Item\\": "packages/red-jasmine/item/src/",
-            "RedJasmine\\ItemAdmin\\": "packages/red-jasmine/item-admin/src/",
-            "RedJasmine\\RegionAdmin\\": "packages/red-jasmine/region-admin/src/",
-            "RedJasmine\\Region\\": "packages/red-jasmine/region/src/",
-            "RedJasmine\\Address\\": "packages/red-jasmine/address/src/",
-            "RedJasmine\\AddressAdmin\\": "packages/red-jasmine/address-admin/src/",
-            "RedJasmine\\ProductAdmin\\": "packages/red-jasmine/product-admin/src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "php-http/discovery": true
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": {
-        "red-jasmine/wallet": {
-            "type": "path",
-            "url": "./packages/red-jasmine/wallet",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/order": {
-            "type": "path",
-            "url": "./packages/red-jasmine/order",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/product-admin": {
-            "type": "path",
-            "url": "./packages/red-jasmine/product-admin",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/mall-seller": {
-            "type": "path",
-            "url": "./packages/red-jasmine/mall-seller",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/product": {
-            "type": "path",
-            "url": "./packages/red-jasmine/product",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/card": {
-            "type": "path",
-            "url": "./packages/red-jasmine/card",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/supplier": {
-            "type": "path",
-            "url": "./packages/red-jasmine/supplier",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/account-recharge": {
-            "type": "path",
-            "url": "./packages/red-jasmine/account-recharge",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/account": {
-            "type": "path",
-            "url": "./packages/red-jasmine/account",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/mall-payment": {
-            "type": "path",
-            "url": "./packages/red-jasmine/mall-payment",
-            "options": {
-                "symlink": true
-            }
-        },
-        "red-jasmine/payment": {
-            "type": "path",
-            "url": "./packages/red-jasmine/payment"
-        },
-        "red-jasmine/mall-core": {
-            "type": "path",
-            "url": "./packages/red-jasmine/mall-core"
-        },
-        "red-jasmine/mall-buyer": {
-            "type": "path",
-            "url": "./packages/red-jasmine/mall-buyer"
-        },
-        "red-jasmine/captcha": {
-            "type": "path",
-            "url": "./packages/red-jasmine/captcha"
-        },
-
-        "red-jasmine/address-admin": {
-            "type": "path",
-            "url": "./packages/red-jasmine/address-admin"
-
-        },
-        "red-jasmine/region-admin": {
-            "type": "path",
-            "url": "./packages/red-jasmine/region-admin"
-        },
-        "red-jasmine/region": {
-            "type": "path",
-            "url": "./packages/red-jasmine/region"
-        },
-        "red-jasmine/address": {
-            "type": "path",
-            "url": "./packages/red-jasmine/address"
-        },
-
-        "red-jasmine/admin": {
-            "type": "path",
-            "url": "./packages/red-jasmine/admin"
-        },
-
-        "red-jasmine/auth": {
-            "type": "path",
-            "url": "./packages/red-jasmine/auth"
-        },
-        "red-jasmine/user": {
-            "type": "path",
-            "url": "./packages/red-jasmine/user"
-        },
-        "red-jasmine/support": {
-            "type": "path",
-            "url": "./packages/red-jasmine/support"
-        }
+  "name": "laravel/laravel",
+  "type": "project",
+  "description": "The Laravel Framework.",
+  "keywords": [
+    "framework",
+    "laravel"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "alphasnow/aliyun-oss-laravel": "^4.7",
+    "guzzlehttp/guzzle": "^7.2",
+    "laravel/framework": "^10.0",
+    "laravel/horizon": "^5.21",
+    "laravel/tinker": "^2.8",
+    "red-jasmine/address": "1.0.x-dev",
+    "red-jasmine/address-admin": "1.0.x-dev",
+    "red-jasmine/admin": "1.0.x-dev",
+    "red-jasmine/auth": "1.0.x-dev",
+    "red-jasmine/captcha": "1.0.x-dev",
+    "red-jasmine/card": "^1.0@dev",
+    "red-jasmine/logistics": "^1.0@dev",
+    "red-jasmine/mall-buyer": "1.0.x-dev",
+    "red-jasmine/mall-core": "1.0.x-dev",
+    "red-jasmine/mall-payment": "1.0.x-dev",
+    "red-jasmine/mall-seller": "1.0.x-dev",
+    "red-jasmine/order": "^1.0@dev",
+    "red-jasmine/payment": "1.0.x-dev",
+    "red-jasmine/product": "1.0.x-dev",
+    "red-jasmine/product-admin": "1.0.x-dev",
+    "red-jasmine/region": "1.0.x-dev",
+    "red-jasmine/region-admin": "1.0.x-dev",
+    "red-jasmine/supplier": "1.0.x-dev",
+    "red-jasmine/user": "1.0.x-dev",
+    "red-jasmine/wallet": "1.0.x-dev"
+  },
+  "require-dev": {
+    "fakerphp/faker": "^1.9.1",
+    "jeroen-g/laravel-packager": "dev-master",
+    "laravel/pint": "^1.0",
+    "laravel/sail": "^1.18",
+    "mockery/mockery": "^1.4.4",
+    "nunomaduro/collision": "^7.0",
+    "phpunit/phpunit": "^10.0",
+    "spatie/laravel-ignition": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/",
+      "RedJasmine\\Item\\": "packages/red-jasmine/item/src/",
+      "RedJasmine\\ItemAdmin\\": "packages/red-jasmine/item-admin/src/",
+      "RedJasmine\\RegionAdmin\\": "packages/red-jasmine/region-admin/src/",
+      "RedJasmine\\Region\\": "packages/red-jasmine/region/src/",
+      "RedJasmine\\Address\\": "packages/red-jasmine/address/src/",
+      "RedJasmine\\AddressAdmin\\": "packages/red-jasmine/address-admin/src/",
+      "RedJasmine\\ProductAdmin\\": "packages/red-jasmine/product-admin/src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ],
+    "post-update-cmd": [
+      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+    ],
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "@php artisan key:generate --ansi"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": {
+    "red-jasmine/logistics": {
+      "type": "path",
+      "url": "./packages/red-jasmine/logistics",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/wallet": {
+      "type": "path",
+      "url": "./packages/red-jasmine/wallet",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/order": {
+      "type": "path",
+      "url": "./packages/red-jasmine/order",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/product-admin": {
+      "type": "path",
+      "url": "./packages/red-jasmine/product-admin",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/mall-seller": {
+      "type": "path",
+      "url": "./packages/red-jasmine/mall-seller",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/product": {
+      "type": "path",
+      "url": "./packages/red-jasmine/product",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/card": {
+      "type": "path",
+      "url": "./packages/red-jasmine/card",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/supplier": {
+      "type": "path",
+      "url": "./packages/red-jasmine/supplier",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/mall-payment": {
+      "type": "path",
+      "url": "./packages/red-jasmine/mall-payment",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/payment": {
+      "type": "path",
+      "url": "./packages/red-jasmine/payment",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/mall-core": {
+      "type": "path",
+      "url": "./packages/red-jasmine/mall-core",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/mall-buyer": {
+      "type": "path",
+      "url": "./packages/red-jasmine/mall-buyer",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/captcha": {
+      "type": "path",
+      "url": "./packages/red-jasmine/captcha",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/address-admin": {
+      "type": "path",
+      "url": "./packages/red-jasmine/address-admin",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/region-admin": {
+      "type": "path",
+      "url": "./packages/red-jasmine/region-admin",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/region": {
+      "type": "path",
+      "url": "./packages/red-jasmine/region",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/address": {
+      "type": "path",
+      "url": "./packages/red-jasmine/address",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/admin": {
+      "type": "path",
+      "url": "./packages/red-jasmine/admin",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/auth": {
+      "type": "path",
+      "url": "./packages/red-jasmine/auth",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/user": {
+      "type": "path",
+      "url": "./packages/red-jasmine/user",
+      "options": {
+        "symlink": true
+      }
+    },
+    "red-jasmine/support": {
+      "type": "path",
+      "url": "./packages/red-jasmine/support",
+      "options": {
+        "symlink": true
+      }
+    }
+  }
 }

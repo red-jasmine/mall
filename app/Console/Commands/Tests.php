@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use QL\QueryList;
 use RedJasmine\Address\Models\Address as AddressModel;
 use RedJasmine\Item\Models\Item;
 use RedJasmine\Item\Services\Items\ItemCreateService;
+use RedJasmine\Logistics\Models\LogisticsCompany;
 use RedJasmine\Order\DataTransferObjects\DataPipeline;
 use RedJasmine\Order\DataTransferObjects\OrderDTO;
 use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
@@ -86,6 +88,16 @@ class Tests extends Command
 
     public function handle()
     {
+
+        $result = LogisticsCompany::all();
+
+        $res  = Storage::disk('public')->get('logistics/logistics_company.json');
+        $json = json_decode($res, true);
+        foreach ($json as $one) {
+            $one['code'] = $one['type'];
+            LogisticsCompany::create($one);
+        }
+        dd($res);
 
         $service = app(WalletWithdrawalService::class);
         $service->setOperator(new SystemUser(2));
