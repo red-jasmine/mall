@@ -2,11 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Dflydev\DotAccessData\Data;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Encryption\Encrypter;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use QL\QueryList;
@@ -17,25 +13,18 @@ use RedJasmine\Logistics\Models\LogisticsCompany;
 use RedJasmine\Order\DataTransferObjects\DataPipeline;
 use RedJasmine\Order\DataTransferObjects\OrderDTO;
 use RedJasmine\Order\DataTransferObjects\OrderPaidInfoDTO;
-use RedJasmine\Order\DataTransferObjects\OrderProductDTO;
 use RedJasmine\Order\DataTransferObjects\OrderSplitProductDTO;
 use RedJasmine\Order\DataTransferObjects\Others\OrderProductProgressDTO;
 use RedJasmine\Order\DataTransferObjects\Others\OrderRemarksDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\OrderProductRefundDTO;
-use RedJasmine\Order\DataTransferObjects\Refund\RefundAgreeDTO;
-use RedJasmine\Order\DataTransferObjects\Refund\RefundRefuseDTO;
 use RedJasmine\Order\DataTransferObjects\Refund\RefundReturnGoodsDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderCardKeyShippingDTO;
 use RedJasmine\Order\DataTransferObjects\Shipping\OrderLogisticsShippingDTO;
-use RedJasmine\Order\DataTransferObjects\Shipping\OrderShippingDTO;
 use RedJasmine\Order\Enums\Orders\OrderStatusEnum;
 use RedJasmine\Order\Enums\Orders\OrderTypeEnum;
 use RedJasmine\Order\Enums\Orders\PaymentStatusEnum;
 use RedJasmine\Order\Enums\Orders\ShippingTypeEnum;
-use RedJasmine\Order\Enums\Refund\RefundGoodsStatusEnum;
 use RedJasmine\Order\Enums\Refund\RefundTypeEnum;
-use RedJasmine\Order\Models\OrderLogistics;
-use RedJasmine\Order\Models\OrderProduct;
 use RedJasmine\Order\Pipelines\OrderTestPipeline;
 use RedJasmine\Order\Services\Orders\Actions\OrderPayingAction;
 use RedJasmine\Order\Services\Orders\Pipelines\Products\ProductCategoryApplying;
@@ -44,17 +33,14 @@ use RedJasmine\Order\Services\RefundService;
 use RedJasmine\Order\ValueObjects\OrderProductObject;
 use RedJasmine\Product\Enums\Category\CategoryStatusEnum;
 use RedJasmine\Product\Enums\Product\ProductTypeEnum;
-use RedJasmine\Product\Enums\Stock\ProductStockChangeTypeEnum;
+use RedJasmine\Product\Models\ProductSku;
 use RedJasmine\Product\Services\Category\ProductCategoryService;
 use RedJasmine\Product\Services\Product\ProductService;
 use RedJasmine\Product\Services\Product\ProductStock;
 use RedJasmine\Product\Services\Product\Stock\StockChannelObject;
 use RedJasmine\Product\Services\Product\Stock\StockChanneObject;
-use RedJasmine\Support\DataTransferObjects\SystemUserDTO;
+use RedJasmine\Support\Data\UserData;
 use RedJasmine\Support\DataTransferObjects\UserDTO;
-use RedJasmine\Support\Helpers\Encrypter\AES;
-use RedJasmine\Support\Helpers\User\SystemUser;
-use RedJasmine\Support\Helpers\User\UserObject;
 use RedJasmine\Trade\Helpers\Trade;
 use RedJasmine\Trade\Services\TradeCreate;
 use RedJasmine\Trade\Services\Validators\TradeBaseValidator;
@@ -68,6 +54,7 @@ use RedJasmine\Wallet\WalletService;
 use RedJasmine\Wallet\WalletWithdrawalService;
 use Spatie\Browsershot\Browsershot;
 use Throwable;
+use  RedJasmine\Product\Services\Product\Enums\ProductStockChangeTypeEnum;
 
 class Tests extends Command
 {
@@ -89,6 +76,13 @@ class Tests extends Command
     public function handle()
     {
 
+        $service = app(ProductService::class);
+
+        $service->stock()->sub(ProductSku::find(418293992514269), 40, ProductStockChangeTypeEnum::SELLER);
+
+        dd();
+
+
         $result = LogisticsCompany::all();
 
         $res  = Storage::disk('public')->get('logistics/logistics_company.json');
@@ -100,7 +94,7 @@ class Tests extends Command
         dd($res);
 
         $service = app(WalletWithdrawalService::class);
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
         $id  = 409674314262254;
         $DTO = WalletWithdrawalDTO::from([
@@ -115,7 +109,7 @@ class Tests extends Command
         dd();
 
         $service = new WalletService();
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
         $owner   = UserDTO::from([ 'type' => 'system', 'id' => 1 ]);
         $wallet1 = $service->wallet($owner, 'balance');
         $DTO     = WalletActionDTO::from([
@@ -141,7 +135,7 @@ class Tests extends Command
         //$service->refund($wallet->id, $DTO);
 
         $service = app(WalletRechargeService::class);
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
         $DTO            = WalletRechargeDTO::from([
                                                       'amount' => 10
@@ -167,7 +161,7 @@ class Tests extends Command
     public function testOrderProducts()
     {
         $service = app(OrderService::class);
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
 
         $DTO = OrderProductProgressDTO::from([
@@ -189,7 +183,7 @@ class Tests extends Command
     public function testOrderOthers()
     {
         $service = app(OrderService::class);
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
         $id  = 408200202924856;
         $DTO = OrderRemarksDTO::from([
@@ -203,7 +197,7 @@ class Tests extends Command
     public function testRefund()
     {
         $service = app(RefundService::class);
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
 
         // 创建
@@ -262,7 +256,7 @@ class Tests extends Command
     {
 
         $service = app(OrderService::class);
-        $service->setOperator(new SystemUser(2));
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
         $product  = [
             'order_product_type' => 'goods',
@@ -303,8 +297,8 @@ class Tests extends Command
 
         $order = [
             'title'           => '标题',
-            'seller'          => UserDTO::fromUserInterface(User::find(383142919024923)),
-            'buyer'           => new SystemUserDTO(),
+            'seller'          => UserData::fromUserInterface(User::find(383142919024923)),
+            'buyer'           => UserData::from([ 'type' => 'system', 'id' => 1 ]),
             'order_type'      => OrderTypeEnum::MALL->value,
             'shipping_type'   => ShippingTypeEnum::EXPRESS->value,
             'order_status'    => OrderStatusEnum::WAIT_BUYER_PAY->value,
@@ -404,7 +398,7 @@ class Tests extends Command
 
 
         $service = app(ProductService::class);
-        $service->setOperator(new UserObject([ 'type' => 'admin', 'uid' => 0 ]));
+        $service->setOperator(UserData::from([ 'type' => 'admin', 'uid' => 0 ]));
 
         $changeStock = rand(-100, 100);
         $changeStock = 200;
@@ -519,7 +513,7 @@ class Tests extends Command
     {
 
         $service = app(ProductCategoryService::class);
-        $service->setOperator(new SystemUser());
+        $service->setOperator(UserData::from([ 'type' => 'system', 'id' => 0 ]));
 
         $attributes      = [
             'parent_id'  => 0,

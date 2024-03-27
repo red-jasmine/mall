@@ -66,7 +66,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => "RedJasmine\\User\\Models\\User",
+            'model'  => "App\\Models\\User",
+            // 'model'  => "RedJasmine\\User\\Models\\User",
         ],
         // 'users' => [
         //     'driver' => 'database',
