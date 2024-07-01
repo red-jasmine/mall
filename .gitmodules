@@ -1,9 +1,0 @@
-[submodule "packages/red-jasmine/product"]
-	path = packages/red-jasmine/product
-	url = git@github.com:red-jasmine/product.git
-[submodule "packages/red-jasmine/support"]
-	path = packages/red-jasmine/support
-	url = git@github.com:red-jasmine/support.git
-[submodule "packages/red-jasmine/ecommerce"]
-	path = packages/red-jasmine/ecommerce
-	url = git@github.com:red-jasmine/ecommerce.git
