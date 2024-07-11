@@ -13,3 +13,9 @@ Route::group(['prefix' => 'buyer'],function (){
     \RedJasmine\Product\UI\Http\Buyer\ProductBuyerRoute::api();
 
 });
+
+
+Route::group(['prefix' => 'seller'],function (){
+    \RedJasmine\Product\UI\Http\Seller\ProductSellerRoute::api();
+
+});
