@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27e1715a44635ca7153ed604c5f83d9b",
+    "content-hash": "9a508762b27412ff032bfedbfd14247b",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3510,12 +3510,72 @@
             "time": "2024-04-27T21:32:50+00:00"
         },
         {
+            "name": "red-jasmine/card",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../packages/card",
+                "reference": "530bd9af2d7f8c91e363a8d203ca6d2bd1e4d185"
+            },
+            "require": {
+                "red-jasmine/support": "1.0.x-dev"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RedJasmine\\Card\\CardServicePackageProvider",
+                        "RedJasmine\\Card\\Application\\CardServiceApplicationProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\Card\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RedJasmine\\Card\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liushoukun",
+                    "email": "liushoukun66@gmail.com",
+                    "homepage": "https://github.com/liushoukun66"
+                }
+            ],
+            "description": "卡密",
+            "homepage": "https://github.com/red-jasmine/captcha",
+            "keywords": [
+                "Card",
+                "Laravel"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "red-jasmine/ecommerce",
             "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../packages/ecommerce",
-                "reference": "6c103aae76f90334f6c564dc3ddd35bd3bf10140"
+                "reference": "20a75c930673abf9353e5277ddb120effc437b60"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -3566,11 +3626,11 @@
         },
         {
             "name": "red-jasmine/product",
-            "version": "dev-develop",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../packages/product",
-                "reference": "4080a6989fb572347acd690ab331c48080ea2a79"
+                "reference": "50fb4521295db84294aa0023895ba519cdc4c666"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -3630,11 +3690,11 @@
         },
         {
             "name": "red-jasmine/support",
-            "version": "dev-develop",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../packages/support",
-                "reference": "ef7fa2e8201d1b1349bfda8432ec8a024aafdc3a"
+                "reference": "9eec2e8ab53ff220c01be9c59ff4d22c4a9814ce"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",
@@ -7419,6 +7479,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "red-jasmine/card": 20,
         "red-jasmine/product": 20
     },
     "prefer-stable": true,
