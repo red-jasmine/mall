@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f40c64a0e4515dd2dc91f1273f3b732d",
+    "content-hash": "ef9e9703426394fc6ce2d94b683555e2",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3516,7 +3516,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/card",
-                "reference": "f06b6c57c330fd6585bc40dabbbf0c74264a82a8"
+                "reference": "64c1bd8d6d1f7076a226b2c29ae27475ef552398"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -3626,12 +3626,74 @@
             }
         },
         {
+            "name": "red-jasmine/order",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./packages/order",
+                "reference": "fc0479ae9b6241ac7cd0da2b83b9af221bb24330"
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "red-jasmine/ecommerce": "1.0.x-dev",
+                "red-jasmine/support": "1.0.x-dev"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RedJasmine\\Order\\OrderPackageServiceProvider",
+                        "RedJasmine\\Order\\Domain\\OrderDomainServiceProvider",
+                        "RedJasmine\\Order\\Application\\OrderApplicationServiceProvider"
+                    ],
+                    "aliases": []
+                },
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\Order\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RedJasmine\\Order\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "liushoukun",
+                    "email": "liushoukun66@gmail.com",
+                    "homepage": "https://github.com/liushoukun"
+                }
+            ],
+            "description": ":package_description",
+            "homepage": "https://github.com/red-jasmine/order",
+            "keywords": [
+                "Laravel",
+                "Order"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "red-jasmine/product",
             "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "50fb4521295db84294aa0023895ba519cdc4c666"
+                "reference": "1f203d3f2f4fa71db2d7720fa43bf760a9b713ba"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -3655,7 +3717,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "RedJasmine\\Product\\": "src/"
+                    "RedJasmine\\Product\\": "src/",
+                    "RedJasmine\\Product\\Database\\Seeders\\": "./database/seeders/"
                 }
             },
             "autoload-dev": {
@@ -3695,7 +3758,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/support",
-                "reference": "9eec2e8ab53ff220c01be9c59ff4d22c4a9814ce"
+                "reference": "bf77cdbc9f66c0a6a3b4465891a7f0bf62a396a5"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",
@@ -7481,6 +7544,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "red-jasmine/card": 20,
+        "red-jasmine/order": 20,
         "red-jasmine/product": 20
     },
     "prefer-stable": true,
