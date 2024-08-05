@@ -13,7 +13,8 @@
     "laravel/tinker": "^2.9",
     "red-jasmine/card": "1.0.x-dev",
     "red-jasmine/order": "1.0.x-dev",
-    "red-jasmine/product": "1.0.x-dev"
+    "red-jasmine/product": "1.0.x-dev",
+    "red-jasmine/shopping": "1.0.x-dev"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",

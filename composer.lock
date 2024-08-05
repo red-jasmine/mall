@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef9e9703426394fc6ce2d94b683555e2",
+    "content-hash": "47cf2a7452a90dd1bea69a297ac01797",
     "packages": [
         {
             "name": "amphp/amp",
@@ -3516,7 +3516,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/card",
-                "reference": "64c1bd8d6d1f7076a226b2c29ae27475ef552398"
+                "reference": "bf361ff28ec7d9ae985028143df275e77bfe88fb"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -3631,7 +3631,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/order",
-                "reference": "fc0479ae9b6241ac7cd0da2b83b9af221bb24330"
+                "reference": "ed3b697b0f538c2a3d4b0e7446935119db106f84"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -3747,6 +3747,36 @@
                 "Laravel",
                 "Product"
             ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "red-jasmine/shopping",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/shopping",
+                "reference": "26f29e907d506d49b7176e68ecb30ff18a8b80e6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev",
+                    "dev-main": "1.0.x-dev",
+                    "dev-develop": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RedJasmine\\Shopping\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "red-jasmine shopping",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -7545,7 +7575,8 @@
     "stability-flags": {
         "red-jasmine/card": 20,
         "red-jasmine/order": 20,
-        "red-jasmine/product": 20
+        "red-jasmine/product": 20,
+        "red-jasmine/shopping": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
