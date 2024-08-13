@@ -6,8 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use RedJasmine\Support\Contracts\UserInterface;
 
-class User extends Authenticatable
+class User extends Authenticatable implements UserInterface
 {
     use HasFactory, Notifiable;
 
@@ -37,11 +38,33 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    protected function casts() : array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
+
+    public function getType() : string
+    {
+        return 'user';
+    }
+
+    public function getID() : int
+    {
+        return $this->getKey();
+    }
+
+    public function getNickname() : ?string
+    {
+        return $this->name;
+    }
+
+    public function getAvatar() : ?string
+    {
+        return null;
+    }
+
+
 }
