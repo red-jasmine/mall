@@ -9,6 +9,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.3",
+    "filament/filament": "^3.2",
     "laravel/framework": "^11.9",
     "laravel/tinker": "^2.9",
     "red-jasmine/card": "1.0.x-dev",
@@ -76,11 +77,6 @@
         "options": {
           "symlink": true
         }
-      },
-        {
-            "type": "composer",
-            "url": "https://mirrors.cloud.tencent.com/composer/"
-        }
-
+      }
     ]
 }
