@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7025ccaba6f03b778d56867e49fe1218",
+    "content-hash": "42e3adbf94a23dcfaa46c5557a5228fe",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2664,6 +2664,82 @@
                 }
             ],
             "time": "2023-12-03T19:50:20+00:00"
+        },
+        {
+            "name": "invaders-xx/filament-nested-list",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/invaders-xx/filament-nested-list.git",
+                "reference": "e0a1a8c71478ff562acd455282ce2f19c6bcfb83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/invaders-xx/filament-nested-list/zipball/e0a1a8c71478ff562acd455282ce2f19c6bcfb83",
+                "reference": "e0a1a8c71478ff562acd455282ce2f19c6bcfb83",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0",
+                "filament/support": "^3.0",
+                "illuminate/contracts": "^10.0||^11.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.15",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "InvadersXX\\FilamentNestedList\\FilamentNestedListServiceProvider"
+                    ],
+                    "aliases": {
+                        "FilamentNestedList": "InvadersXX\\FilamentNestedList\\Facades\\FilamentNestedList"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "InvadersXX\\FilamentNestedList\\": "src/",
+                    "InvadersXX\\FilamentNestedList\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Vincent",
+                    "email": "envahisseur@gmail.com",
+                    "role": "Owner"
+                }
+            ],
+            "description": "Nested lists layout plugin for Filament",
+            "homepage": "https://github.com/invaders-xx/filament-nested-list",
+            "keywords": [
+                "Envahisseur",
+                "filament-nested-list",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/invaders-xx/filament-nested-list/issues",
+                "source": "https://github.com/invaders-xx/filament-nested-list/tree/v1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/David Vincent",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-05-13T15:45:06+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -5515,7 +5591,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/card",
-                "reference": "6335e82ca4d74a7dfadba03e17c49ba878659fd5"
+                "reference": "9572d96b3f0758dfc42f407f6e8ca47696b48218"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5575,7 +5651,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/ecommerce",
-                "reference": "68044fa74110e2744123ddedc10be62be587f238"
+                "reference": "cb40009efff632e4398ed35a2d81a29f947b80c3"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -5630,7 +5706,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/order",
-                "reference": "fbd19ee68ac83552f155fa2e07bed6d21378ae41"
+                "reference": "c1a12488780c63921caeb1a2ef222ef4616e6ff9"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -5692,7 +5768,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "fea88861fa4984ededa6df9baea88085c1470aea"
+                "reference": "eaaa086e961244e4d5611b68a10a0591e8b01ee9"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -5757,7 +5833,13 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/shopping",
-                "reference": "c5ce1faac20555c70f49a261436a6bda2315d0ed"
+                "reference": "ff5ec8277a6ff2a95adfe3165352366cc2ba33c9"
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "red-jasmine/order": "1.0.x-dev",
+                "red-jasmine/product": "1.0.x-dev",
+                "red-jasmine/support": "1.0.x-dev"
             },
             "type": "library",
             "extra": {
@@ -5787,7 +5869,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/support",
-                "reference": "8d04409606d185122c21f476f505e4b9a0de69d6"
+                "reference": "53fca1d32de2ea150c70220b00fa395df7a4c9e8"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",
