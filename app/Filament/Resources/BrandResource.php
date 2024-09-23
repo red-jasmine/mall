@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BrandResource\Pages;
 use App\Filament\Resources\BrandResource\RelationManagers;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -27,6 +28,14 @@ class BrandResource extends Resource
     {
         return $form
             ->schema([
+                SelectTree::make('parent_id')
+                          ->relationship(relationship: 'parent',titleAttribute:  'name',parentAttribute: 'parent_id')
+                    // ->required()
+                          ->searchable()
+                          ->default(0)
+                          ->enableBranchNode()
+                          ->parentNullValue(0)
+                ,
                 Forms\Components\TextInput::make('name')
                                           ->label(__('red-jasmine.product::brand.fields.name'))
                                           ->required(),
@@ -52,6 +61,7 @@ class BrandResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('parent.name'),
                 Tables\Columns\TextColumn::make('name')
                                          ->label(__('red-jasmine.product::brand.fields.name'))
                                          ->searchable(),

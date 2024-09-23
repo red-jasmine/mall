@@ -2,11 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductCategoryResource\Pages;
-use App\Filament\Resources\ProductCategoryResource\RelationManagers;
-use CodeWithDennis\FilamentSelectTree\SelectTree;
-use RedJasmine\Product\Domain\Category\Models\Enums\CategoryStatusEnum;
-use RedJasmine\Product\Domain\Category\Models\ProductCategory;
+use App\Filament\Resources\ProductSellerCategoryResource\Pages;
+use App\Filament\Resources\ProductSellerCategoryResource\RelationManagers;
+use RedJasmine\Product\Domain\Category\Models\ProductSellerCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,51 +13,62 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductCategoryResource extends Resource
+class ProductSellerCategoryResource extends Resource
 {
-    protected static ?string $model = ProductCategory::class;
+    protected static ?string $model = ProductSellerCategory::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
 
     public static function getModelLabel() : string
     {
-       return  __('red-jasmine.product::product-category.labels.product-category');
+        return  __('red-jasmine.product::product-seller-category.labels.product-seller-category');
     }
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-
-                SelectTree::make('parent_id')
-                    ->relationship(relationship: 'parent',titleAttribute:  'name',parentAttribute: 'parent_id')
-                    // ->required()
-                        ->searchable()
-                    ->default(0)
-                    ->enableBranchNode()
-                    ->parentNullValue(0)
-                ,
+                Forms\Components\TextInput::make('owner_type')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('owner_id')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
+                Forms\Components\Select::make('parent_id')
+                    ->relationship('parent', 'name')
+                    ->required()
+                    ->default(0),
                 Forms\Components\TextInput::make('group_name')
                     ->maxLength(255),
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
                 Forms\Components\TextInput::make('sort')
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\Toggle::make('is_leaf')
+                Forms\Components\TextInput::make('is_leaf')
                     ->required()
-
+                    ->numeric()
                     ->default(0),
-                Forms\Components\Toggle::make('is_show')
+                Forms\Components\TextInput::make('is_show')
                     ->required()
+                    ->numeric()
                     ->default(0),
-                Forms\Components\Radio::make('status')
+                Forms\Components\TextInput::make('status')
                     ->required()
-                    ->options(CategoryStatusEnum::options()),
+                    ->maxLength(32),
+                Forms\Components\TextInput::make('creator_type')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('creator_id')
+                    ->numeric(),
+                Forms\Components\TextInput::make('updater_type')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('updater_id')
+                    ->numeric(),
             ]);
     }
 
@@ -69,16 +78,21 @@ class ProductCategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID')
-
+                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('parent.name')
-
+                Tables\Columns\TextColumn::make('owner_type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('owner_id')
+                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('parent.name')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('group_name')
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('sort')
                     ->numeric()
                     ->sortable(),
@@ -90,7 +104,6 @@ class ProductCategoryResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
-
             ])
             ->filters([
                 //
@@ -115,9 +128,9 @@ class ProductCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProductCategories::route('/'),
-            'create' => Pages\CreateProductCategory::route('/create'),
-            'edit' => Pages\EditProductCategory::route('/{record}/edit'),
+            'index' => Pages\ListProductSellerCategories::route('/'),
+            'create' => Pages\CreateProductSellerCategory::route('/create'),
+            'edit' => Pages\EditProductSellerCategory::route('/{record}/edit'),
         ];
     }
 }
