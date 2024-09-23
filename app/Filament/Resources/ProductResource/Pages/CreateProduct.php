@@ -17,12 +17,13 @@ class CreateProduct extends CreateRecord
     protected function handleRecordCreation(array $data) : Model
     {
 
+
         $this->commandService = app(ProductCommandService::class);
         $command              = ProductCreateCommand::from($data);
 
        return $this->commandService->create($command);
 
-        return static::getModel()::create($data);
+
     }
 
 

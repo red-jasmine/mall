@@ -31,8 +31,9 @@ class EditProduct extends EditRecord
         $model          = app(ProductQueryService::class)->findById($query);
         foreach ($model->info->getAttributes() as $key => $value) {
             $model->setAttribute($key, $model->info->{$key});
-
         }
+        $model->setAttribute('skus', $model->skus->toArray());
+
         return $model;
     }
 

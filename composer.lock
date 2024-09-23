@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f207e9936e73990749a4f041aadecdf",
+    "content-hash": "fb0bb669acb6e46e8df787224628ac26",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1008,6 +1008,87 @@
                 "source": "https://github.com/AnourValar/eloquent-serialize/tree/1.2.25"
             },
             "time": "2024-09-16T12:59:37+00:00"
+        },
+        {
+            "name": "awcodes/filament-table-repeater",
+            "version": "v3.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awcodes/filament-table-repeater.git",
+                "reference": "5140e21290a99dea460cec85f1ef015aedbbcf57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awcodes/filament-table-repeater/zipball/5140e21290a99dea460cec85f1ef015aedbbcf57",
+                "reference": "5140e21290a99dea460cec85f1ef015aedbbcf57",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "filament/forms": "^3.1",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.13.5"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.0",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^2.0",
+                "pestphp/pest-plugin-faker": "^2.0",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "pestphp/pest-plugin-livewire": "^2.0",
+                "phpunit/phpunit": "^10.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Awcodes\\TableRepeater\\TableRepeaterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Awcodes\\TableRepeater\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Weston",
+                    "email": "awcodes1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A modified version of the Filament Forms Repeater to display it as a table.",
+            "homepage": "https://github.com/awcodes/filament-table-repeater",
+            "keywords": [
+                "awcodes",
+                "filament",
+                "laravel",
+                "plugin",
+                "table repeater"
+            ],
+            "support": {
+                "issues": "https://github.com/awcodes/filament-table-repeater/issues",
+                "source": "https://github.com/awcodes/filament-table-repeater/tree/v3.0.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/awcodes",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-07-18T16:02:26+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -6644,7 +6725,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/order",
-                "reference": "110184433ae9b153c0b9290704472c64f3cbb15f"
+                "reference": "7ed0f464cfa73ab9a6476563171cb1da9e772c1e"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -6706,7 +6787,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "eaaa086e961244e4d5611b68a10a0591e8b01ee9"
+                "reference": "10289eb0719f7bfe2524eee0c14ebe773e9d526b"
             },
             "require": {
                 "ext-bcmath": "*",

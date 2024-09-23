@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "awcodes/filament-table-repeater": "^3.0",
         "codewithdennis/filament-select-tree": "*",
         "filament/filament": "^3.2",
         "laravel/framework": "^11.9",

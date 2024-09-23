@@ -4,15 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use Awcodes\TableRepeater\Components\TableRepeater;
+use Awcodes\TableRepeater\Header;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use RedJasmine\Ecommerce\Domain\Models\Enums\ProductTypeEnum;
 use RedJasmine\Ecommerce\Domain\Models\Enums\ShippingTypeEnum;
+use RedJasmine\Product\Application\Property\Services\PropertyValidateService;
 use RedJasmine\Product\Domain\Product\Models\Enums\FreightPayerEnum;
 use RedJasmine\Product\Domain\Product\Models\Enums\ProductStatusEnum;
 use RedJasmine\Product\Domain\Product\Models\Product;
@@ -77,14 +81,52 @@ class ProductResource extends Resource
                                             ) => $get('is_multiple_spec'))->live()
                                                 ->afterStateUpdated(function ( $state, $old,Forms\Get $get, Forms\Set $set) {
 
-                                                    Log::info('saleProps更新SKU',['state'=>$state]);
+                                                    try {
+                                                        $saleProps = array_values($get('sale_props')??[]);
+
+                                                        $saleProps =  array_map(function ($item){
+                                                            $item['values'] = array_values($item['values']??[]);
+                                                            return $item;
+                                                        },$saleProps);
+                                                        $service = app(PropertyValidateService::class);
+                                                        $crossJoin =  $service->crossJoin($saleProps);
+
+                                                        $skus = $get('skus')??[];
+                                                        $skus = [];
+                                                        foreach ($crossJoin as $properties => $propertyName){
+                                                            $skus[] = [
+                                                                'properties'      => $properties,
+                                                                'properties_name' => $propertyName,
+                                                                'price'           => 0,
+                                                                'market_price'    => 0,
+                                                                'cost_price'      => 0,
+                                                                'stock'           => 0,
+                                                                'safety_stock'    => 0,
+                                                                'status'          => ProductStatusEnum::ON_SALE->value,
+
+                                                            ];
+                                                        }
+
+                                                        $set('skus',$skus);
+                                                    }catch (\Throwable $throwable){
+
+                                                    }
+
+
+
+
+                                                    //dd($skus);
+                                                    //Log::info('saleProps更新SKU',['state'=>$state]);
                                                     // TODO 更新SKU 值
                                                 }),
 
-                                            static::skus()->visible()->visible(fn(Forms\Get $get
+                                            static::skus()
+                                                  ->deletable(false)
+                                                  ->visible()->visible(fn(Forms\Get $get
                                             ) => $get('is_multiple_spec'))->live()
+
                                                 ->afterStateUpdated(function ($state, $old) {
-                                                    Log::info('更新SKU');
+
                                                 }),
                                             Forms\Components\TextInput::make('stock')
                                                                       ->required()
@@ -274,7 +316,8 @@ class ProductResource extends Resource
             Forms\Components\Select::make('pid')
                                    ->live()
                                    ->columns(1)
-                                   ->inlineLabel()
+                                   ->columnSpan(1)
+
                                    ->searchable()
                                    ->getSearchResultsUsing(fn(string $search) : array => ProductProperty::where('name',
                                        'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
@@ -313,6 +356,7 @@ class ProductResource extends Resource
 
                                      ])
                                      ->columns(2)
+                                     ->columnSpan(3)
                                      ->minItems(1)
                                      ->reorderable(false)
                 // 是否多选
@@ -321,7 +365,12 @@ class ProductResource extends Resource
 
         ])
                                         ->columns(1)
-                                        ->default([]);
+                                        ->default([])
+            ->inlineLabel(false)
+            ->columns(4)
+            ->columnSpan('full')
+            ->reorderable(false)
+            ;
     }
 
     public static function table(Table $table) : Table
@@ -345,8 +394,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                                          ->badge()
                                          ->formatStateUsing(fn($state) => ProductStatusEnum::labels()[$state->value])
-                                         ->color(fn($state) => ProductStatusEnum::colors()[$state->value])
-                ,
+                                         ->color(fn($state) => ProductStatusEnum::colors()[$state->value]),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('barcode')->searchable(),
                 Tables\Columns\TextColumn::make('outer_id')->searchable(),
@@ -374,10 +422,10 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('cost_price')
                                          ->numeric()
                                          ->sortable(),
-
                 Tables\Columns\TextColumn::make('stock')
-                                         ->numeric()
-                                         ->sortable(),
+                                          ->numeric()
+                                          ->sortable(0),
+
                 Tables\Columns\TextColumn::make('safety_stock')
                                          ->numeric()
                                          ->sortable(),
@@ -431,18 +479,47 @@ class ProductResource extends Resource
 
     protected static function skus()
     {
-        return Forms\Components\Repeater::make('skus')->schema([
-            Forms\Components\TextInput::make('properties_name')->maxLength(32),
-            Forms\Components\TextInput::make('properties')->maxLength(32),
-            Forms\Components\TextInput::make('price')->maxLength(32),
-            Forms\Components\TextInput::make('market_price')->maxLength(32),
-            Forms\Components\TextInput::make('cost_price')->maxLength(32),
+        return TableRepeater::make('skus')
+                           ->headers([
+
+                               Header::make('properties_name'),
+                               Header::make('properties'),
+                               Header::make('price'),
+                               Header::make('market_price'),
+                               Header::make('cost_price'),
+                               Header::make('stock'),
+                               Header::make('safety_stock'),
+                               Header::make('barcode'),
+                               Header::make('outer_id'),
+                               Header::make('supplier_sku_id'),
+                               Header::make('status'),
+                           ])
+                            ->schema([
+
+
+
+            Forms\Components\TextInput::make('properties_name')->readOnly(),
+            Forms\Components\TextInput::make('properties')->readOnly(),
+            Forms\Components\TextInput::make('price')->required()->numeric()->default(0.00)->formatStateUsing(fn($state) => is_object($state) ? $state->value() : $state),
+            Forms\Components\TextInput::make('market_price')->required()->numeric()->default(0.00)->formatStateUsing(fn($state) => is_object($state) ? $state->value() : $state),
+            Forms\Components\TextInput::make('cost_price')->required()->numeric()->default(0.00)->formatStateUsing(fn($state) => is_object($state) ? $state->value() : $state),
             Forms\Components\TextInput::make('stock')->maxLength(32),
-            Forms\Components\TextInput::make('safety_stock')->maxLength(32),
+            Forms\Components\TextInput::make('safety_stock')
+                                      ->numeric()
+                                      ->default(0),
             Forms\Components\TextInput::make('barcode')->maxLength(32),
             Forms\Components\TextInput::make('outer_id')->maxLength(32),
             Forms\Components\TextInput::make('supplier_sku_id')->maxLength(32),
-            Forms\Components\TextInput::make('status')->maxLength(32),
-        ]);
+            Forms\Components\Select::make('status')->required()
+                                                  ->default(ProductStatusEnum::ON_SALE->value)
+                                                  ->options(ProductStatusEnum::skusStatus()),
+
+
+        ])->inlineLabel(false)
+          ->columnSpan('full')
+            ->streamlined()
+            ->reorderable(false)
+            ->addable(false)
+            ;
     }
 }
