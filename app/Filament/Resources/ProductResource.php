@@ -5,22 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
-use Illuminate\Database\Eloquent\Model;
-use RedJasmine\Ecommerce\Domain\Models\Enums\ProductTypeEnum;
-use RedJasmine\Ecommerce\Domain\Models\Enums\ShippingTypeEnum;
-use RedJasmine\Order\Domain\Models\Enums\ShippingStatusEnum;
-use RedJasmine\Product\Application\Product\Services\ProductCommandService;
-use RedJasmine\Product\Application\Product\UserCases\Commands\ProductCreateCommand;
-use RedJasmine\Product\Domain\Product\Models\Enums\FreightPayerEnum;
-use RedJasmine\Product\Domain\Product\Models\Enums\ProductStatusEnum;
-use RedJasmine\Product\Domain\Product\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
+use RedJasmine\Ecommerce\Domain\Models\Enums\ProductTypeEnum;
+use RedJasmine\Ecommerce\Domain\Models\Enums\ShippingTypeEnum;
+use RedJasmine\Product\Domain\Product\Models\Enums\FreightPayerEnum;
+use RedJasmine\Product\Domain\Product\Models\Enums\ProductStatusEnum;
+use RedJasmine\Product\Domain\Product\Models\Product;
 use RedJasmine\Product\Domain\Property\Models\Enums\PropertyTypeEnum;
 use RedJasmine\Product\Domain\Property\Models\ProductProperty;
 use RedJasmine\Product\Domain\Property\Models\ProductPropertyValue;
@@ -29,11 +24,9 @@ class ProductResource extends Resource
 {
 
 
-
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
 
     public static function form(Form $form) : Form
     {
@@ -71,58 +64,28 @@ class ProductResource extends Resource
 
                                             Forms\Components\Radio::make('status')->required()->inline()->options(ProductStatusEnum::options()),
 
+                                            static::basicProps()->columnSpan('full'),
 
-                                            Forms\Components\Repeater::make('basic_props')->schema([
-                                                    Forms\Components\Select::make('pid')
-                                                        ->live()
-                                                        ->columns(1)
-                                                        ->inlineLabel()
-                                                        ->searchable()
-                                                        ->getSearchResultsUsing(fn (string $search): array => ProductProperty::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
-                                                        ->getOptionLabelUsing(fn ($value,Forms\Get $get): ?string =>$get('name')),
-
-                                                    Forms\Components\Repeater::make('values')
-                                                                             ->hiddenLabel()
-                                                                             ->schema([
-                                                        Forms\Components\Select::make('vid')
-                                                                               ->searchable()
-
-                                                                                ->inlineLabel()
-                                                                               ->getSearchResultsUsing(fn (string $search): array => ProductPropertyValue::where('name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
-
-                                                                                ->getOptionLabelUsing(fn ($value,Forms\Get $get): ?string =>$get('name'))
-
-                                                                           ->hidden(fn(Forms\Get $get)=>ProductProperty::find($get('../../pid'))?->type === PropertyTypeEnum::TEXT),
-
-
-                                                        Forms\Components\TextInput::make('name')
-                                                            ->maxLength(30)
-                                                            ->hidden(fn(Forms\Get $get)=>ProductProperty::find($get('../../pid'))?->type !== PropertyTypeEnum::TEXT),
-
-
-                                                        Forms\Components\TextInput::make('alias')->maxLength(30)
-                                                            ->hidden(fn(Forms\Get $get)=>ProductProperty::find($get('../../pid'))?->type === PropertyTypeEnum::TEXT),
-
-
-
-
-
-                                                    ])
-                                                        ->columns(2)
-                                                        // 是否多选
-                                                    ->hidden(fn(Forms\Get $get)=>!$get('pid')),
-
-
-
-                                            ])
-                                                                                          ->columns(2)
-                                                                                          ->default([]),
-
-                                            ]),
+                                        ]),
 
                 Forms\Components\Section::make('销售信息')->inlineLabel()
                                         ->schema([
                                             Forms\Components\Radio::make('is_multiple_spec')->required()->boolean()->live()->inline()->default(0),
+
+
+                                            static::saleProps()->visible(fn(Forms\Get $get
+                                            ) => $get('is_multiple_spec'))->live()
+                                                ->afterStateUpdated(function ( $state, $old,Forms\Get $get, Forms\Set $set) {
+
+                                                    Log::info('saleProps更新SKU',['state'=>$state]);
+                                                    // TODO 更新SKU 值
+                                                }),
+
+                                            static::skus()->visible()->visible(fn(Forms\Get $get
+                                            ) => $get('is_multiple_spec'))->live()
+                                                ->afterStateUpdated(function ($state, $old) {
+                                                    Log::info('更新SKU');
+                                                }),
                                             Forms\Components\TextInput::make('stock')
                                                                       ->required()
                                                                       ->numeric()
@@ -133,19 +96,22 @@ class ProductResource extends Resource
                                                                       ->required()
                                                                       ->numeric()
                                                                       ->default(0.00)
-                                                ->formatStateUsing(fn($state)=> is_object($state)?$state->value():$state)
+                                                                      ->formatStateUsing(fn($state
+                                                                      ) => is_object($state) ? $state->value() : $state)
                                                                       ->hidden(fn(Forms\Get $get
                                                                       ) => $get('is_multiple_spec')),
                                             Forms\Components\TextInput::make('market_price')
                                                                       ->required()
                                                                       ->numeric()
-                                                ->formatStateUsing(fn($state)=> is_object($state)?$state->value():$state)
+                                                                      ->formatStateUsing(fn($state
+                                                                      ) => is_object($state) ? $state->value() : $state)
                                                                       ->default(0.00)->hidden(fn(Forms\Get $get
                                                 ) => $get('is_multiple_spec')),
                                             Forms\Components\TextInput::make('cost_price')
                                                                       ->required()
                                                                       ->numeric()
-                                                ->formatStateUsing(fn($state)=> is_object($state)?$state->value():$state)
+                                                                      ->formatStateUsing(fn($state
+                                                                      ) => is_object($state) ? $state->value() : $state)
                                                                       ->default(0.00)->hidden(fn(Forms\Get $get
                                                 ) => $get('is_multiple_spec')),
                                             Forms\Components\TextInput::make('unit')
@@ -240,18 +206,122 @@ class ProductResource extends Resource
                                           ->numeric(),
 
 
-
-
-
-
-
-
-
-
-
-
             ])
             ->columns(1);
+    }
+
+    protected static function basicProps()
+    {
+
+        return Forms\Components\Repeater::make('basic_props')->schema([
+            Forms\Components\Select::make('pid')
+                                   ->live()
+                                   ->columns(1)
+                                   ->inlineLabel()
+                                   ->searchable()
+                                   ->getSearchResultsUsing(fn(string $search) : array => ProductProperty::where('name',
+                                       'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
+                                   ->getOptionLabelUsing(fn($value, Forms\Get $get) : ?string => $get('name')),
+
+            Forms\Components\Repeater::make('values')
+                                     ->hiddenLabel()
+                                     ->schema([
+                                         Forms\Components\Select::make('vid')
+                                                                ->searchable()
+                                                                ->inlineLabel()
+                                                                ->getSearchResultsUsing(fn(string $search
+                                                                ) : array => ProductPropertyValue::where('name', 'like',
+                                                                    "%{$search}%")->limit(50)->pluck('name',
+                                                                    'id')->toArray())
+                                                                ->getOptionLabelUsing(fn(
+                                                                    $value,
+                                                                    Forms\Get $get
+                                                                ) : ?string => $get('name'))
+                                                                ->hidden(fn(Forms\Get $get
+                                                                ) => ProductProperty::find($get('../../pid'))?->type === PropertyTypeEnum::TEXT),
+
+
+                                         Forms\Components\TextInput::make('name')
+                                                                   ->maxLength(30)
+                                                                   ->inlineLabel()
+                                                                   ->hidden(fn(Forms\Get $get
+                                                                   ) => ProductProperty::find($get('../../pid'))?->type !== PropertyTypeEnum::TEXT),
+
+
+                                         Forms\Components\TextInput::make('alias')->maxLength(30)
+                                                                   ->inlineLabel()
+                                                                   ->hidden(fn(Forms\Get $get
+                                                                   ) => ProductProperty::find($get('../../pid'))?->type === PropertyTypeEnum::TEXT),
+
+
+                                     ])
+                                     ->columns(2)
+                                     ->minItems(1)
+                                     ->reorderable(false)
+                // 是否多选
+                                     ->hidden(fn(Forms\Get $get) => !$get('pid')),
+
+
+        ])
+                                        ->columns(1)
+                                        ->default([]);
+    }
+
+
+    protected static function saleProps()
+    {
+        return Forms\Components\Repeater::make('sale_props')->schema([
+            Forms\Components\Select::make('pid')
+                                   ->live()
+                                   ->columns(1)
+                                   ->inlineLabel()
+                                   ->searchable()
+                                   ->getSearchResultsUsing(fn(string $search) : array => ProductProperty::where('name',
+                                       'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
+                                   ->getOptionLabelUsing(fn($value, Forms\Get $get) : ?string => $get('name')),
+
+            Forms\Components\Repeater::make('values')
+                                     ->hiddenLabel()
+                                     ->schema([
+                                         Forms\Components\Select::make('vid')
+                                                                ->searchable()
+                                                                ->inlineLabel()
+                                                                ->getSearchResultsUsing(fn(string $search
+                                                                ) : array => ProductPropertyValue::where('name', 'like',
+                                                                    "%{$search}%")->limit(50)->pluck('name',
+                                                                    'id')->toArray())
+                                                                ->getOptionLabelUsing(fn(
+                                                                    $value,
+                                                                    Forms\Get $get
+                                                                ) : ?string => $get('name'))
+                                                                ->hidden(fn(Forms\Get $get
+                                                                ) => ProductProperty::find($get('../../pid'))?->type === PropertyTypeEnum::TEXT),
+
+
+                                         Forms\Components\TextInput::make('name')
+                                                                   ->maxLength(30)
+                                                                   ->inlineLabel()
+                                                                   ->hidden(fn(Forms\Get $get
+                                                                   ) => ProductProperty::find($get('../../pid'))?->type !== PropertyTypeEnum::TEXT),
+
+
+                                         Forms\Components\TextInput::make('alias')->maxLength(30)
+                                                                   ->inlineLabel()
+                                                                   ->hidden(fn(Forms\Get $get
+                                                                   ) => ProductProperty::find($get('../../pid'))?->type === PropertyTypeEnum::TEXT),
+
+
+                                     ])
+                                     ->columns(2)
+                                     ->minItems(1)
+                                     ->reorderable(false)
+                // 是否多选
+                                     ->hidden(fn(Forms\Get $get) => !$get('pid')),
+
+
+        ])
+                                        ->columns(1)
+                                        ->default([]);
     }
 
     public static function table(Table $table) : Table
@@ -278,18 +348,13 @@ class ProductResource extends Resource
                                          ->color(fn($state) => ProductStatusEnum::colors()[$state->value])
                 ,
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('barcode')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('outer_id')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('is_customized')
-                                         ->numeric()
-                                         ->sortable(),
+                Tables\Columns\TextColumn::make('barcode')->searchable(),
+                Tables\Columns\TextColumn::make('outer_id')->searchable(),
+
                 Tables\Columns\TextColumn::make('is_multiple_spec')
                                          ->numeric()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('slogan')
-                                         ->searchable(),
+
                 Tables\Columns\TextColumn::make('brand.name')
                                          ->numeric()
                                          ->sortable(),
@@ -299,11 +364,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sellerCategory.name')
                                          ->numeric()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('freight_payer')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('postage_id')
-                                         ->numeric()
-                                         ->sortable(),
+
                 Tables\Columns\TextColumn::make('price')
                                          ->money()
                                          ->sortable(),
@@ -313,75 +374,18 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('cost_price')
                                          ->numeric()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('unit')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('unit_name')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('sub_stock')
-                                         ->searchable(),
+
                 Tables\Columns\TextColumn::make('stock')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('channel_stock')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('lock_stock')
                                          ->numeric()
                                          ->sortable(),
                 Tables\Columns\TextColumn::make('safety_stock')
                                          ->numeric()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('delivery_time')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('vip')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('points')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('min_limit')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('max_limit')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('step_limit')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('is_hot')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('is_new')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('is_best')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('is_benefit')
-                                         ->numeric()
-                                         ->sortable(),
+
                 Tables\Columns\TextColumn::make('sort')
                                          ->numeric()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('on_sale_time')
-                                         ->dateTime()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('sold_out_time')
-                                         ->dateTime()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('off_sale_time')
-                                         ->dateTime()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('supplier_type')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('supplier_id')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('supplier_product_id')
-                                         ->numeric()
-                                         ->sortable(),
+
                 Tables\Columns\TextColumn::make('sales')
                                          ->numeric()
                                          ->sortable(),
@@ -423,5 +427,22 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit'   => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    protected static function skus()
+    {
+        return Forms\Components\Repeater::make('skus')->schema([
+            Forms\Components\TextInput::make('properties_name')->maxLength(32),
+            Forms\Components\TextInput::make('properties')->maxLength(32),
+            Forms\Components\TextInput::make('price')->maxLength(32),
+            Forms\Components\TextInput::make('market_price')->maxLength(32),
+            Forms\Components\TextInput::make('cost_price')->maxLength(32),
+            Forms\Components\TextInput::make('stock')->maxLength(32),
+            Forms\Components\TextInput::make('safety_stock')->maxLength(32),
+            Forms\Components\TextInput::make('barcode')->maxLength(32),
+            Forms\Components\TextInput::make('outer_id')->maxLength(32),
+            Forms\Components\TextInput::make('supplier_sku_id')->maxLength(32),
+            Forms\Components\TextInput::make('status')->maxLength(32),
+        ]);
     }
 }

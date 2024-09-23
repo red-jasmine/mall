@@ -33,10 +33,7 @@ class EditProduct extends EditRecord
             $model->setAttribute($key, $model->info->{$key});
 
         }
-
-
         return $model;
-
     }
 
 
