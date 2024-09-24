@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\ProductSellerCategoryResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\Pages;
 
-use App\Filament\Resources\ProductSellerCategoryResource;
-use Filament\Actions;
+use App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryCommandService;
 use RedJasmine\Product\Application\Category\UserCases\Commands\ProductSellerCategoryCreateCommand;
-use RedJasmine\Product\Application\Category\UserCases\Commands\ProductSellerCategoryUpdateCommand;
 
 class CreateProductSellerCategory extends CreateRecord
 {

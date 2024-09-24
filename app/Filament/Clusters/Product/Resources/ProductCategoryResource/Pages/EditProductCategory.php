@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\ProductCategoryResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages;
 
-use App\Filament\Resources\ProductCategoryResource;
+use App\Filament\Clusters\Product\Resources\ProductCategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Category\Services\ProductCategoryCommandService;
 use RedJasmine\Product\Application\Category\Services\ProductCategoryQueryService;
-use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryCommandService;
-use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryQueryService;
 use RedJasmine\Product\Application\Category\UserCases\Commands\ProductCategoryUpdateCommand;
-use RedJasmine\Product\Application\Category\UserCases\Commands\ProductSellerCategoryUpdateCommand;
 use RedJasmine\Support\Domain\Data\Queries\FindQuery;
 
 class EditProductCategory extends EditRecord

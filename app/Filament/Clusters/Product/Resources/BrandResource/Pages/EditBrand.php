@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\BrandResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\BrandResource\Pages;
 
-use App\Filament\Resources\BrandResource;
+use App\Filament\Clusters\Product\Resources\BrandResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Brand\Services\BrandCommandService;
 use RedJasmine\Product\Application\Brand\Services\BrandQueryService;
 use RedJasmine\Product\Application\Brand\UserCases\Commands\BrandCreateCommand;
-use RedJasmine\Product\Application\Category\Services\ProductCategoryCommandService;
-use RedJasmine\Product\Application\Category\Services\ProductCategoryQueryService;
-use RedJasmine\Product\Application\Category\UserCases\Commands\ProductCategoryUpdateCommand;
 use RedJasmine\Support\Domain\Data\Queries\FindQuery;
 
 class EditBrand extends EditRecord

@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Product\Resources;
 
-use App\Filament\Resources\ProductSellerCategoryResource\Pages;
-use App\Filament\Resources\ProductSellerCategoryResource\RelationManagers;
+use App\Filament\Clusters\Product;
+use App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\Pages;
+use App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\RelationManagers;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
-use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryCommandService;
-use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryQueryService;
-use RedJasmine\Product\Domain\Category\Models\Enums\CategoryStatusEnum;
-use RedJasmine\Product\Domain\Category\Models\ProductSellerCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryCommandService;
+use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryQueryService;
+use RedJasmine\Product\Domain\Category\Models\Enums\CategoryStatusEnum;
+use RedJasmine\Product\Domain\Category\Models\ProductSellerCategory;
 
 class ProductSellerCategoryResource extends Resource
 {
 
-
+    protected static ?string $cluster = Product::class;
     public function __construct(
         public ProductSellerCategoryCommandService $commandService,
         public ProductSellerCategoryQueryService $queryService
@@ -30,7 +29,7 @@ class ProductSellerCategoryResource extends Resource
 
     protected static ?string $model = ProductSellerCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
 
 
     public static function getModelLabel() : string
@@ -136,9 +135,9 @@ class ProductSellerCategoryResource extends Resource
     public static function getPages() : array
     {
         return [
-            'index'  => Pages\ListProductSellerCategories::route('/'),
-            'create' => Pages\CreateProductSellerCategory::route('/create'),
-            'edit'   => Pages\EditProductSellerCategory::route('/{record}/edit'),
+            'index'  => \App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\Pages\ListProductSellerCategories::route('/'),
+            'create' => \App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\Pages\CreateProductSellerCategory::route('/create'),
+            'edit'   => \App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\Pages\EditProductSellerCategory::route('/{record}/edit'),
         ];
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Product\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Filament\Clusters\Product\Resources\ProductResource\Pages;
+use App\Filament\Clusters\Product\Resources\ProductResource\RelationManagers;
 use Awcodes\TableRepeater\Components\TableRepeater;
 use Awcodes\TableRepeater\Header;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
@@ -25,10 +25,10 @@ use RedJasmine\Product\Domain\Property\Models\ProductPropertyValue;
 class ProductResource extends Resource
 {
 
-
+    protected static ?string $cluster = \App\Filament\Clusters\Product::class;
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
 
     public static function getModelLabel() : string
     {
@@ -500,6 +500,7 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -519,9 +520,11 @@ class ProductResource extends Resource
     public static function getPages() : array
     {
         return [
-            'index'  => Pages\ListProducts::route('/'),
-            'create' => Pages\CreateProduct::route('/create'),
-            'edit'   => Pages\EditProduct::route('/{record}/edit'),
+            'index'  => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\ListProducts::route('/'),
+            'create' => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\CreateProduct::route('/create'),
+            'view'   => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\ViewProduct::route('/{record}'),
+            'edit'   => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\EditProduct::route('/{record}/edit'),
+
         ];
     }
 

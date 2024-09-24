@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\ProductResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\ProductResource;
+use App\Filament\Clusters\Product\Resources\ProductResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Product\Services\ProductCommandService;
 use RedJasmine\Product\Application\Product\Services\ProductQueryService;
-use RedJasmine\Product\Application\Product\UserCases\Commands\ProductCreateCommand;
 use RedJasmine\Product\Application\Product\UserCases\Commands\ProductUpdateCommand;
 use RedJasmine\Support\Domain\Data\Queries\FindQuery;
 

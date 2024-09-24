@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\BrandResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\BrandResource\Pages;
 
-use App\Filament\Resources\BrandResource;
-use Filament\Actions;
+use App\Filament\Clusters\Product\Resources\BrandResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Brand\Services\BrandCommandService;
 use RedJasmine\Product\Application\Brand\UserCases\Commands\BrandCreateCommand;
-use RedJasmine\Product\Application\Category\Services\ProductCategoryCommandService;
-use RedJasmine\Product\Application\Category\UserCases\Commands\ProductCategoryCreateCommand;
 
 class CreateBrand extends CreateRecord
 {

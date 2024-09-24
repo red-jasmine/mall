@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ProductResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\ProductResource;
-use Filament\Actions;
+use App\Filament\Clusters\Product\Resources\ProductResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Product\Services\ProductCommandService;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Product\Resources;
 
-use App\Filament\Resources\BrandResource\Pages;
-use App\Filament\Resources\BrandResource\RelationManagers;
+use App\Filament\Clusters\Product\Resources\BrandResource\Pages;
+use App\Filament\Clusters\Product\Resources\BrandResource\RelationManagers;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,14 +13,19 @@ use Filament\Tables\Table;
 use RedJasmine\Product\Domain\Brand\Models\Brand;
 use RedJasmine\Product\Domain\Brand\Models\Enums\BrandStatusEnum;
 use RedJasmine\Product\Domain\Brand\Repositories\BrandReadRepositoryInterface;
-
+use App\Filament\Clusters\Product;
 class BrandResource extends Resource
 {
+    protected static ?string $cluster = Product::class;
     protected static ?string $model = Brand::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
 
+    public static function getEloquentQuery() : \Illuminate\Database\Eloquent\Builder
+    {
+        return app(BrandReadRepositoryInterface::class)->modelQuery();
+    }
 
     public static function getModelLabel() : string
     {
@@ -32,7 +37,7 @@ class BrandResource extends Resource
         return $form
             ->schema([
                 SelectTree::make('parent_id')
-                          ->relationship(relationship: 'parent',titleAttribute:  'name',parentAttribute: 'parent_id')
+                          ->relationship(relationship: 'parent', titleAttribute: 'name', parentAttribute: 'parent_id')
                     // ->required()
                           ->searchable()
                           ->default(0)
@@ -51,7 +56,7 @@ class BrandResource extends Resource
                                           ->default(0)->required()->numeric()->minValue(0),
                 Forms\Components\Radio::make('is_show')
                                       ->label(__('red-jasmine.product::brand.fields.is_show'))
-                                      ->boolean()->inline()->options([true=>'是',false=>'否'])->default(true),
+                                      ->boolean()->inline()->options([true => '是', false => '否'])->default(true),
                 Forms\Components\Radio::make('status')->label(__('red-jasmine.product::brand.fields.status'))
                                       ->options(BrandStatusEnum::options())
                                       ->inline()->default(BrandStatusEnum::ENABLE->value),
@@ -108,9 +113,9 @@ class BrandResource extends Resource
     public static function getPages() : array
     {
         return [
-            'index'  => Pages\ListBrands::route('/'),
-            'create' => Pages\CreateBrand::route('/create'),
-            'edit'   => Pages\EditBrand::route('/{record}/edit'),
+            'index'  => \App\Filament\Clusters\Product\Resources\BrandResource\Pages\ListBrands::route('/'),
+            'create' => \App\Filament\Clusters\Product\Resources\BrandResource\Pages\CreateBrand::route('/create'),
+            'edit'   => \App\Filament\Clusters\Product\Resources\BrandResource\Pages\EditBrand::route('/{record}/edit'),
         ];
     }
 }

@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Clusters\Product\Resources;
 
-use App\Filament\Resources\ProductCategoryResource\Pages;
-use App\Filament\Resources\ProductCategoryResource\RelationManagers;
+use App\Filament\Clusters\Product;
+use App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages;
+use App\Filament\Clusters\Product\Resources\ProductCategoryResource\RelationManagers;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
-use RedJasmine\Product\Domain\Category\Models\Enums\CategoryStatusEnum;
-use RedJasmine\Product\Domain\Category\Models\ProductCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use RedJasmine\Product\Domain\Category\Models\Enums\CategoryStatusEnum;
+use RedJasmine\Product\Domain\Category\Models\ProductCategory;
 
 class ProductCategoryResource extends Resource
 {
+    protected static ?string $cluster = Product::class;
     protected static ?string $model = ProductCategory::class;
 
     public static function getModelLabel() : string
@@ -24,7 +24,7 @@ class ProductCategoryResource extends Resource
        return  __('red-jasmine.product::product-category.labels.product-category');
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
     public static function form(Form $form): Form
     {
@@ -115,9 +115,9 @@ class ProductCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProductCategories::route('/'),
-            'create' => Pages\CreateProductCategory::route('/create'),
-            'edit' => Pages\EditProductCategory::route('/{record}/edit'),
+            'index' => \App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\ListProductCategories::route('/'),
+            'create' => \App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\CreateProductCategory::route('/create'),
+            'edit' => \App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\EditProductCategory::route('/{record}/edit'),
         ];
     }
 }

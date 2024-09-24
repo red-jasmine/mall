@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\ProductSellerCategoryResource\Pages;
+namespace App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource\Pages;
 
-use App\Filament\Resources\ProductSellerCategoryResource;
+use App\Filament\Clusters\Product\Resources\ProductSellerCategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryCommandService;
 use RedJasmine\Product\Application\Category\Services\ProductSellerCategoryQueryService;
-use RedJasmine\Product\Application\Category\UserCases\Commands\ProductSellerCategoryCreateCommand;
 use RedJasmine\Product\Application\Category\UserCases\Commands\ProductSellerCategoryUpdateCommand;
 use RedJasmine\Support\Domain\Data\Queries\FindQuery;
 
