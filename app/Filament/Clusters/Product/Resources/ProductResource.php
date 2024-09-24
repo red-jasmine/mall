@@ -9,6 +9,7 @@ use Awcodes\TableRepeater\Header;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -26,9 +27,12 @@ class ProductResource extends Resource
 {
 
     protected static ?string $cluster = \App\Filament\Clusters\Product::class;
+
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+
+
 
     public static function getModelLabel() : string
     {
@@ -499,6 +503,7 @@ class ProductResource extends Resource
             ->filters([
                 //
             ])
+            ->recordUrl(null)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -510,20 +515,15 @@ class ProductResource extends Resource
             ]);
     }
 
-    public static function getRelations() : array
-    {
-        return [
-            //
-        ];
-    }
+
 
     public static function getPages() : array
     {
         return [
-            'index'  => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\ListProducts::route('/'),
-            'create' => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\CreateProduct::route('/create'),
-            'view'   => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\ViewProduct::route('/{record}'),
-            'edit'   => \App\Filament\Clusters\Product\Resources\ProductResource\Pages\EditProduct::route('/{record}/edit'),
+            'index'  => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'view'   => Pages\ViewProduct::route('/{record}'),
+            'edit'   => Pages\EditProduct::route('/{record}/edit'),
 
         ];
     }

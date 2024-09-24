@@ -56,7 +56,7 @@ class BrandResource extends Resource
                                           ->default(0)->required()->numeric()->minValue(0),
                 Forms\Components\Radio::make('is_show')
                                       ->label(__('red-jasmine.product::brand.fields.is_show'))
-                                      ->boolean()->inline()->options([true => '是', false => '否'])->default(true),
+                                      ->boolean()->inline()->default(true),
                 Forms\Components\Radio::make('status')->label(__('red-jasmine.product::brand.fields.status'))
                                       ->options(BrandStatusEnum::options())
                                       ->inline()->default(BrandStatusEnum::ENABLE->value),

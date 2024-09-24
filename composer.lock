@@ -6787,7 +6787,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "10289eb0719f7bfe2524eee0c14ebe773e9d526b"
+                "reference": "bff4cec382d3668accb2c6ce4964a6709ee2fafd"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -6888,7 +6888,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/support",
-                "reference": "53fca1d32de2ea150c70220b00fa395df7a4c9e8"
+                "reference": "d39bed7143ee2c38c2f56c42dc9b7790de88b0c1"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",

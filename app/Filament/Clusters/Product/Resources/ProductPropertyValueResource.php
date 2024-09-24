@@ -3,12 +3,10 @@
 namespace App\Filament\Clusters\Product\Resources;
 
 use App\Filament\Clusters\Product;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\CreateProductPropertyGroup;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\EditProductPropertyGroup;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\ListProductPropertyGroups;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\ViewProductPropertyGroup;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\RelationManagers;
+use App\Filament\Clusters\Product\Resources\ProductPropertyValueResource\Pages;
+use App\Filament\Clusters\Product\Resources\ProductPropertyValueResource\RelationManagers;
+use RedJasmine\Product\Domain\Property\Models\Enums\PropertyStatusEnum;
+use RedJasmine\Product\Domain\Property\Models\ProductPropertyValue;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,14 +14,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use RedJasmine\Product\Domain\Property\Models\ProductPropertyGroup;
 
-class ProductPropertyGroupResource extends Resource
+class ProductPropertyValueResource extends Resource
 {
-    protected static ?string $cluster = Product::class;
-    protected static ?string $model   = ProductPropertyGroup::class;
+    protected static ?string $model = ProductPropertyValue::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $cluster = Product::class;
 
     public static function getNavigationGroup() : ?string
     {
@@ -34,24 +32,37 @@ class ProductPropertyGroupResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('pid')
+                                       ->required()
+                                       ->relationship('property', 'name')
+                                       ->searchable(['name'])
+                                       ->preload()->optionsLimit(2)
+                                       ->nullable(),
+
+                Forms\Components\Select::make('group_id')
+                                       ->relationship('group', 'name')
+                                       ->searchable(['name'])
+                                       ->preload()
+                                       ->nullable(),
                 Forms\Components\TextInput::make('name')
                                           ->required()
-                                          ->maxLength(255),
+                                          ->maxLength(64),
                 Forms\Components\TextInput::make('sort')
                                           ->required()
                                           ->numeric()
                                           ->default(0),
-                Forms\Components\TextInput::make('status')
-                                          ->required()
-                                          ->maxLength(32),
+                Forms\Components\Radio::make('status')
+                                      ->required()
+                                      ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
+                                      ->inline()->inlineLabel(false)->required(),
                 Forms\Components\TextInput::make('creator_type')
-                                          ->maxLength(255)->readOnly()->visibleOn('view'),
+                                          ->maxLength(255),
                 Forms\Components\TextInput::make('creator_id')
-                                          ->numeric()->readOnly()->visibleOn('view'),
+                                          ->numeric(),
                 Forms\Components\TextInput::make('updater_type')
-                                          ->maxLength(255)->readOnly()->visibleOn('view'),
+                                          ->maxLength(255),
                 Forms\Components\TextInput::make('updater_id')
-                                          ->numeric()->readOnly()->visibleOn('view'),
+                                          ->numeric(),
             ]);
     }
 
@@ -61,15 +72,14 @@ class ProductPropertyGroupResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                                          ->label('ID')
-                                         ->numeric()
+                                         ->copyable()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('sort')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                                         ->searchable(),
+                Tables\Columns\TextColumn::make('property.name'),
+
+                Tables\Columns\TextColumn::make('name')->copyable(),
+                Tables\Columns\TextColumn::make('group.name')->sortable(),
+                Tables\Columns\TextColumn::make('sort')->sortable(),
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('creator_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('creator_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updater_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
@@ -81,7 +91,6 @@ class ProductPropertyGroupResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
-            ->deferFilters()
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -105,10 +114,10 @@ class ProductPropertyGroupResource extends Resource
     public static function getPages() : array
     {
         return [
-            'index'  => Pages\ListProductPropertyGroups::route('/'),
-            'create' => Pages\CreateProductPropertyGroup::route('/create'),
-            'view'   => Pages\ViewProductPropertyGroup::route('/{record}'),
-            'edit'   => Pages\EditProductPropertyGroup::route('/{record}/edit'),
+            'index'  => Pages\ListProductPropertyValues::route('/'),
+            'create' => Pages\CreateProductPropertyValue::route('/create'),
+            'view'   => Pages\ViewProductPropertyValue::route('/{record}'),
+            'edit'   => Pages\EditProductPropertyValue::route('/{record}/edit'),
         ];
     }
 
