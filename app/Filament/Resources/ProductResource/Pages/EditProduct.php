@@ -40,9 +40,12 @@ class EditProduct extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data) : Model
     {
+
         $this->commandService = app(ProductCommandService::class);
         $data['id']           = $record->getKey();
         $command              = ProductUpdateCommand::from($data);
+
+
         return $this->commandService->update($command);
     }
 
