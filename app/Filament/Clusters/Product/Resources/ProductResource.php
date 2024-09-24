@@ -30,7 +30,7 @@ class ProductResource extends Resource
 
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
 
 
@@ -439,14 +439,12 @@ class ProductResource extends Resource
                                          ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                                          ->searchable(),
-                Tables\Columns\TextColumn::make('product_type')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('shipping_type')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                                         ->badge()
-                                         ->formatStateUsing(fn($state) => ProductStatusEnum::labels()[$state->value])
-                                         ->color(fn($state) => ProductStatusEnum::colors()[$state->value]),
+
+
+                Tables\Columns\TextColumn::make('product_type')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+                Tables\Columns\TextColumn::make('shipping_type')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('barcode')->searchable(),
                 Tables\Columns\TextColumn::make('outer_id')->searchable(),

@@ -19,7 +19,12 @@ class ProductPropertyValueResource extends Resource
 {
     protected static ?string $model = ProductPropertyValue::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
+
+    public static function getModelLabel() : string
+    {
+        return __('red-jasmine.product::product-property-value.labels.product-property-value');
+    }
 
     protected static ?string $cluster = Product::class;
 
@@ -47,22 +52,15 @@ class ProductPropertyValueResource extends Resource
                 Forms\Components\TextInput::make('name')
                                           ->required()
                                           ->maxLength(64),
-                Forms\Components\TextInput::make('sort')
-                                          ->required()
-                                          ->numeric()
-                                          ->default(0),
+                Forms\Components\TextInput::make('sort')->required()->integer()->default(0),
                 Forms\Components\Radio::make('status')
                                       ->required()
                                       ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
                                       ->inline()->inlineLabel(false)->required(),
-                Forms\Components\TextInput::make('creator_type')
-                                          ->maxLength(255),
-                Forms\Components\TextInput::make('creator_id')
-                                          ->numeric(),
-                Forms\Components\TextInput::make('updater_type')
-                                          ->maxLength(255),
-                Forms\Components\TextInput::make('updater_id')
-                                          ->numeric(),
+                Forms\Components\TextInput::make('creator_type')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('creator_id')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('updater_type')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('updater_id')->readOnly()->visibleOn('view'),
             ]);
     }
 
@@ -79,7 +77,7 @@ class ProductPropertyValueResource extends Resource
                 Tables\Columns\TextColumn::make('name')->copyable(),
                 Tables\Columns\TextColumn::make('group.name')->sortable(),
                 Tables\Columns\TextColumn::make('sort')->sortable(),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
                 Tables\Columns\TextColumn::make('creator_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('creator_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updater_type')->searchable()->toggleable(isToggledHiddenByDefault: true),

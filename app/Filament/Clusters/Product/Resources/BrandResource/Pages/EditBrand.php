@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use RedJasmine\Product\Application\Brand\Services\BrandCommandService;
 use RedJasmine\Product\Application\Brand\Services\BrandQueryService;
 use RedJasmine\Product\Application\Brand\UserCases\Commands\BrandCreateCommand;
+use RedJasmine\Product\Application\Brand\UserCases\Commands\BrandUpdateCommand;
 use RedJasmine\Support\Domain\Data\Queries\FindQuery;
 
 class EditBrand extends EditRecord
@@ -24,7 +25,7 @@ class EditBrand extends EditRecord
 
     protected static string $queryService   = BrandQueryService::class;
     protected static string $commandService = BrandCommandService::class;
-    protected static string $command        = BrandCreateCommand::class;
+    protected static string $command        = BrandUpdateCommand::class;
 
     protected function resolveRecord(int|string $key) : Model
     {

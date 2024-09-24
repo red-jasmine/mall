@@ -4,6 +4,9 @@ namespace App\Filament\Clusters\Product\Resources;
 
 use App\Filament\Clusters\Product;
 use App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages;
+use App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\CreateProductCategory;
+use App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\EditProductCategory;
+use App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\ListProductCategories;
 use App\Filament\Clusters\Product\Resources\ProductCategoryResource\RelationManagers;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
@@ -17,79 +20,73 @@ use RedJasmine\Product\Domain\Category\Models\ProductCategory;
 class ProductCategoryResource extends Resource
 {
     protected static ?string $cluster = Product::class;
-    protected static ?string $model = ProductCategory::class;
+    protected static ?string $model   = ProductCategory::class;
 
     public static function getModelLabel() : string
     {
-       return  __('red-jasmine.product::product-category.labels.product-category');
+        return __('red-jasmine.product::product-category.labels.product-category');
     }
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
-    public static function form(Form $form): Form
+
+
+
+    public static function form(Form $form) : Form
     {
         return $form
             ->schema([
 
                 SelectTree::make('parent_id')
-                    ->relationship(relationship: 'parent',titleAttribute:  'name',parentAttribute: 'parent_id')
+                          ->relationship(relationship: 'parent', titleAttribute: 'name', parentAttribute: 'parent_id')
                     // ->required()
-                        ->searchable()
-                    ->default(0)
-                    ->enableBranchNode()
-                    ->parentNullValue(0)
+                          ->searchable()
+                          ->default(0)
+                          ->enableBranchNode()
+                          ->parentNullValue(0)
                 ,
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+                                          ->required()
+                                          ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
-                    ->image(),
+                                           ->image(),
                 Forms\Components\TextInput::make('group_name')
-                    ->maxLength(255),
+                                          ->maxLength(255),
                 Forms\Components\TextInput::make('sort')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                                          ->required()
+                                          ->numeric()
+                                          ->default(0),
                 Forms\Components\Toggle::make('is_leaf')
-                    ->required()
-
-                    ->default(0),
+                                       ->required()
+                                       ->default(0),
                 Forms\Components\Toggle::make('is_show')
-                    ->required()
-                    ->default(0),
+                                       ->required()
+                                       ->default(0),
                 Forms\Components\Radio::make('status')
-                    ->required()
-                    ->options(CategoryStatusEnum::options()),
+                                      ->required()
+                                      ->options(CategoryStatusEnum::options()),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Table $table) : Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
-
-                    ->sortable(),
+                                         ->label('ID')
+                                         ->sortable(),
                 Tables\Columns\TextColumn::make('parent.name')
-
-                    ->sortable(),
+                                         ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                                         ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('group_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('sort')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('is_leaf')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('is_show')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                                         ->searchable(),
+
+                Tables\Columns\IconColumn::make('is_leaf')->boolean(),
+                Tables\Columns\IconColumn::make('is_show')->boolean(),
+                Tables\Columns\TextColumn::make('sort')->sortable(),
+                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
 
             ])
             ->filters([
@@ -105,19 +102,19 @@ class ProductCategoryResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
+    public static function getRelations() : array
     {
         return [
             //
         ];
     }
 
-    public static function getPages(): array
+    public static function getPages() : array
     {
         return [
-            'index' => \App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\ListProductCategories::route('/'),
-            'create' => \App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\CreateProductCategory::route('/create'),
-            'edit' => \App\Filament\Clusters\Product\Resources\ProductCategoryResource\Pages\EditProductCategory::route('/{record}/edit'),
+            'index'  => ListProductCategories::route('/'),
+            'create' => CreateProductCategory::route('/create'),
+            'edit'   => EditProductCategory::route('/{record}/edit'),
         ];
     }
 }

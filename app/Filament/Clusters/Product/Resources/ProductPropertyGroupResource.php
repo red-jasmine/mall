@@ -16,6 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use RedJasmine\Product\Domain\Property\Models\Enums\PropertyStatusEnum;
 use RedJasmine\Product\Domain\Property\Models\ProductPropertyGroup;
 
 class ProductPropertyGroupResource extends Resource
@@ -23,7 +24,12 @@ class ProductPropertyGroupResource extends Resource
     protected static ?string $cluster = Product::class;
     protected static ?string $model   = ProductPropertyGroup::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
+
+    public static function getModelLabel() : string
+    {
+        return __('red-jasmine.product::product-property-group.labels.product-property-group');
+    }
 
     public static function getNavigationGroup() : ?string
     {
@@ -37,22 +43,16 @@ class ProductPropertyGroupResource extends Resource
                 Forms\Components\TextInput::make('name')
                                           ->required()
                                           ->maxLength(255),
-                Forms\Components\TextInput::make('sort')
-                                          ->required()
-                                          ->numeric()
-                                          ->default(0),
-                Forms\Components\TextInput::make('status')
-                                          ->required()
-                                          ->maxLength(32),
-                Forms\Components\TextInput::make('creator_type')
-                                          ->maxLength(255)->readOnly()->visibleOn('view'),
-                Forms\Components\TextInput::make('creator_id')
-                                          ->numeric()->readOnly()->visibleOn('view'),
-                Forms\Components\TextInput::make('updater_type')
-                                          ->maxLength(255)->readOnly()->visibleOn('view'),
-                Forms\Components\TextInput::make('updater_id')
-                                          ->numeric()->readOnly()->visibleOn('view'),
-            ]);
+                Forms\Components\TextInput::make('sort')->required()->integer()->default(0),
+                Forms\Components\Radio::make('status')
+                                      ->required()
+                                      ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
+                                      ->inline()->inlineLabel(false)->required(),
+                Forms\Components\TextInput::make('creator_type')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('creator_id')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('updater_type')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('updater_id')->readOnly()->visibleOn('view'),
+            ])->columns(1);
     }
 
     public static function table(Table $table) : Table
@@ -68,8 +68,7 @@ class ProductPropertyGroupResource extends Resource
                 Tables\Columns\TextColumn::make('sort')
                                          ->numeric()
                                          ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                                         ->searchable(),
+                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
                 Tables\Columns\TextColumn::make('creator_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('creator_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updater_type')->searchable()->toggleable(isToggledHiddenByDefault: true),

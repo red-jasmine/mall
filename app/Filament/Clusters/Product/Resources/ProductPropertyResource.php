@@ -20,87 +20,72 @@ class ProductPropertyResource extends Resource
 {
     protected static ?string $model = ProductProperty::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
+
+    public static function getModelLabel() : string
+    {
+        return __('red-jasmine.product::product-property.labels.product-property');
+    }
 
     protected static ?string $cluster = Product::class;
 
 
-    public static function getNavigationGroup():?string
+    public static function getNavigationGroup() : ?string
     {
-        return  '属性';
+        return '属性';
     }
 
-    public static function form(Form $form): Form
+    public static function form(Form $form) : Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('group_id')
-                    ->relationship('group', 'name')
-                    ->searchable(['name'])
-                    ->preload()
-                    ->nullable(),
+                                       ->relationship('group', 'name')
+                                       ->searchable(['name'])
+                                       ->preload()
+                                       ->nullable(),
                 Forms\Components\Radio::make('type')
-                    ->required()
-                    ->inline()
-                    ->inlineLabel(false)
-                    ->default(PropertyTypeEnum::SELECT)
-                    ->options(PropertyTypeEnum::options()),
+                                      ->required()
+                                      ->inline()
+                                      ->inlineLabel(false)
+                                      ->default(PropertyTypeEnum::SELECT)
+                                      ->options(PropertyTypeEnum::options()),
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('unit')
-                    ->maxLength(10),
+                                          ->required()
+                                          ->maxLength(255),
+                Forms\Components\TextInput::make('unit')->maxLength(10),
 
                 Forms\Components\Radio::make('is_allow_multiple')->default(false)->boolean()->inline()->inlineLabel(false)->required(),
                 Forms\Components\Radio::make('is_allow_alias')->default(false)->boolean()->inline()->inlineLabel(false)->required(),
 
-                Forms\Components\TextInput::make('sort')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                Forms\Components\TextInput::make('sort')->required()->integer()->default(0),
                 Forms\Components\Radio::make('status')
-                    ->required()
-                    ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
-                    ->inline()->inlineLabel(false)->required(),
-                Forms\Components\TextInput::make('creator_type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('creator_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('updater_type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('updater_id')
-                    ->numeric(),
+                                      ->required()
+                                      ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
+                                      ->inline()->inlineLabel(false)->required(),
+                Forms\Components\TextInput::make('creator_type')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('creator_id')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('updater_type')->readOnly()->visibleOn('view'),
+                Forms\Components\TextInput::make('updater_id')->readOnly()->visibleOn('view'),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Table $table) : Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('group.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
+                Tables\Columns\TextColumn::make('group.name')->numeric(),
+                Tables\Columns\TextColumn::make('type')->badge()->formatStateUsing(fn($state
+                ) => PropertyTypeEnum::options()[$state->value])->color(fn($state
+                ) => PropertyTypeEnum::colors()[$state->value]),
+                Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('unit')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('is_allow_multiple')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('is_allow_alias')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('sort')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                ,
+                Tables\Columns\IconColumn::make('is_allow_multiple')->boolean(),
+                Tables\Columns\IconColumn::make('is_allow_alias')->boolean(),
+                Tables\Columns\TextColumn::make('sort')->sortable(),
+                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
                 Tables\Columns\TextColumn::make('creator_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('creator_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updater_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
@@ -112,6 +97,7 @@ class ProductPropertyResource extends Resource
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
+            ->recordUrl(null)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -125,28 +111,28 @@ class ProductPropertyResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
+    public static function getRelations() : array
     {
         return [
             //
         ];
     }
 
-    public static function getPages(): array
+    public static function getPages() : array
     {
         return [
-            'index' => Pages\ListProductProperties::route('/'),
+            'index'  => Pages\ListProductProperties::route('/'),
             'create' => Pages\CreateProductProperty::route('/create'),
-            'view' => Pages\ViewProductProperty::route('/{record}'),
-            'edit' => Pages\EditProductProperty::route('/{record}/edit'),
+            'view'   => Pages\ViewProductProperty::route('/{record}'),
+            'edit'   => Pages\EditProductProperty::route('/{record}/edit'),
         ];
     }
 
-    public static function getEloquentQuery(): Builder
+    public static function getEloquentQuery() : Builder
     {
         return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+                     ->withoutGlobalScopes([
+                         SoftDeletingScope::class,
+                     ]);
     }
 }

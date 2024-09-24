@@ -79,15 +79,11 @@ class BrandResource extends Resource
                                          ->label(__('red-jasmine.product::brand.fields.english_name')),
                 Tables\Columns\ImageColumn::make('logo')->label(__('red-jasmine.product::brand.fields.logo')),
 
-                Tables\Columns\IconColumn::make('is_show')->label(__('red-jasmine.product::brand.fields.is_show'))
-                                         ->boolean(),
-                Tables\Columns\TextColumn::make('sort')->label(__('red-jasmine.product::brand.fields.sort'))
-                                         ->sortable(),
+                Tables\Columns\IconColumn::make('is_show')->label(__('red-jasmine.product::brand.fields.is_show'))->boolean(),
+                Tables\Columns\TextColumn::make('sort')->label(__('red-jasmine.product::brand.fields.sort'))->sortable(),
                 Tables\Columns\TextColumn::make('status')->label(__('red-jasmine.product::brand.fields.status'))
-                                         ->badge()
-                                         ->formatStateUsing(fn($state
-                                         ) : string => BrandStatusEnum::labels()[$state->value])
-                                         ->color(fn($state) : string => BrandStatusEnum::colors()[$state->value]),
+                                         ->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+
 
             ])
             ->filters([

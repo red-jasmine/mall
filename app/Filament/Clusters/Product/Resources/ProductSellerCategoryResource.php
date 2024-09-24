@@ -99,18 +99,11 @@ class ProductSellerCategoryResource extends Resource
                 Tables\Columns\TextColumn::make('group_name')
                                          ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('sort')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('is_leaf')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('is_show')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                                         ->badge()
-                                         ->searchable(),
+                Tables\Columns\TextColumn::make('sort')->sortable(),
+                Tables\Columns\IconColumn::make('is_leaf')->boolean(),
+                Tables\Columns\IconColumn::make('is_allow_alias')->boolean(),
+                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+
             ])
             ->filters([
                 //
