@@ -30,6 +30,12 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel() : string
+    {
+        return __('red-jasmine.product::product.labels.product');
+    }
+
+
     public static function form(Form $form) : Form
     {
         return $form
@@ -37,15 +43,28 @@ class ProductResource extends Resource
                 Forms\Components\Section::make('基本信息')->inlineLabel()
                                         ->schema([
                                             Forms\Components\TextInput::make('title')->required()->maxLength(60),
-                                            Forms\Components\Radio::make('product_type')->required()->default(ProductTypeEnum::GOODS->value)->inline()->options(ProductTypeEnum::options()),
-                                            Forms\Components\Radio::make('shipping_type')->required()->inline()->options(ShippingTypeEnum::options()),
                                             Forms\Components\TextInput::make('slogan')->maxLength(255),
+                                            Forms\Components\Radio::make('product_type')->required()->default(ProductTypeEnum::GOODS)->inline()->options(ProductTypeEnum::options()),
+                                            Forms\Components\Radio::make('shipping_type')->required()->inline()
+                                                                                                     ->default(ShippingTypeEnum::EXPRESS)
+                                                                                                     ->options(ShippingTypeEnum::options()),
+
 
 
                                             Forms\Components\Radio::make('is_customized')
                                                                   ->required()
                                                                   ->boolean()->inline()
                                                                   ->default(0),
+
+                                            Forms\Components\Radio::make('status')->required()->inline()
+                                                                                              ->default(ProductStatusEnum::ON_SALE)
+                                                                                              ->options(ProductStatusEnum::options()),
+
+
+
+                                        ]),
+                Forms\Components\Section::make('商品属性')->inlineLabel()
+                                        ->schema([
                                             SelectTree::make('brand_id')
                                                       ->relationship('brand', 'name', 'parent_id')
                                                       ->enableBranchNode()
@@ -63,13 +82,8 @@ class ProductResource extends Resource
                                                       ->parentNullValue(0)
                                                       ->default(0), // 设置可选
 
-
-                                            Forms\Components\Radio::make('status')->required()->inline()->options(ProductStatusEnum::options()),
-
                                             static::basicProps()->columnSpan('full'),
-
                                         ]),
-
                 Forms\Components\Section::make('销售信息')->inlineLabel()
                                         ->schema([
                                             Forms\Components\Radio::make('is_multiple_spec')->required()->boolean()->live()->inline()->default(0),
@@ -104,7 +118,7 @@ class ProductResource extends Resource
                                                               $sku                    = $oldSku[$properties] ?? [
                                                                   'properties'      => $properties,
                                                                   'properties_name' => $propertyName,
-                                                                  'price'           => 0,
+                                                                  'price'           => null,
                                                                   'market_price'    => 0,
                                                                   'cost_price'      => 0,
                                                                   'stock'           => 0,
@@ -118,7 +132,7 @@ class ProductResource extends Resource
 
                                                           $set('skus', $skus);
                                                       } catch (\Throwable $throwable) {
-                                                          throw $throwable;
+                                                          $set('skus', []);
                                                       }
 
 
@@ -322,8 +336,12 @@ class ProductResource extends Resource
                                      ])
                                      ->columns()
                                      ->columnSpan(3)
-                                     ->minItems(1)
+
                                      ->reorderable(false)
+                                     ->deletable(fn($state)=>count($state)>1)
+                                     ->minItems(1)
+                                     ->maxItems(fn(Forms\Get $get
+                                     ) => ProductProperty::find($get('pid'))?->is_allow_multiple  ? 30 : 1)
                                      ->hidden(fn(Forms\Get $get) => !$get('pid')),
 
 
@@ -331,6 +349,7 @@ class ProductResource extends Resource
                                         ->default([])
                                         ->inlineLabel(false)
                                         ->columns(4)
+
                                         ->columnSpan('full')
                                         ->reorderable(false);
     }
@@ -391,7 +410,6 @@ class ProductResource extends Resource
                                      ->columnSpanFull()
                                      ->minItems(1)
                                      ->reorderable(false)
-                // 是否多选
                                      ->hidden(fn(Forms\Get $get) => !$get('pid')),
 
 

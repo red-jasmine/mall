@@ -12,12 +12,15 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use RedJasmine\Product\Domain\Brand\Models\Brand;
 use RedJasmine\Product\Domain\Brand\Models\Enums\BrandStatusEnum;
+use RedJasmine\Product\Domain\Brand\Repositories\BrandReadRepositoryInterface;
 
 class BrandResource extends Resource
 {
     protected static ?string $model = Brand::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+
 
     public static function getModelLabel() : string
     {

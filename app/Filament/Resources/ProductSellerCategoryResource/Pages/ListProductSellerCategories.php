@@ -16,4 +16,5 @@ class ListProductSellerCategories extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
 }
