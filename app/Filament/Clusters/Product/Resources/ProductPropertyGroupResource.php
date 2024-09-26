@@ -3,11 +3,8 @@
 namespace App\Filament\Clusters\Product\Resources;
 
 use App\Filament\Clusters\Product;
+use App\Filament\Clusters\Product\FilamentResource\ResourcePageHelper;
 use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\CreateProductPropertyGroup;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\EditProductPropertyGroup;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\ListProductPropertyGroups;
-use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\Pages\ViewProductPropertyGroup;
 use App\Filament\Clusters\Product\Resources\ProductPropertyGroupResource\RelationManagers;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -16,6 +13,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use RedJasmine\Product\Application\Property\Services\ProductPropertyGroupCommandService;
+use RedJasmine\Product\Application\Property\Services\ProductPropertyGroupQueryService;
+use RedJasmine\Product\Application\Property\UserCases\Commands\ProductPropertyGroupCreateCommand;
+use RedJasmine\Product\Application\Property\UserCases\Commands\ProductPropertyGroupDeleteCommand;
+use RedJasmine\Product\Application\Property\UserCases\Commands\ProductPropertyGroupUpdateCommand;
 use RedJasmine\Product\Domain\Property\Models\Enums\PropertyStatusEnum;
 use RedJasmine\Product\Domain\Property\Models\ProductPropertyGroup;
 
@@ -26,6 +28,16 @@ class ProductPropertyGroupResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
 
+
+    use ResourcePageHelper;
+
+    protected static ?string $commandService = ProductPropertyGroupCommandService::class;
+    protected static ?string $queryService   = ProductPropertyGroupQueryService::class;
+    protected static ?string $createCommand  = ProductPropertyGroupCreateCommand::class;
+    protected static ?string $updateCommand  = ProductPropertyGroupUpdateCommand::class;
+    protected static ?string $deleteCommand  = ProductPropertyGroupDeleteCommand::class;
+
+
     public static function getModelLabel() : string
     {
         return __('red-jasmine.product::product-property-group.labels.product-property-group');
@@ -33,65 +45,64 @@ class ProductPropertyGroupResource extends Resource
 
     public static function getNavigationGroup() : ?string
     {
-        return '属性';
+        return __('red-jasmine.product::product-property.labels.product-property');
     }
 
     public static function form(Form $form) : Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                                          ->required()
-                                          ->maxLength(255),
-                Forms\Components\TextInput::make('sort')->required()->integer()->default(0),
-                Forms\Components\Radio::make('status')
-                                      ->required()
-                                      ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
-                                      ->inline()->inlineLabel(false)->required(),
-                Forms\Components\TextInput::make('creator_type')->readOnly()->visibleOn('view'),
-                Forms\Components\TextInput::make('creator_id')->readOnly()->visibleOn('view'),
-                Forms\Components\TextInput::make('updater_type')->readOnly()->visibleOn('view'),
-                Forms\Components\TextInput::make('updater_id')->readOnly()->visibleOn('view'),
-            ])->columns(1);
+                         Forms\Components\TextInput::make('name')->required()->maxLength(255),
+                         Forms\Components\TextInput::make('description')->maxLength(255),
+                         Forms\Components\TextInput::make('sort')->required()->integer()->default(0),
+                         Forms\Components\Radio::make('status')
+                                               ->required()
+                                               ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
+                                               ->inline()->inlineLabel(false)->required(),
+                         Forms\Components\TextInput::make('creator_type')->readOnly()->visibleOn('view'),
+                         Forms\Components\TextInput::make('creator_id')->readOnly()->visibleOn('view'),
+                         Forms\Components\TextInput::make('updater_type')->readOnly()->visibleOn('view'),
+                         Forms\Components\TextInput::make('updater_id')->readOnly()->visibleOn('view'),
+                     ])->columns(1);
     }
 
     public static function table(Table $table) : Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                                         ->label('ID')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                                         ->searchable(),
-                Tables\Columns\TextColumn::make('sort')
-                                         ->numeric()
-                                         ->sortable(),
-                Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
-                Tables\Columns\TextColumn::make('creator_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('creator_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updater_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updater_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
-            ])
+                          Tables\Columns\TextColumn::make('id')
+                                                   ->label('ID')
+                                                   ->numeric()
+                                                   ->sortable(),
+                          Tables\Columns\TextColumn::make('name')
+                                                   ->searchable(),
+                          Tables\Columns\TextColumn::make('sort')
+                                                   ->numeric()
+                                                   ->sortable(),
+                          Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+                          Tables\Columns\TextColumn::make('creator_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
+                          Tables\Columns\TextColumn::make('creator_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
+                          Tables\Columns\TextColumn::make('updater_type')->searchable()->toggleable(isToggledHiddenByDefault: true),
+                          Tables\Columns\TextColumn::make('updater_id')->sortable()->toggleable(isToggledHiddenByDefault: true),
+                          Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                          Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                          Tables\Columns\TextColumn::make('deleted_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                      ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
-            ])
+                          Tables\Filters\TrashedFilter::make(),
+                      ])
             ->deferFilters()
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
+                          Tables\Actions\ViewAction::make(),
+                          Tables\Actions\EditAction::make(),
+                      ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                ]),
-            ]);
+                              Tables\Actions\BulkActionGroup::make([
+                                                                       Tables\Actions\DeleteBulkAction::make(),
+                                                                       Tables\Actions\ForceDeleteBulkAction::make(),
+                                                                       Tables\Actions\RestoreBulkAction::make(),
+                                                                   ]),
+                          ]);
     }
 
     public static function getRelations() : array
@@ -115,7 +126,7 @@ class ProductPropertyGroupResource extends Resource
     {
         return parent::getEloquentQuery()
                      ->withoutGlobalScopes([
-                         SoftDeletingScope::class,
-                     ]);
+                                               SoftDeletingScope::class,
+                                           ]);
     }
 }

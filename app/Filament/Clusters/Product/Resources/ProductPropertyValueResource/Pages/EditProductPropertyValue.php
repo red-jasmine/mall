@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\Product\Resources\ProductPropertyValueResource\Pages;
 
+use App\Filament\Clusters\Product\FilamentResource\ResourcePageHelper;
 use App\Filament\Clusters\Product\Resources\ProductPropertyValueResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -19,4 +20,5 @@ class EditProductPropertyValue extends EditRecord
             Actions\RestoreAction::make(),
         ];
     }
+    use ResourcePageHelper;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\Product\Resources\ProductPropertyValueResource\Pages;
 
+use App\Filament\Clusters\Product\FilamentResource\ResourcePageHelper;
 use App\Filament\Clusters\Product\Resources\ProductPropertyValueResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -16,4 +17,5 @@ class ViewProductPropertyValue extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+    use ResourcePageHelper;
 }
