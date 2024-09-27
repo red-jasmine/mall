@@ -77,6 +77,7 @@ class ProductCategoryResource extends Resource
                                                 ->default(1),
                          Forms\Components\Radio::make('status')
                                                ->required()
+                                               ->default(CategoryStatusEnum::ENABLE)
                                                ->options(CategoryStatusEnum::options()),
                      ]);
     }
