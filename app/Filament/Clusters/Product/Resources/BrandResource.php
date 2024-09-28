@@ -64,7 +64,10 @@ class BrandResource extends Resource
                          Forms\Components\TextInput::make('name')
                                                    ->label(__('red-jasmine.product::brand.fields.name'))
                                                    ->required(),
-                         Forms\Components\TextInput::make('description')->maxLength(255),
+                         Forms\Components\TextInput::make('description')
+                             ->label(__('red-jasmine.product::brand.fields.description'))
+
+                             ->maxLength(255),
                          Forms\Components\TextInput::make('english_name')
                                                    ->label(__('red-jasmine.product::brand.fields.english_name'))
                                                    ->required(),
