@@ -59,23 +59,31 @@ class ProductCategoryResource extends Resource
                                    ->parentNullValue(0)
                          ,
                          Forms\Components\TextInput::make('name')
+                                                   ->label(__('red-jasmine.product::product-category.labels.name'))
                                                    ->required()
                                                    ->maxLength(255),
-                         Forms\Components\TextInput::make('description')->maxLength(255),
+                         Forms\Components\TextInput::make('description')
+                                                   ->label(__('red-jasmine.product::product-category.labels.description'))->maxLength(255),
                          Forms\Components\FileUpload::make('image')
+                                                    ->label(__('red-jasmine.product::product-category.labels.image'))
                                                     ->image(),
                          Forms\Components\TextInput::make('group_name')
+                                                   ->label(__('red-jasmine.product::product-category.labels.group_name'))
                                                    ->maxLength(255),
                          Forms\Components\TextInput::make('sort')
+                                                   ->label(__('red-jasmine.product::product-category.labels.sort'))
                                                    ->required()
                                                    ->default(0),
                          Forms\Components\Toggle::make('is_leaf')
+                                                ->label(__('red-jasmine.product::product-category.labels.is_leaf'))
                                                 ->required()
                                                 ->default(0),
                          Forms\Components\Toggle::make('is_show')
+                                                ->label(__('red-jasmine.product::product-category.labels.is_show'))
                                                 ->required()
                                                 ->default(1),
                          Forms\Components\Radio::make('status')
+                                               ->label(__('red-jasmine.product::product-category.labels.status'))
                                                ->required()
                                                ->default(CategoryStatusEnum::ENABLE)
                                                ->options(CategoryStatusEnum::options()),
@@ -90,17 +98,30 @@ class ProductCategoryResource extends Resource
                                                    ->label('ID')
                                                    ->sortable(),
                           Tables\Columns\TextColumn::make('parent.name')
+                                                   ->label(__('red-jasmine.product::product-category.labels.parent_id'))
                                                    ->sortable(),
                           Tables\Columns\TextColumn::make('name')
+                                                   ->label(__('red-jasmine.product::product-category.labels.name'))
                                                    ->searchable(),
-                          Tables\Columns\ImageColumn::make('image'),
+                          Tables\Columns\ImageColumn::make('image')
+                                                    ->label(__('red-jasmine.product::product-category.labels.image'))
+                          ,
                           Tables\Columns\TextColumn::make('group_name')
+                                                   ->label(__('red-jasmine.product::product-category.labels.group_name'))
                                                    ->searchable(),
 
-                          Tables\Columns\IconColumn::make('is_leaf')->boolean(),
-                          Tables\Columns\IconColumn::make('is_show')->boolean(),
-                          Tables\Columns\TextColumn::make('sort')->sortable(),
-                          Tables\Columns\TextColumn::make('status')->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
+                          Tables\Columns\IconColumn::make('is_leaf')
+                                                   ->label(__('red-jasmine.product::product-category.labels.is_leaf'))
+                                                   ->boolean(),
+                          Tables\Columns\IconColumn::make('is_show')
+                                                   ->label(__('red-jasmine.product::product-category.labels.is_show'))
+                                                   ->boolean(),
+                          Tables\Columns\TextColumn::make('sort')
+                                                   ->label(__('red-jasmine.product::product-category.labels.sort'))
+                                                   ->sortable(),
+                          Tables\Columns\TextColumn::make('status')
+                                                   ->label(__('red-jasmine.product::product-category.labels.status'))
+                                                   ->badge()->formatStateUsing(fn($state) => $state->label())->color(fn($state) => $state->color()),
 
                       ])
             ->filters([
