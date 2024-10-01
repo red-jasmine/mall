@@ -53,7 +53,7 @@ class ProductPropertyGroupResource extends Resource
         return $form
             ->schema([
                          Forms\Components\TextInput::make('name')
-                                                   ->label(__('red-jasmine.product::product-property-group.labels.name'))
+                                                   ->label(__('red-jasmine.product::product-property-group.fields.name'))
                                                    ->required()->maxLength(255),
                          Forms\Components\TextInput::make('description')
                                                    ->label(__('red-jasmine.product::product-property-group.fields.description'))
