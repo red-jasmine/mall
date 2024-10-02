@@ -52,6 +52,7 @@ class ProductPropertyValueResource extends Resource
         return $form
             ->schema([
                          Forms\Components\Select::make('pid')
+                             ->label(__('red-jasmine.product::product-property-value.fields.pid'))
                                                 ->required()
                                                 ->relationship('property', 'name')
                                                 ->searchable([ 'name' ])
@@ -59,16 +60,23 @@ class ProductPropertyValueResource extends Resource
                                                 ->nullable(),
 
                          Forms\Components\Select::make('group_id')
-                                                ->relationship('group', 'name')
+                             ->label(__('red-jasmine.product::product-property-value.fields.group_id'))
+
+                             ->relationship('group', 'name')
                                                 ->searchable([ 'name' ])
                                                 ->preload()
                                                 ->nullable(),
                          Forms\Components\TextInput::make('name')
+                             ->label(__('red-jasmine.product::product-property-value.fields.name'))
                                                    ->required()
                                                    ->maxLength(64),
-                         Forms\Components\TextInput::make('description')->maxLength(255),
-                         Forms\Components\TextInput::make('sort')->required()->integer()->default(0),
+                         Forms\Components\TextInput::make('description')
+                             ->label(__('red-jasmine.product::product-property-value.fields.description'))->maxLength(255),
+                         Forms\Components\TextInput::make('sort')
+                             ->label(__('red-jasmine.product::product-property-value.fields.sort'))
+                             ->required()->integer()->default(0),
                          Forms\Components\Radio::make('status')
+                             ->label(__('red-jasmine.product::product-property-value.fields.status'))
                                                ->required()
                                                ->default(PropertyStatusEnum::ENABLE)->options(PropertyStatusEnum::options())
                                                ->inline()->inlineLabel(false)->required(),
