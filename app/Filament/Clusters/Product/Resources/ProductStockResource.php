@@ -136,7 +136,10 @@ class ProductStockResource extends Resource
             ->striped()
             ->columns([
                           Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
-                          Tables\Columns\TextColumn::make('owner_type'),
+                          Tables\Columns\TextColumn::make('owner_type')
+                              ->label(__('red-jasmine.product::product-stock.fields.owner_type'))
+
+                          ,
                           Tables\Columns\TextColumn::make('owner_id'),
                           Tables\Columns\TextColumn::make('title'),
                           Tables\Columns\TextColumn::make('outer_id'),
