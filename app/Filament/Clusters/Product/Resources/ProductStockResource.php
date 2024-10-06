@@ -38,18 +38,41 @@ class ProductStockResource extends Resource
         return __('red-jasmine.product::product-stock.labels.product-stock');
     }
 
-    public static function form(Form $form) : Form
+    public static function table(Table $table) : Table
     {
-        return $form
-            ->schema([
-                         //
-                     ]);
+        return $table
+            ->striped()
+            ->columns([
+                          Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
+                          Tables\Columns\TextColumn::make('owner_type')
+                                                   ->label(__('red-jasmine.product::product-stock.fields.owner_type'))
+                          ,
+                          Tables\Columns\TextColumn::make('owner_id')->label(__('red-jasmine.product::product-stock.fields.owner_id')),
+                          Tables\Columns\TextColumn::make('title')->label(__('red-jasmine.product::product-stock.fields.title')),
+                          Tables\Columns\TextColumn::make('outer_id')->label(__('red-jasmine.product::product-stock.fields.outer_id')),
+                          Tables\Columns\ImageColumn::make('image')->label(__('red-jasmine.product::product-stock.fields.image'))->size(40),
+                          Tables\Columns\TextColumn::make('status')->label(__('red-jasmine.product::product-stock.fields.status')),
+                          Tables\Columns\TextColumn::make('stock')->label(__('red-jasmine.product::product-stock.fields.stock')),
+                          Tables\Columns\TextColumn::make('lock_stock')->label(__('red-jasmine.product::product-stock.fields.lock_stock')),
+
+                      ])
+            ->filters([
+                          //
+                      ])
+            ->actions([
+                          static::editStockAction()
+                      ])
+            ->bulkActions([
+                              Tables\Actions\BulkActionGroup::make([
+                                                                       Tables\Actions\DeleteBulkAction::make(),
+                                                                   ]),
+                          ]);
     }
 
     protected static function editStockAction()
     {
         return Tables\Actions\Action::make('edit')
-            ->label(__('red-jasmine.product::product-stock.labels.edit'))
+                                    ->label(__('red-jasmine.product::product-stock.labels.edit'))
                                     ->modalWidth('7xl')
                                     ->slideOver()
                                     ->modalAutofocus(false)
@@ -130,36 +153,12 @@ class ProductStockResource extends Resource
                                     });
     }
 
-    public static function table(Table $table) : Table
+    public static function form(Form $form) : Form
     {
-        return $table
-            ->striped()
-            ->columns([
-                          Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
-                          Tables\Columns\TextColumn::make('owner_type')
-                              ->label(__('red-jasmine.product::product-stock.fields.owner_type'))
-
-                          ,
-                          Tables\Columns\TextColumn::make('owner_id'),
-                          Tables\Columns\TextColumn::make('title'),
-                          Tables\Columns\TextColumn::make('outer_id'),
-                          Tables\Columns\ImageColumn::make('image')->size(40),
-                          Tables\Columns\TextColumn::make('status'),
-                          Tables\Columns\TextColumn::make('stock'),
-                          Tables\Columns\TextColumn::make('lock_stock'),
-
-                      ])
-            ->filters([
-                          //
-                      ])
-            ->actions([
-                          static::editStockAction()
-                      ])
-            ->bulkActions([
-                              Tables\Actions\BulkActionGroup::make([
-                                                                       Tables\Actions\DeleteBulkAction::make(),
-                                                                   ]),
-                          ]);
+        return $form
+            ->schema([
+                         //
+                     ]);
     }
 
     public static function getRelations() : array
