@@ -18,6 +18,9 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use RedJasmine\FilamentProduct\Clusters\Product\Resources\ProductResource;
+use Redjasmine\FilamentProduct\FilamentProductPlugin;
+use Firefly\FilamentBlog\Blog;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,14 +35,16 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
 
-            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
+            //->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->resources([
+
+                        ])
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
@@ -60,6 +65,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->sidebarWidth('10rem')
             ->maxContentWidth(MaxWidth::Full)
+            ->plugins([
+
+                FilamentProductPlugin::make(),
+
+
+                      ])
             ;
     }
 }
