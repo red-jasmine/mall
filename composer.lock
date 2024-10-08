@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "660a9f555c8b26fe3d4be7b969ed2053",
+    "content-hash": "d44acfd457cb50997b63b1016bffacbb",
     "packages": [
         {
             "name": "amphp/amp",
@@ -6655,12 +6655,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "dbab16f268c9ae6d52b8323bb3a58b3d8cfede2c"
+                "reference": "5b996d9736e50cb39fbf5d50485e1aacea30491e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/dbab16f268c9ae6d52b8323bb3a58b3d8cfede2c",
-                "reference": "dbab16f268c9ae6d52b8323bb3a58b3d8cfede2c",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/5b996d9736e50cb39fbf5d50485e1aacea30491e",
+                "reference": "5b996d9736e50cb39fbf5d50485e1aacea30491e",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6746,7 +6746,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-30T21:50:31+00:00"
+            "time": "2024-10-07T21:53:55+00:00"
         },
         {
             "name": "red-jasmine/card",
@@ -6754,7 +6754,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/card",
-                "reference": "9572d96b3f0758dfc42f407f6e8ca47696b48218"
+                "reference": "d7c146e7cd04c7584f81984cd0089f96e67abf8a"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6869,10 +6869,12 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-core",
-                "reference": "e73a22d5c7775a36e9df7014bd1bd45804bc2875"
+                "reference": "f781714be7c6b715a26588224456f978328cfcc2"
             },
             "require": {
-                "filament/filament": "^3.0",
+                "awcodes/filament-table-repeater": "^3.0",
+                "codewithdennis/filament-select-tree": "*",
+                "filament/filament": "^3.2",
                 "php": "^8.1",
                 "spatie/laravel-package-tools": "^1.15.0"
             },
@@ -6950,11 +6952,11 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-product",
-                "reference": "f62ae8c429043ab0362ba7d868aab1d5a4a4e6a5"
+                "reference": "a1f7620420a36efd39c1c8e60d8d8c8ba64ea587"
             },
             "require": {
-                "filament/filament": "^3.0",
                 "php": "^8.1",
+                "red-jasmine/filament-core": "1.0.x-dev",
                 "spatie/laravel-package-tools": "^1.15.0"
             },
             "require-dev": {
@@ -6970,10 +6972,7 @@
                 "laravel": {
                     "providers": [
                         "RedJasmine\\FilamentProduct\\FilamentProductServiceProvider"
-                    ],
-                    "aliases": {
-                        "FilamentProduct": "Redjasmine\\FilamentProduct\\Facades\\FilamentProduct"
-                    }
+                    ]
                 },
                 "branch-alias": {
                     "dev-master": "1.0.x-dev",
@@ -7097,7 +7096,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "9836b969f695d6260c17060432136a1fd3659a6b"
+                "reference": "9df0b174f55866f1bce66f875817a8ad701f5435"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -7546,16 +7545,16 @@
         },
         {
             "name": "spatie/laravel-data",
-            "version": "4.10.0",
+            "version": "4.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-data.git",
-                "reference": "01eea07b5254d319157b7960de99f32dde6975ce"
+                "reference": "d3113c6bc03a6f1c241074d6f5832e05daa7ca77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/01eea07b5254d319157b7960de99f32dde6975ce",
-                "reference": "01eea07b5254d319157b7960de99f32dde6975ce",
+                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/d3113c6bc03a6f1c241074d6f5832e05daa7ca77",
+                "reference": "d3113c6bc03a6f1c241074d6f5832e05daa7ca77",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -7624,7 +7623,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-data/issues",
-                "source": "https://github.com/spatie/laravel-data/tree/4.10.0"
+                "source": "https://github.com/spatie/laravel-data/tree/4.10.1"
             },
             "funding": [
                 {
@@ -7632,7 +7631,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-04T12:50:57+00:00"
+            "time": "2024-10-07T08:36:46+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
