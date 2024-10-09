@@ -6442,7 +6442,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/ecommerce",
-                "reference": "0ad2dcef398de0b7ddca5df3166286c81b65e25c"
+                "reference": "c58a2a15c08bd112e2681aeb7bbe75d25aa18c3c"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6497,7 +6497,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-core",
-                "reference": "fedb3cbd02048e82af907dae3b36065292dd5e40"
+                "reference": "96c5a799212974f99ea7b9aee822d732aeadde93"
             },
             "require": {
                 "awcodes/filament-table-repeater": "^3.0",
@@ -6580,7 +6580,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-product",
-                "reference": "6a74fd815a9a9c6eb12899bdcc7b426b6020110d"
+                "reference": "2f96d872a9d6285615f26b10bdf7af61f2cd11c5"
             },
             "require": {
                 "php": "^8.1",
@@ -6724,7 +6724,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "3c5c6067bbe7383547f430e245b4da2a056e8ad0"
+                "reference": "322cb990a1c4121497e9bbb3418eaa6d01457bc3"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -6825,7 +6825,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/support",
-                "reference": "7d31f9f7c7b5ccf7d634af9281c76006da81b785"
+                "reference": "d84dc345127f857c95f8a80919772b3ee8133f29"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",
