@@ -32,45 +32,43 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
-            ])
+                         //'primary' => Color::Amber,
+                     ])
 
             //->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->pages([
-                Pages\Dashboard::class,
-            ])
+                        Pages\Dashboard::class,
+                    ])
             ->resources([
 
                         ])
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
+                          Widgets\AccountWidget::class,
+                          Widgets\FilamentInfoWidget::class,
+                      ])
             ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-            ])
+                             EncryptCookies::class,
+                             AddQueuedCookiesToResponse::class,
+                             StartSession::class,
+                             AuthenticateSession::class,
+                             ShareErrorsFromSession::class,
+                             VerifyCsrfToken::class,
+                             SubstituteBindings::class,
+                             DisableBladeIconComponents::class,
+                             DispatchServingFilamentEvent::class,
+                         ])
             ->authMiddleware([
-                Authenticate::class,
-            ])
+                                 Authenticate::class,
+                             ])
             ->sidebarWidth('10rem')
+//            ->topNavigation()
             ->maxContentWidth(MaxWidth::Full)
             ->plugins([
 
-                FilamentProductPlugin::make(),
-
-
-                      ])
-            ;
+                          FilamentProductPlugin::make(),
+                      ]);
     }
 }

@@ -9,15 +9,17 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register() : void
     {
         //
+
+        //Gate::policy(Product::class, ProductPolicy::class);
     }
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot() : void
     {
         //
     }

@@ -35,6 +35,12 @@ class User extends Authenticatable implements UserInterface
         'remember_token',
     ];
 
+    public function isAdmin()
+    {
+        return true;
+
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -50,7 +56,7 @@ class User extends Authenticatable implements UserInterface
 
     public function getType() : string
     {
-        return 'user';
+        return 'seller';
     }
 
     public function getID() : int
