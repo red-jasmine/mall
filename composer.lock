@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d44acfd457cb50997b63b1016bffacbb",
+    "content-hash": "c00a9377f00026344626f36fff5859dc",
     "packages": [
         {
             "name": "amphp/amp",
@@ -341,16 +341,16 @@
         },
         {
             "name": "amphp/parallel",
-            "version": "v2.2.9",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/parallel.git",
-                "reference": "73d293f1fc4df1bebc3c4fce1432e82dd7032238"
+                "reference": "9777db1460d1535bc2a843840684fb1205225b87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/parallel/zipball/73d293f1fc4df1bebc3c4fce1432e82dd7032238",
-                "reference": "73d293f1fc4df1bebc3c4fce1432e82dd7032238",
+                "url": "https://api.github.com/repos/amphp/parallel/zipball/9777db1460d1535bc2a843840684fb1205225b87",
+                "reference": "9777db1460d1535bc2a843840684fb1205225b87",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -419,7 +419,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/parallel/issues",
-                "source": "https://github.com/amphp/parallel/tree/v2.2.9"
+                "source": "https://github.com/amphp/parallel/tree/v2.3.0"
             },
             "funding": [
                 {
@@ -427,7 +427,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-24T18:27:44+00:00"
+            "time": "2024-09-14T19:16:14+00:00"
         },
         {
             "name": "amphp/parser",
@@ -1953,16 +1953,16 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.3.3",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "adfb1f505deb6384dc8b39804c5065dd3c8c8c0a"
+                "reference": "8c784d071debd117328803d86b2097615b457500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/adfb1f505deb6384dc8b39804c5065dd3c8c8c0a",
-                "reference": "adfb1f505deb6384dc8b39804c5065dd3c8c8c0a",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/8c784d071debd117328803d86b2097615b457500",
+                "reference": "8c784d071debd117328803d86b2097615b457500",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1981,10 +1981,14 @@
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^1.0",
-                "phpstan/phpstan-webmozart-assert": "^1.0",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Cron\\": "src/Cron/"
@@ -2008,7 +2012,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.3"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.4.0"
             },
             "funding": [
                 {
@@ -2016,7 +2020,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-10T19:36:49+00:00"
+            "time": "2024-10-09T13:47:03+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -6580,7 +6584,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-product",
-                "reference": "b195e0910212cb462cee16b364a24f31876e3575"
+                "reference": "c1927b90f19b510f4328662a066189dc0243ab19"
             },
             "require": {
                 "php": "^8.1",
@@ -6657,74 +6661,12 @@
             }
         },
         {
-            "name": "red-jasmine/order",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./packages/order",
-                "reference": "7ed0f464cfa73ab9a6476563171cb1da9e772c1e"
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "red-jasmine/ecommerce": "1.0.x-dev",
-                "red-jasmine/support": "1.0.x-dev"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RedJasmine\\Order\\OrderPackageServiceProvider",
-                        "RedJasmine\\Order\\Domain\\OrderDomainServiceProvider",
-                        "RedJasmine\\Order\\Application\\OrderApplicationServiceProvider"
-                    ],
-                    "aliases": []
-                },
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-main": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RedJasmine\\Order\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "RedJasmine\\Order\\Tests\\": "tests"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "liushoukun",
-                    "email": "liushoukun66@gmail.com",
-                    "homepage": "https://github.com/liushoukun"
-                }
-            ],
-            "description": ":package_description",
-            "homepage": "https://github.com/red-jasmine/order",
-            "keywords": [
-                "Laravel",
-                "Order"
-            ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
             "name": "red-jasmine/product",
             "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "4f956fc176b00ae771cdef06ceeae06838ef9833"
+                "reference": "24bfa6f6da14961030cb8c1e4ffd2bd0ae90e719"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -6778,42 +6720,6 @@
                 "Laravel",
                 "Product"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "red-jasmine/shopping",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./packages/shopping",
-                "reference": "51a382f47939d25f59e839e9964262637efcf371"
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "red-jasmine/order": "1.0.x-dev",
-                "red-jasmine/product": "1.0.x-dev",
-                "red-jasmine/support": "1.0.x-dev"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-main": "1.0.x-dev",
-                    "dev-develop": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RedJasmine\\Shopping\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "red-jasmine shopping",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -12592,9 +12498,7 @@
         "red-jasmine/card": 20,
         "red-jasmine/filament-core": 20,
         "red-jasmine/filament-product": 20,
-        "red-jasmine/order": 20,
-        "red-jasmine/product": 20,
-        "red-jasmine/shopping": 20
+        "red-jasmine/product": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

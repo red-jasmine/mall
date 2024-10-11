@@ -12,7 +12,7 @@ Route::group([ 'prefix' => 'admin' ], function () {
 Route::group([ 'prefix' => 'buyer' ], function () {
     \RedJasmine\Product\UI\Http\Buyer\ProductBuyerRoute::api();
 
-    \RedJasmine\Shopping\UI\Http\Buyer\ShopingBuyerRoute::api();
+   // \RedJasmine\Shopping\UI\Http\Buyer\ShopingBuyerRoute::api();
 
 
 

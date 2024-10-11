@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                         //'primary' => Color::Amber,
+                         'primary' => Color::Amber,
                      ])
 
             //->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
