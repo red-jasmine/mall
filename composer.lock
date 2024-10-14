@@ -6382,11 +6382,11 @@
         },
         {
             "name": "red-jasmine/card",
-            "version": "dev-master",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/card",
-                "reference": "d7c146e7cd04c7584f81984cd0089f96e67abf8a"
+                "reference": "0461e75a4155fab98af18b55b2c2786b2636b894"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6442,11 +6442,11 @@
         },
         {
             "name": "red-jasmine/ecommerce",
-            "version": "dev-master",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "./packages/ecommerce",
-                "reference": "28c7ad40934c613b806ae6b030b3b775d930b54e"
+                "reference": "2c9d008a229cdf90566a7e08e20f703d50ce0e55"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6501,7 +6501,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-core",
-                "reference": "fef3b07b1c2d1e1293b39fc1578e8e6f0f14de1a"
+                "reference": "8f83f5b2f440f56ccfbfb841034c58e7031c52ce"
             },
             "require": {
                 "awcodes/filament-table-repeater": "^3.0",
@@ -6583,7 +6583,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-product",
-                "reference": "9f249e711bb0eb7ce8e8344f593c4198c341d915"
+                "reference": "41dca022bd0dab958a45efb29400af75a0c2e957"
             },
             "require": {
                 "php": "^8.1",
@@ -6665,7 +6665,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "9c725402c26ad7ef7ce0b6cfd94d881ff6c736e3"
+                "reference": "be63b482d9dd08ec6fa744a895e94adf98417983"
             },
             "require": {
                 "ext-bcmath": "*",
