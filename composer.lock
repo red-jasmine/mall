@@ -6446,7 +6446,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/ecommerce",
-                "reference": "11a07fc3fdcc7d0075e44d62502b15d55d130cc7"
+                "reference": "28c7ad40934c613b806ae6b030b3b775d930b54e"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6501,14 +6501,13 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-core",
-                "reference": "b570e99629a75ccb0f0fbf918d47843dfe30189d"
+                "reference": "fef3b07b1c2d1e1293b39fc1578e8e6f0f14de1a"
             },
             "require": {
                 "awcodes/filament-table-repeater": "^3.0",
                 "codewithdennis/filament-select-tree": "*",
                 "filament/filament": "^3.2",
-                "php": "^8.1",
-                "spatie/laravel-package-tools": "^1.15.0"
+                "php": "^8.1"
             },
             "require-dev": {
                 "nunomaduro/collision": "^7.9",
@@ -6584,7 +6583,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/filament-product",
-                "reference": "c1927b90f19b510f4328662a066189dc0243ab19"
+                "reference": "9f249e711bb0eb7ce8e8344f593c4198c341d915"
             },
             "require": {
                 "php": "^8.1",
@@ -6666,7 +6665,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/product",
-                "reference": "24bfa6f6da14961030cb8c1e4ffd2bd0ae90e719"
+                "reference": "9c725402c26ad7ef7ce0b6cfd94d881ff6c736e3"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -6731,7 +6730,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/support",
-                "reference": "907782ffb0872a32c8e89a177d6ed2eb4229f6c4"
+                "reference": "3e9135eaee9f82034fef905e3e546f946c1285f6"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",
