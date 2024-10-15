@@ -14,7 +14,8 @@
         "red-jasmine/card": "1.0.x-dev",
         "red-jasmine/filament-core": "1.0.x-dev",
         "red-jasmine/filament-product": "1.0.x-dev",
-        "red-jasmine/product": "1.0.x-dev"
+        "red-jasmine/product": "1.0.x-dev",
+        "red-jasmine/filament-card": "1.0.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
