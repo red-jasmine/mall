@@ -78,7 +78,7 @@
         },
         "0": {
             "type": "path",
-            "url": "./packages/*",
+            "url": "./framework/packages/*",
             "options": {
                 "symlink": true
             }

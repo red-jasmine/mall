@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b063f98f7e2d7afbf2077261504392f",
+    "content-hash": "9e0f81d2ceb6f5713cdd39f59df152de",
     "packages": [
         {
             "name": "amphp/amp",
@@ -6757,8 +6757,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/card",
-                "reference": "d7c146e7cd04c7584f81984cd0089f96e67abf8a"
+                "url": "./framework/packages/card",
+                "reference": "0461e75a4155fab98af18b55b2c2786b2636b894"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6817,8 +6817,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/ecommerce",
-                "reference": "28c7ad40934c613b806ae6b030b3b775d930b54e"
+                "url": "./framework/packages/ecommerce",
+                "reference": "2c9d008a229cdf90566a7e08e20f703d50ce0e55"
             },
             "require": {
                 "red-jasmine/support": "1.0.x-dev"
@@ -6872,8 +6872,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/filament-card",
-                "reference": "3ff71c5ee42555adbc4a0a17bc4200068cb0fd24"
+                "url": "./framework/packages/filament-card",
+                "reference": "38765570505c38545e8992eafe9c0ee730745789"
             },
             "require": {
                 "filament/filament": "^3.0",
@@ -6956,8 +6956,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/filament-core",
-                "reference": "fa7fcf91561ff218cd773279981dbad85be9ab21"
+                "url": "./framework/packages/filament-core",
+                "reference": "c354ec2d0646f4703d4abc436a06590de246b25c"
             },
             "require": {
                 "awcodes/filament-table-repeater": "^3.0",
@@ -7038,8 +7038,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/filament-product",
-                "reference": "9689c5ff67f38dee0cea0eed9d91e0895df88b92"
+                "url": "./framework/packages/filament-product",
+                "reference": "5e8dca95915c9e1309be3b0fe974a33909cdbba3"
             },
             "require": {
                 "php": "^8.1",
@@ -7120,8 +7120,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/product",
-                "reference": "fbb9166506c34c8c9f96a73cc403e87dc5270b09"
+                "url": "./framework/packages/product",
+                "reference": "5105c1529b58be476597ee96168212e5ac1414e7"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -7185,8 +7185,8 @@
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "./packages/support",
-                "reference": "436483f312765feedfc859640994b3bb794148d2"
+                "url": "./framework/packages/support",
+                "reference": "7cacd7e7e0d785c797f703f1c2732978fb9659c3"
             },
             "require": {
                 "illuminate/contracts": "^10.0|^11.0",
