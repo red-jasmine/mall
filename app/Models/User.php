@@ -56,7 +56,7 @@ class User extends Authenticatable implements UserInterface
 
     public function getType() : string
     {
-        return 'seller';
+        return 'user';
     }
 
     public function getID() : int
