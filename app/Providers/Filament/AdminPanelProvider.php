@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use RedJasmine\FilamentCard\FilamentCardPlugin;
+use RedJasmine\FilamentOrder\FilamentOrderPlugin;
 use RedJasmine\FilamentProduct\Clusters\Product\Resources\ProductResource;
 use Redjasmine\FilamentProduct\FilamentProductPlugin;
 use Firefly\FilamentBlog\Blog;
@@ -71,6 +72,7 @@ class AdminPanelProvider extends PanelProvider
 
                           FilamentProductPlugin::make(),
                           FilamentCardPlugin::make(),
+                          FilamentOrderPlugin::make(),
                       ]);
     }
 }
