@@ -7626,16 +7626,16 @@
         },
         {
             "name": "spatie/laravel-data",
-            "version": "4.10.1",
+            "version": "4.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-data.git",
-                "reference": "d3113c6bc03a6f1c241074d6f5832e05daa7ca77"
+                "reference": "fab1c51236ab9a91d7aca7bbdf7b8cb64c65d4c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/d3113c6bc03a6f1c241074d6f5832e05daa7ca77",
-                "reference": "d3113c6bc03a6f1c241074d6f5832e05daa7ca77",
+                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/fab1c51236ab9a91d7aca7bbdf7b8cb64c65d4c7",
+                "reference": "fab1c51236ab9a91d7aca7bbdf7b8cb64c65d4c7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -7667,7 +7667,7 @@
                 "phpstan/extension-installer": "^1.1",
                 "phpunit/phpunit": "^10.0",
                 "spatie/invade": "^1.0",
-                "spatie/laravel-typescript-transformer": "^2.3",
+                "spatie/laravel-typescript-transformer": "^2.5",
                 "spatie/pest-plugin-snapshots": "^2.1",
                 "spatie/test-time": "^1.2"
             },
@@ -7704,7 +7704,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-data/issues",
-                "source": "https://github.com/spatie/laravel-data/tree/4.10.1"
+                "source": "https://github.com/spatie/laravel-data/tree/4.11.0"
             },
             "funding": [
                 {
@@ -7712,7 +7712,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-07T08:36:46+00:00"
+            "time": "2024-10-22T11:20:40+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -8031,12 +8031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "a97129d215b0730fe86c59f1ceefc6ad2e93533d"
+                "reference": "8f6d3ecb5ae72d1f21af58fc7ec50a4d9e4273e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/a97129d215b0730fe86c59f1ceefc6ad2e93533d",
-                "reference": "a97129d215b0730fe86c59f1ceefc6ad2e93533d",
+                "url": "https://api.github.com/repos/symfony/console/zipball/8f6d3ecb5ae72d1f21af58fc7ec50a4d9e4273e4",
+                "reference": "8f6d3ecb5ae72d1f21af58fc7ec50a4d9e4273e4",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -8122,7 +8122,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-10-13T12:36:15+00:00"
+            "time": "2024-10-14T18:16:08+00:00"
         },
         {
             "name": "symfony/css-selector",
