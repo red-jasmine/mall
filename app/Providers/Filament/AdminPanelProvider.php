@@ -65,6 +65,8 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                                  Authenticate::class,
                              ])
+            ->databaseNotifications()
+
             ->sidebarWidth('10rem')
 //            ->topNavigation()
             ->maxContentWidth(MaxWidth::Full)
