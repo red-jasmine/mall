@@ -12,13 +12,13 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "red-jasmine/card": "1.0.x-dev",
-        "red-jasmine/filament-core": "1.0.x-dev",
-        "red-jasmine/filament-product": "1.0.x-dev",
-        "red-jasmine/filament-order": "1.0.x-dev",
-        "red-jasmine/product": "1.0.x-dev",
         "red-jasmine/filament-card": "1.0.x-dev",
+        "red-jasmine/filament-core": "1.0.x-dev",
+        "red-jasmine/filament-order": "1.0.x-dev",
+        "red-jasmine/filament-product": "1.0.x-dev",
         "red-jasmine/order": "1.0.x-dev",
-        "red-jasmine/payment": "1.0.x-dev"
+        "red-jasmine/payment": "1.0.x-dev",
+        "red-jasmine/product": "1.0.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
