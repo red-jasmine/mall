@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "laravel/framework": "^11.9",
+        "laravel/framework": "^11.35.0",
         "laravel/tinker": "^2.9",
         "red-jasmine/card": "1.0.x-dev",
         "red-jasmine/filament-card": "1.0.x-dev",
@@ -22,10 +22,11 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "laravel/pail": "^1.1",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
+        "nunomaduro/collision": "^8.1",
         "phpunit/phpunit": "^11.0.1"
     },
     "autoload": {
